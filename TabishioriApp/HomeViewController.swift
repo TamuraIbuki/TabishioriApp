@@ -11,11 +11,13 @@ import UIKit
 final class HomeViewController: UIViewController {
     
     // MARK: - IBOutlet
-    @IBOutlet weak var homeTitle: UILabel!
     
-    @IBOutlet weak var tableView: UITableView!
-    
-    @IBOutlet weak var createButton: UIButton!
+    // タイトルラベル
+    @IBOutlet private weak var homeTitle: UILabel!
+    // しおり一覧テーブルビュー
+    @IBOutlet private weak var tableView: UITableView!
+    // 新しいしおりを追加ボタン
+    @IBOutlet private weak var createButton: UIButton!
     
     // MARK: - View Life-Cycle Methods
     
