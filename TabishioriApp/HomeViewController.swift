@@ -35,7 +35,7 @@ final class HomeViewController: UIViewController {
     // MARK: - Other Methods
     
     private func setupFont() {
-        //タイトルのフォントを変更
+        // タイトルのフォントを変更
         if let homeTitle = self.homeTitle {
             homeTitle.font = .zenMaruGothic(size: 32)
         } else {
