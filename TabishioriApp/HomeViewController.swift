@@ -33,6 +33,7 @@ final class HomeViewController: UIViewController {
     }
     
     // MARK: - Other Methods
+    
     private func setupFont() {
         //タイトルのフォントを変更
         if let homeTitle = self.homeTitle {
