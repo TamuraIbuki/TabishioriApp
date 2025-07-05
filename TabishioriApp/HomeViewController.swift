@@ -45,7 +45,7 @@ final class HomeViewController: UIViewController {
         // 新しいしおり作成ボタンのフォントを変更
         if let createButton = self.createButton {
             let title = "新しいしおりを作成"
-            let font = UIFont.setFontZenMaruGothic(size: 18)
+            let font = UIFont.setFontZenMaruGothic(size: 24)
             let attributes: [NSAttributedString.Key: Any] = [
                 .font: font,
                 .foregroundColor: UIColor.white
