@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIFont {
-    static func zenMaruGothic(size: CGFloat) -> UIFont {
+    static func setFontZenMaruGothic(size: CGFloat) -> UIFont {
         if let font = UIFont(name: "ZenMaruGothic-Black", size: size) {
             return font
         } else {
