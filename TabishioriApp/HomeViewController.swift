@@ -42,7 +42,7 @@ final class HomeViewController: UIViewController {
             print("homeTitle is nil")
         }
         
-        //新しいしおり作成ボタンのフォントを変更
+        // 新しいしおり作成ボタンのフォントを変更
         if let createButton = self.createButton {
             let title = "新しいしおりを作成"
             let font = UIFont.zenMaruGothic(size: 18)
