@@ -8,7 +8,7 @@
 import UIKit
 
 /// Home画面
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var homeTitle: UILabel!
