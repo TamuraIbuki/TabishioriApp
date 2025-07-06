@@ -28,7 +28,7 @@ final class HomeViewController: UIViewController {
     
     // MARK: - IBActions
     
-    // 新しいしおりを作成ボタンをタップ
+    /// 新しいしおりを作成ボタンをタップ
     @IBAction private func createButtonTapped(_ sender: Any) {
     }
     
