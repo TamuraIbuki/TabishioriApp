@@ -41,7 +41,7 @@ final class CreateShioriViewController: UIViewController {
     }
     
     /// クローズボタンをタップ
-    @IBAction private func tapCloseButton(_ sender: UIButton) {
+    @IBAction private func tapCloseButtonTapped(_ sender: UIButton) {
         // 前の画面に戻る
         dismiss(animated: true, completion: nil)
     }
