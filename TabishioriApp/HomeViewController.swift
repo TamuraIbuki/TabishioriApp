@@ -12,11 +12,11 @@ final class HomeViewController: UIViewController {
     
     // MARK: - IBOutlet
     
-    // タイトルラベル
+    /// タイトルラベル
     @IBOutlet private weak var homeTitle: UILabel!
-    // しおり一覧テーブルビュー
+    /// しおり一覧テーブルビュー
     @IBOutlet private weak var tableView: UITableView!
-    // 新しいしおりを追加ボタン
+    /// 新しいしおりを追加ボタン
     @IBOutlet private weak var createButton: UIButton!
     
     // MARK: - View Life-Cycle Methods
