@@ -8,7 +8,7 @@
 import UIKit
 
 /// 新しいしおり作成画面
-class CreateShioriViewController: UIViewController {
+final class CreateShioriViewController: UIViewController {
     
     // MARK: - IBOutlet
     
