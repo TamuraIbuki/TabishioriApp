@@ -13,7 +13,7 @@ final class HomeViewController: UIViewController {
     // MARK: - IBOutlet
     
     /// タイトルラベル
-    @IBOutlet private weak var homeTitle: UILabel!
+    @IBOutlet private weak var homeTitleLabel: UILabel!
     /// しおり一覧テーブルビュー
     @IBOutlet private weak var tableView: UITableView!
     /// 新しいしおりを追加ボタン
@@ -38,7 +38,7 @@ final class HomeViewController: UIViewController {
     
     private func setupFont() {
         // タイトルのフォントを変更
-        homeTitle.font = .setFontZenMaruGothic(size: 32)
+        homeTitleLabel.font = .setFontZenMaruGothic(size: 32)
         
         // 新しいしおり作成ボタンのフォントを変更
         let title = "新しいしおりを作成"

@@ -11,7 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="TabishioriApp" customModuleProvider="target">
             <connections>
                 <outlet property="createButton" destination="sqC-mr-K4K" id="Vc9-4a-NhH"/>
-                <outlet property="homeTitle" destination="QwJ-r6-FcJ" id="Tzj-5H-e7n"/>
+                <outlet property="homeTitleLabel" destination="QwJ-r6-FcJ" id="Tzj-5H-e7n"/>
                 <outlet property="tableView" destination="QRk-z2-dl1" id="l3n-W2-Vow"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
