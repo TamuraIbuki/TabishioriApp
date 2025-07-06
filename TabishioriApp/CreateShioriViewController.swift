@@ -32,7 +32,6 @@ final class CreateShioriViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupFont()
-        
     }
 
     // MARK: - IBActions
