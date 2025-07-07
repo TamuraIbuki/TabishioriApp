@@ -11,11 +11,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateShioriViewController" customModule="TabishioriApp" customModuleProvider="target">
             <connections>
                 <outlet property="backColor" destination="nhn-qH-q1R" id="XHO-3n-byb"/>
-                <outlet property="creaTitleLabel" destination="R39-5Q-d6h" id="hGR-62-9Ha"/>
                 <outlet property="createButton" destination="aAC-Bw-FTB" id="Drx-Iw-Muc"/>
                 <outlet property="endDate" destination="qYe-Qg-HBr" id="NMk-SB-RCv"/>
                 <outlet property="shioriName" destination="96n-kV-L1m" id="baH-cP-7Rn"/>
                 <outlet property="startDate" destination="d87-UN-ym1" id="jnT-Dg-dDK"/>
+                <outlet property="titleLabel" destination="R39-5Q-d6h" id="hGR-62-9Ha"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="whiteColorButton" destination="FzS-fl-whb" id="tWr-Of-NjO"/>
             </connections>
