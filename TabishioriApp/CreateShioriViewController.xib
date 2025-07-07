@@ -264,12 +264,12 @@
                         <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="bHT-nP-5Ba">
                             <rect key="frame" x="5" y="0.0" width="223" height="35"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nQj-vx-m8Q">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVj-Qa-7hm">
                                     <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
-                                    <color key="backgroundColor" red="0.99607843160629272" green="0.0" blue="0.58039218187332153" alpha="0.84705883260000003" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" red="0.99607843160629272" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="35" id="G3K-rY-YlF"/>
-                                        <constraint firstAttribute="width" constant="35" id="H8M-a2-yk9"/>
+                                        <constraint firstAttribute="width" constant="35" id="27d-2m-M97"/>
+                                        <constraint firstAttribute="height" constant="35" id="Cgv-WC-F5k"/>
                                     </constraints>
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain"/>
@@ -279,12 +279,12 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVj-Qa-7hm">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nQj-vx-m8Q">
                                     <rect key="frame" x="47" y="0.0" width="35" height="35"/>
-                                    <color key="backgroundColor" red="0.99607843160629272" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" red="0.99607843160629272" green="0.0" blue="0.58039218187332153" alpha="0.84705883260000003" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="35" id="27d-2m-M97"/>
-                                        <constraint firstAttribute="height" constant="35" id="Cgv-WC-F5k"/>
+                                        <constraint firstAttribute="height" constant="35" id="G3K-rY-YlF"/>
+                                        <constraint firstAttribute="width" constant="35" id="H8M-a2-yk9"/>
                                     </constraints>
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain"/>
