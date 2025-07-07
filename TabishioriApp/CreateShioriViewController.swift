@@ -19,7 +19,7 @@ final class CreateShioriViewController: UIViewController {
     /// 開始日ラベル
     @IBOutlet private weak var startDateLabel: UILabel!
     /// 終了日ラベル
-    @IBOutlet private weak var endDate: UILabel!
+    @IBOutlet private weak var endDateLabel: UILabel!
     /// 背景の色ラベル
     @IBOutlet private weak var backColor: UILabel!
     /// 作成ボタン
@@ -88,7 +88,7 @@ final class CreateShioriViewController: UIViewController {
         // 開始日のフォントを変更
         startDateLabel.font = .setFontZenMaruGothic(size: 18)
         // 終了日のフォントを変更
-        endDate.font = .setFontZenMaruGothic(size: 18)
+        endDateLabel.font = .setFontZenMaruGothic(size: 18)
         // 背景の色のフォントを変更
         backColor.font = .setFontZenMaruGothic(size: 18)
         // 作成ボタンのフォントを変更
