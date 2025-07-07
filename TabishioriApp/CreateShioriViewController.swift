@@ -46,6 +46,38 @@ final class CreateShioriViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    /// 赤を選択
+    @IBAction func redButtonTapped(_ sender: UIButton) {
+    }
+    /// ピンクを選択
+    @IBAction func pinkButtonTapped(_ sender: UIButton) {
+    }
+    /// 紫を選択
+    @IBAction func purpleButtonTapped(_ sender: UIButton) {
+    }
+    /// 青を選択
+    @IBAction func buleButtonTapped(_ sender: UIButton) {
+    }
+    /// 水色を選択
+    @IBAction func skybuleButtonTapped(_ sender: UIButton) {
+    }
+    /// 緑を選択
+    @IBAction func greenButtonTapped(_ sender: UIButton) {
+    }
+    /// 黄緑色を選択
+    @IBAction func lightgreenButtonTapped(_ sender: UIButton) {
+    }
+    /// 黄色を選択
+    @IBAction func yellowButtonTapped(_ sender: UIButton) {
+    }
+    /// 橙を選択
+    @IBAction func orangeButtonTapped(_ sender: UIButton) {
+    }
+    /// 白を選択
+    @IBAction func whiteButtonTapped(_ sender: UIButton) {
+    }
+    
+    
     // MARK: - Other Methods
     
     private func setupFont() {

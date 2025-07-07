@@ -185,6 +185,9 @@
                                             <real key="value" value="17.5"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="greenButtonTapped:" destination="-1" eventType="touchUpInside" id="ouV-gf-bV3"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gTW-Ra-ab2">
                                     <rect key="frame" x="47" y="0.0" width="35" height="35"/>
@@ -200,6 +203,9 @@
                                             <real key="value" value="17.5"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="lightgreenButtonTapped:" destination="-1" eventType="touchUpInside" id="lJd-jt-po0"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OSs-4S-aS2">
                                     <rect key="frame" x="94" y="0.0" width="35" height="35"/>
@@ -215,6 +221,9 @@
                                             <real key="value" value="17.5"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="yellowButtonTapped:" destination="-1" eventType="touchUpInside" id="bEK-16-UmV"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xag-C2-UDm">
                                     <rect key="frame" x="141" y="0.0" width="35" height="35"/>
@@ -230,6 +239,9 @@
                                             <real key="value" value="17.5"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="orangeButtonTapped:" destination="-1" eventType="touchUpInside" id="SAI-Xc-Xub"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FzS-fl-whb">
                                     <rect key="frame" x="188" y="0.0" width="35" height="35"/>
@@ -252,6 +264,9 @@
                                             <integer key="value" value="5"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="whiteButtonTapped:" destination="-1" eventType="touchUpInside" id="2E9-5S-VmT"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>
@@ -278,6 +293,9 @@
                                             <real key="value" value="17.5"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="redButtonTapped:" destination="-1" eventType="touchUpInside" id="P6m-Li-DGY"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nQj-vx-m8Q">
                                     <rect key="frame" x="47" y="0.0" width="35" height="35"/>
@@ -293,6 +311,9 @@
                                             <real key="value" value="17.5"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="pinkButtonTapped:" destination="-1" eventType="touchUpInside" id="l2o-1B-CKY"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XF8-EX-7eH">
                                     <rect key="frame" x="94" y="0.0" width="35" height="35"/>
@@ -308,6 +329,9 @@
                                             <real key="value" value="17.5"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="purpleButtonTapped:" destination="-1" eventType="touchUpInside" id="xMY-A1-gUb"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7WU-wj-JiE">
                                     <rect key="frame" x="141" y="0.0" width="35" height="35"/>
@@ -323,6 +347,9 @@
                                             <real key="value" value="17.5"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="buleButtonTapped:" destination="-1" eventType="touchUpInside" id="bwe-w0-3iy"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jEG-0d-P9l">
                                     <rect key="frame" x="188" y="0.0" width="35" height="35"/>
@@ -338,6 +365,9 @@
                                             <real key="value" value="17.5"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="skybuleButtonTapped:" destination="-1" eventType="touchUpInside" id="MqI-9x-qdX"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>
