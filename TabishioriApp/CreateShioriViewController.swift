@@ -15,7 +15,7 @@ final class CreateShioriViewController: UIViewController {
     /// 新しいしおり作成画面のタイトル
     @IBOutlet private weak var titleLabel: UILabel!
     /// しおり名ラベル
-    @IBOutlet private weak var shioriName: UILabel!
+    @IBOutlet private weak var shioriNameLabel: UILabel!
     /// 開始日ラベル
     @IBOutlet private weak var startDate: UILabel!
     /// 終了日ラベル
@@ -84,7 +84,7 @@ final class CreateShioriViewController: UIViewController {
         // タイトルのフォントを変更
         titleLabel.font = .setFontZenMaruGothic(size: 24)
         // しおり名のフォントを変更
-        shioriName.font = .setFontZenMaruGothic(size: 18)
+        shioriNameLabel.font = .setFontZenMaruGothic(size: 18)
         // 開始日のフォントを変更
         startDate.font = .setFontZenMaruGothic(size: 18)
         // 終了日のフォントを変更
