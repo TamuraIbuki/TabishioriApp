@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// しおり修正画面
 final class EditShioriViewController: UIViewController {
     
     // MARK: - IBOutlet
