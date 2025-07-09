@@ -10,7 +10,7 @@ import UIKit
 /// 新しいしおり作成画面
 final class CreateShioriViewController: UIViewController {
     
-    // MARK: - IBOutlet
+    // MARK: - IBOutlets
     
     /// 新しいしおり作成画面のタイトル
     @IBOutlet private weak var titleLabel: UILabel!
