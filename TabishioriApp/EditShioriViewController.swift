@@ -26,7 +26,7 @@ final class EditShioriViewController: UIViewController {
     @IBOutlet private weak var updateButton: UIButton!
     /// ホワイトボタン
     @IBOutlet private weak var whiteColorButton: UIButton!
-    ///  戻るボタン
+    /// 戻るボタン
     @IBOutlet private weak var leftArrowButton: UIButton!
     
     // MARK: - View Life-Cycle Methods
