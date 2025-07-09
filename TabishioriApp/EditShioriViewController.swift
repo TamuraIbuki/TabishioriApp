@@ -12,7 +12,7 @@ final class EditShioriViewController: UIViewController {
     
     // MARK: - IBOutlets
     
-    /// 新しいしおり作成画面のタイトル
+    /// 画面タイトル
     @IBOutlet private weak var titleLabel: UILabel!
     /// しおり名ラベル
     @IBOutlet private weak var shioriNameLabel: UILabel!
