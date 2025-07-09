@@ -49,34 +49,42 @@ final class CreateShioriViewController: UIViewController {
     /// 赤を選択
     @IBAction private func redButtonTapped(_ sender: UIButton) {
     }
+    
     /// ピンクを選択
     @IBAction private func pinkButtonTapped(_ sender: UIButton) {
     }
+    
     /// 紫を選択
     @IBAction private func purpleButtonTapped(_ sender: UIButton) {
     }
+    
     /// 青を選択
     @IBAction private func buleButtonTapped(_ sender: UIButton) {
     }
+    
     /// 水色を選択
     @IBAction private func skybuleButtonTapped(_ sender: UIButton) {
     }
+    
     /// 緑を選択
     @IBAction private func greenButtonTapped(_ sender: UIButton) {
     }
+    
     /// 黄緑色を選択
     @IBAction private func lightgreenButtonTapped(_ sender: UIButton) {
     }
+    
     /// 黄色を選択
     @IBAction private func yellowButtonTapped(_ sender: UIButton) {
     }
+    
     /// 橙を選択
     @IBAction private func orangeButtonTapped(_ sender: UIButton) {
     }
+    
     /// 白を選択
     @IBAction private func whiteButtonTapped(_ sender: UIButton) {
     }
-    
     
     // MARK: - Other Methods
     
