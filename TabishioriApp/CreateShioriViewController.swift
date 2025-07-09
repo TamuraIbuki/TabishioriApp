@@ -63,7 +63,7 @@ final class CreateShioriViewController: UIViewController {
     }
     
     /// 水色を選択
-    @IBAction private func skybuleButtonTapped(_ sender: UIButton) {
+    @IBAction private func skyBuleButtonTapped(_ sender: UIButton) {
     }
     
     /// 緑を選択
