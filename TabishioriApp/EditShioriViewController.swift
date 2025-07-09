@@ -72,7 +72,7 @@ final class EditShioriViewController: UIViewController {
     }
     
     /// 黄緑色を選択
-    @IBAction private func lightgreenButtonTapped(_ sender: UIButton) {
+    @IBAction private func lightGreenButtonTapped(_ sender: UIButton) {
     }
     
     /// 黄色を選択
