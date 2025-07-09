@@ -1,5 +1,5 @@
 //
-//  EditShioriViewController2.swift
+//  EditShioriViewController.swift
 //  TabishioriApp
 //
 //  Created by 田村伊吹 on 2025/07/08.
