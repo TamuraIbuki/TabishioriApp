@@ -28,8 +28,6 @@ final class EditShioriViewController: UIViewController {
     ///  戻るボタン
     @IBOutlet private weak var leftArrowButton: UIButton!
     
-    
-    
     // MARK: - View Life-Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
