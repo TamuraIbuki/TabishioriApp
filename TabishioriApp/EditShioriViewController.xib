@@ -17,6 +17,7 @@
                 <outlet property="startDateLabel" destination="yIx-KE-npN" id="84u-2W-mqg"/>
                 <outlet property="titleLabel" destination="q7G-EU-bal" id="5kc-1U-X05"/>
                 <outlet property="updateButton" destination="jBA-ja-TfE" id="bET-vR-obM"/>
+                <outlet property="view" destination="ciz-jI-H99" id="7bQ-l4-ceT"/>
                 <outlet property="whiteColorButton" destination="vsM-zd-Gbu" id="L1c-Om-NmJ"/>
             </connections>
         </placeholder>
@@ -193,6 +194,7 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                     <connections>
+                                        <action selector="lightGreenButtonTapped:" destination="-1" eventType="touchUpInside" id="bPL-9v-xVh"/>
                                         <action selector="lightgreenButtonTapped:" destination="-1" eventType="touchUpInside" id="xmo-6S-P2I"/>
                                     </connections>
                                 </button>
@@ -349,6 +351,7 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                     <connections>
+                                        <action selector="skyBuleButtonTapped:" destination="-1" eventType="touchUpInside" id="0Ew-nC-gpO"/>
                                         <action selector="skybuleButtonTapped:" destination="-1" eventType="touchUpInside" id="Fem-Eb-Np2"/>
                                     </connections>
                                 </button>

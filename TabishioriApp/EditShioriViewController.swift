@@ -43,7 +43,7 @@ final class EditShioriViewController: UIViewController {
     }
     
     /// 左矢印ボタンをタップ
-    @IBAction private func leftArrowButtonTapped(_ sender: Any) {
+    @IBAction private func leftArrowButtonTapped(_ sender: UIButton) {
         // 前の画面に戻る
     }
 
