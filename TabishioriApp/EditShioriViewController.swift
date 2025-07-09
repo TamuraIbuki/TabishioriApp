@@ -29,6 +29,7 @@ final class EditShioriViewController: UIViewController {
     @IBOutlet private weak var leftArrowButton: UIButton!
     
     // MARK: - View Life-Cycle Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
