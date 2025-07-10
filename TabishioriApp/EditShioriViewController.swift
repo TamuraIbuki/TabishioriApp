@@ -112,7 +112,5 @@ final class EditShioriViewController: UIViewController {
         // 白の背景ボタンに黒い枠線をつける
         whiteColorButton.layer.borderWidth = 1
         whiteColorButton.layer.borderColor = UIColor.black.cgColor
-        // 戻るボタンを反転させる
-        leftArrowButton.imageView?.transform = CGAffineTransform(scaleX: -1, y: 1)
     }
 }
