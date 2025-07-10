@@ -195,7 +195,6 @@
                                     </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="lightGreenButtonTapped:" destination="-1" eventType="touchUpInside" id="bPL-9v-xVh"/>
-                                        <action selector="lightgreenButtonTapped:" destination="-1" eventType="touchUpInside" id="xmo-6S-P2I"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gBr-Do-KF3">
@@ -352,7 +351,6 @@
                                     </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="skyBuleButtonTapped:" destination="-1" eventType="touchUpInside" id="0Ew-nC-gpO"/>
-                                        <action selector="skybuleButtonTapped:" destination="-1" eventType="touchUpInside" id="Fem-Eb-Np2"/>
                                     </connections>
                                 </button>
                             </subviews>
