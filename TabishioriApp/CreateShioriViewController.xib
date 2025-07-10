@@ -204,7 +204,7 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                     <connections>
-                                        <action selector="lightgreenButtonTapped:" destination="-1" eventType="touchUpInside" id="lJd-jt-po0"/>
+                                        <action selector="lightGreenButtonTapped:" destination="-1" eventType="touchUpInside" id="uxK-E1-lb1"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OSs-4S-aS2">
@@ -360,6 +360,7 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                     <connections>
+                                        <action selector="skyBuleButtonTapped:" destination="-1" eventType="touchUpInside" id="4Oe-r6-UAg"/>
                                         <action selector="skybuleButtonTapped:" destination="-1" eventType="touchUpInside" id="MqI-9x-qdX"/>
                                     </connections>
                                 </button>
