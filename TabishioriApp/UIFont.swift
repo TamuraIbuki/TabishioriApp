@@ -16,4 +16,12 @@ extension UIFont {
             return UIFont.systemFont(ofSize: size)
         }
     }
+    static func setFontKiwiMaru(size: CGFloat) -> UIFont {
+        if let font = UIFont(name: "KiwiMaru-Medium", size: size){
+            return font
+        } else {
+            print("フォントが読み込めませんでした")
+            return UIFont.systemFont(ofSize: size)
+        }
+    }
 }
