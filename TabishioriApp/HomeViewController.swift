@@ -41,6 +41,13 @@ final class HomeViewController: UIViewController {
         // タイトルのフォントを変更
         homeTitleLabel.font = .setFontZenMaruGothic(size: 32)
         
+        // シャドウ
+        homeTitleLabel.layer.shadowColor = UIColor(white: 0.0, alpha: 0.3).cgColor
+        homeTitleLabel.layer.shadowRadius = 2.0
+        homeTitleLabel.layer.shadowOpacity = 1.0
+        homeTitleLabel.layer.shadowOffset = CGSize(width: 4, height: 4)
+        homeTitleLabel.layer.masksToBounds = false
+        
         // 新しいしおり作成ボタンのフォントを変更
         let title = "新しいしおりを作成"
         let font = UIFont.setFontZenMaruGothic(size: 24)
