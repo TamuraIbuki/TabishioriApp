@@ -23,7 +23,6 @@ final class HomeTableViewCell: UITableViewCell {
     }
     
     func setup(shioriName: String, shioriDate: String) {
-        //dateLabel.text = shioridate
         let font = UIFont.setFontKiwiMaru(size: 24)
         
         // 日付ラベル処理
