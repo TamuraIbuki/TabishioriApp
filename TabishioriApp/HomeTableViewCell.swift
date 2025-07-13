@@ -42,7 +42,7 @@ final class HomeTableViewCell: UITableViewCell {
         ]
         shioriNameStrokeLabel.attributedText = NSAttributedString(string: shioriName, attributes: strokeAttributes)
         
-        /// 塗り用（通常表示）
+        // 塗り用（通常表示）
         shioriNameFillLabel.font = font
         shioriNameFillLabel.textColor = UIColor(hex: "#FF9D00")
         shioriNameFillLabel.text = shioriName
