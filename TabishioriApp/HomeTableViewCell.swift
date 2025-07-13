@@ -11,7 +11,8 @@ final class HomeTableViewCell: UITableViewCell {
     
     // MARK: - IBOutlets
     
-    @IBOutlet private weak var shioriNameLabel: UILabel!
+    @IBOutlet private weak var shioriNameStrokeLabel: UILabel!
+    @IBOutlet private weak var shioriNameFillLabel: UILabel!
     @IBOutlet private weak var dateLabel: UILabel!
     
     // MARK: - Other Methods
@@ -21,21 +22,28 @@ final class HomeTableViewCell: UITableViewCell {
     }
     
     func setup(shioriName: String, shioridate: String) {
-        shioriNameLabel.text = shioriName
-        dateLabel.text = shioridate
-        // 日付を二行で表示
+        //dateLabel.text = shioridate
+        let font = UIFont.setFontKiwiMaru(size: 24)
+        
+        // 日付ラベル処理
         let wrappedDate = shioridate.replacingOccurrences(of: "~", with: "\n~")
         dateLabel.text = wrappedDate
-        // 背景色を設定
+        
+        // 背景色
         contentView.backgroundColor = UIColor(hex: "#FF9D00", alpha: 0.3)
-        /// しおり名のフォントを設定
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.setFontKiwiMaru(size: 24),
-            .foregroundColor: UIColor(hex: "#FF9D00"),
+        
+        // ストローク用
+        let strokeAttributes: [NSAttributedString.Key: Any] = [
+            .font: font,
             .strokeColor: UIColor.white,
-            .strokeWidth: -8.0,
+            .strokeWidth: 24.0,
+            .foregroundColor: UIColor.clear
         ]
-        let attributedText = NSAttributedString(string: shioriName, attributes: attributes)
-        shioriNameLabel.attributedText = attributedText
+        shioriNameStrokeLabel.attributedText = NSAttributedString(string: shioriName, attributes: strokeAttributes)
+        
+        /// 塗り用（通常表示）
+        shioriNameFillLabel.font = font
+        shioriNameFillLabel.textColor = UIColor(hex: "#FF9D00")
+        shioriNameFillLabel.text = shioriName
     }
 }

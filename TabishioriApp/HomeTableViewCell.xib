@@ -25,6 +25,16 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpZ-7F-txm">
+                        <rect key="frame" x="24" y="4" width="218" height="57"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="218" id="cBo-EC-X4m"/>
+                            <constraint firstAttribute="height" constant="57" id="fXN-dV-yBL"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7G-Qb-YxJ">
                         <rect key="frame" x="257" y="4" width="98" height="57"/>
                         <constraints>
@@ -38,12 +48,17 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="c7G-Qb-YxJ" secondAttribute="trailing" constant="12" id="32Q-uc-Vtz"/>
+                    <constraint firstItem="hpZ-7F-txm" firstAttribute="leading" secondItem="AVq-Wk-zmu" secondAttribute="leading" id="4Wf-uF-Mkh"/>
                     <constraint firstAttribute="bottom" secondItem="AVq-Wk-zmu" secondAttribute="bottom" constant="4" id="FeD-9N-V2a"/>
+                    <constraint firstItem="hpZ-7F-txm" firstAttribute="centerY" secondItem="AVq-Wk-zmu" secondAttribute="centerY" id="FnE-EJ-icl"/>
                     <constraint firstItem="c7G-Qb-YxJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="GvB-cr-7Gt"/>
+                    <constraint firstItem="AVq-Wk-zmu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="KxE-AP-vIm"/>
                     <constraint firstItem="c7G-Qb-YxJ" firstAttribute="leading" secondItem="AVq-Wk-zmu" secondAttribute="trailing" constant="15" id="LLE-AY-gtd"/>
                     <constraint firstItem="AVq-Wk-zmu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="ThZ-TS-A4m"/>
                     <constraint firstItem="AVq-Wk-zmu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="hTB-nW-UpQ"/>
                     <constraint firstAttribute="bottom" secondItem="c7G-Qb-YxJ" secondAttribute="bottom" constant="4" id="jVg-ma-CQF"/>
+                    <constraint firstItem="AVq-Wk-zmu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="oAa-4d-Ygb"/>
+                    <constraint firstAttribute="bottom" secondItem="AVq-Wk-zmu" secondAttribute="bottom" constant="4" id="w5d-eO-4G3"/>
                 </constraints>
                 <userDefinedRuntimeAttributes>
                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -52,8 +67,9 @@
                 </userDefinedRuntimeAttributes>
             </tableViewCellContentView>
             <connections>
-                <outlet property="dateLabel" destination="c7G-Qb-YxJ" id="Rvc-xs-IC1"/>
-                <outlet property="shioriNameLabel" destination="AVq-Wk-zmu" id="uIb-ov-d9s"/>
+                <outlet property="dateLabel" destination="c7G-Qb-YxJ" id="7Iv-Pt-e5B"/>
+                <outlet property="shioriNameFillLabel" destination="hpZ-7F-txm" id="TBX-iv-WFz"/>
+                <outlet property="shioriNameStrokeLabel" destination="AVq-Wk-zmu" id="2MP-9v-WJf"/>
             </connections>
             <point key="canvasLocation" x="133.58778625954199" y="-3.5211267605633805"/>
         </tableViewCell>
