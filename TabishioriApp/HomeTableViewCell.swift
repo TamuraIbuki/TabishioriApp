@@ -22,12 +22,12 @@ final class HomeTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func setup(shioriName: String, shioridate: String) {
+    func setup(shioriName: String, shioriDate: String) {
         //dateLabel.text = shioridate
         let font = UIFont.setFontKiwiMaru(size: 24)
         
         // 日付ラベル処理
-        let wrappedDate = shioridate.replacingOccurrences(of: "~", with: "\n~")
+        let wrappedDate = shioriDate.replacingOccurrences(of: "~", with: "\n~")
         dateLabel.text = wrappedDate
         
         // 背景色
