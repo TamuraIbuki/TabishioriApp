@@ -12,8 +12,11 @@ final class HomeTableViewCell: UITableViewCell {
     
     // MARK: - IBOutlets
     
+    /// 白線表示用のしおり名ラベル
     @IBOutlet private weak var shioriNameStrokeLabel: UILabel!
+    /// しおり名の塗り用ラベル
     @IBOutlet private weak var shioriNameFillLabel: UILabel!
+    /// 日付ラベル
     @IBOutlet private weak var dateLabel: UILabel!
     
     // MARK: - Other Methods
