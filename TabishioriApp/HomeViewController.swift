@@ -73,7 +73,7 @@ final class HomeViewController: UIViewController {
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return 3
         }
-        // セルを設定
+        /// セルを設定
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             // カスタムセルを指定
             let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCellID", for: indexPath)as! HomeTableViewCell
