@@ -69,7 +69,7 @@ final class HomeViewController: UIViewController {
 
     // MARK: - Extentions
     extension HomeViewController: UITableViewDataSource {
-        // セルの数
+        /// セルの数
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return 3
         }
