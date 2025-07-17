@@ -25,6 +25,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         setupFont()
         configureTableView()
+        tableView.delegate = self
     }
     
     // MARK: - IBActions
@@ -67,18 +68,26 @@ final class HomeViewController: UIViewController {
     }
 }
 
-    // MARK: - Extentions
-    extension HomeViewController: UITableViewDataSource {
-        /// セルの数
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return 3
-        }
-        /// セルを設定
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            // カスタムセルを指定
-            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCellID", for: indexPath)as! HomeTableViewCell
-            // ここにセルに渡す処理を書く
-            cell.setup(shioriName: "マレーシア旅行", shioriDate: "2025.07.24~2025.07.28")
-            return cell
-        }
+// MARK: - Extentions
+extension HomeViewController: UITableViewDataSource {
+    /// セルの数
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    /// セルを設定
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // カスタムセルを指定
+        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCellID", for: indexPath)as! HomeTableViewCell
+        // ここにセルに渡す処理を書く
+        cell.setup(shioriName: "マレーシア旅行", shioriDate: "2025.07.24~2025.07.28")
+        return cell
+    }
+}
+
+extension HomeViewController: UITableViewDelegate {
+    /// テーブルビューセルをタップした時しおり画面に遷移
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let shioriVC = ShioriViewController(nibName: "ShioriViewController", bundle: nil)
+        navigationController?.pushViewController(shioriVC, animated: true)
+    }
     }
