@@ -7,7 +7,7 @@
 
 import UIKit
 
-// しおり画面
+/// しおり画面
 final class ShioriViewController: UIViewController {
     
     // MARK: - Stored Properties
