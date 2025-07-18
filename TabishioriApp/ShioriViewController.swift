@@ -91,7 +91,7 @@ final class ShioriViewController: UIViewController {
 // MARK: - UIPageViewControllerDataSource
 
 extension ShioriViewController: UIPageViewControllerDataSource {
-        /// 右にスワイプ（戻る）した場合のメソッド
+    /// 右にスワイプ（戻る）した場合のメソッド
     func pageViewController(_ pageViewController: UIPageViewController,
                             viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let index = pages.firstIndex(of: viewController), index > 0 else { return nil }
