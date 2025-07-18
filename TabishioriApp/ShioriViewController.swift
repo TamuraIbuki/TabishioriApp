@@ -29,7 +29,6 @@ final class ShioriViewController: UIViewController {
     
     /// 中央のビュー
     @IBOutlet private weak var containerView: UIView!
-    
     /// フッタービュー
     @IBOutlet private weak var footerView: UIStackView!
     
