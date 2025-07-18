@@ -85,6 +85,8 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
+
 extension HomeViewController: UITableViewDelegate {
     /// テーブルビューセルをタップした時しおり画面に遷移
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
