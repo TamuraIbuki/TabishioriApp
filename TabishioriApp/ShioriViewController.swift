@@ -75,7 +75,7 @@ final class ShioriViewController: UIViewController {
         navigationItem.rightBarButtonItem = editButton
         
         // 戻るボタン
-        let backButton = UIBarButtonItem(image: UIImage(named: "ic_LeftArrow"), style: .plain, target: self, action: #selector(backButtonTapped))
+        let backButton = UIBarButtonItem(image: UIImage(named: "ic_left_arrow"), style: .plain, target: self, action: #selector(backButtonTapped))
         backButton.tintColor = UIColor.black
         navigationItem.leftBarButtonItem = backButton
             }
