@@ -70,7 +70,7 @@ final class ShioriViewController: UIViewController {
     
     private func configureBarButtonItems() {
         // 編集ボタン
-        let editButton = UIBarButtonItem(image: UIImage(named: "ic_Edit"),style: .plain,target: self,action: #selector(editButtonTapped))
+        let editButton = UIBarButtonItem(image: UIImage(named: "ic_edit"),style: .plain,target: self,action: #selector(editButtonTapped))
         editButton.tintColor = UIColor.black
         navigationItem.rightBarButtonItem = editButton
         
