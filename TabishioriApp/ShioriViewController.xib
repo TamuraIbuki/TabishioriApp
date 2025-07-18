@@ -26,7 +26,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YqP-ks-v0d">
                             <rect key="frame" x="0.0" y="0.0" width="131" height="91"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_Luggage" translatesAutoresizingMaskIntoConstraints="NO" id="9ok-jD-moI">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_luggage" translatesAutoresizingMaskIntoConstraints="NO" id="9ok-jD-moI">
                                     <rect key="frame" x="37" y="17" width="57" height="57"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="57" id="Zaf-bN-cap"/>
@@ -163,9 +163,9 @@
         </view>
     </objects>
     <resources>
-        <image name="ic_Luggage" width="57" height="57"/>
         <image name="ic_PDF" width="55" height="55"/>
         <image name="ic_add" width="55" height="55"/>
+        <image name="ic_luggage" width="57" height="57"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
