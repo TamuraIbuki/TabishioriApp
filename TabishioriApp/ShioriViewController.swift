@@ -80,7 +80,7 @@ final class ShioriViewController: UIViewController {
                                          target: self, action: #selector(backButtonTapped))
         backButton.tintColor = UIColor.black
         navigationItem.leftBarButtonItem = backButton
-            }
+    }
     
     /// 編集ボタンをタップ
     @objc func editButtonTapped() {
