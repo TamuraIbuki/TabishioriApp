@@ -94,4 +94,4 @@ extension HomeViewController: UITableViewDelegate {
         let shioriVC = ShioriViewController(nibName: "ShioriViewController", bundle: nil)
         navigationController?.pushViewController(shioriVC, animated: true)
     }
-    }
+}
