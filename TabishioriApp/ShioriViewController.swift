@@ -63,18 +63,21 @@ final class ShioriViewController: UIViewController {
         pageViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         pageViewController.didMove(toParent: self)
         
-        pageViewController.setViewControllers([pages[0]], direction: .forward, animated: false, completion: nil)
+        pageViewController.setViewControllers([pages[0]], direction: .forward,
+                                              animated: false, completion: nil)
         pageViewController.dataSource = self
     }
     
     private func configureBarButtonItems() {
         // 編集ボタン
-        let editButton = UIBarButtonItem(image: UIImage(named: "ic_edit"),style: .plain,target: self,action: #selector(editButtonTapped))
+        let editButton = UIBarButtonItem(image: UIImage(named: "ic_edit"),style: .plain,
+                                         target: self,action: #selector(editButtonTapped))
         editButton.tintColor = UIColor.black
         navigationItem.rightBarButtonItem = editButton
         
         // 戻るボタン
-        let backButton = UIBarButtonItem(image: UIImage(named: "ic_left_arrow"), style: .plain, target: self, action: #selector(backButtonTapped))
+        let backButton = UIBarButtonItem(image: UIImage(named: "ic_left_arrow"), style: .plain,
+                                         target: self, action: #selector(backButtonTapped))
         backButton.tintColor = UIColor.black
         navigationItem.leftBarButtonItem = backButton
             }
@@ -101,7 +104,8 @@ extension ShioriViewController: UIPageViewControllerDataSource {
     /// 左にスワイプ（進む）した場合のメソッド
     func pageViewController(_ pageViewController: UIPageViewController,
                             viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let index = pages.firstIndex(of: viewController), index < pages.count - 1 else { return nil }
+        guard let index = pages.firstIndex(of: viewController),
+              index < pages.count - 1 else { return nil }
         return pages[index + 1]
     }
 }

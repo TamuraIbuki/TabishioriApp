@@ -78,7 +78,8 @@ extension HomeViewController: UITableViewDataSource {
     /// セルを設定
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // カスタムセルを指定
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCellID", for: indexPath)as! HomeTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCellID",
+                                                 for: indexPath)as! HomeTableViewCell
         // ここにセルに渡す処理を書く
         cell.setup(shioriName: "マレーシア旅行", shioriDate: "2025.07.24~2025.07.28")
         return cell
