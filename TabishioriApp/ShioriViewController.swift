@@ -87,6 +87,7 @@ final class ShioriViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 }
+
 // MARK: - UIPageViewControllerDataSource
 
 extension ShioriViewController: UIPageViewControllerDataSource {
