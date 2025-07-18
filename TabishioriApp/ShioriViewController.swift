@@ -86,6 +86,7 @@ final class ShioriViewController: UIViewController {
     @objc func editButtonTapped() {
         
     }
+    
     /// 戻るボタンをタップ
     @objc func backButtonTapped() {
         navigationController?.popViewController(animated: true)
