@@ -114,8 +114,8 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PDFへ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X4l-5S-uDS">
-                                    <rect key="frame" x="49.666666666666686" y="77" width="32" height="12"/>
-                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="10"/>
+                                    <rect key="frame" x="50.000000000000007" y="77" width="31.333333333333336" height="12"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
