@@ -34,7 +34,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="持ち物リスト" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7GB-tj-q96">
-                                    <rect key="frame" x="37" y="77" width="60" height="14"/>
+                                    <rect key="frame" x="35.666666666666657" y="77" width="60" height="14"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="14" id="Vp5-qq-Zmj"/>
                                         <constraint firstAttribute="width" constant="60" id="o4J-Db-F7x"/>
@@ -63,7 +63,6 @@
                                 <constraint firstItem="phV-nG-1a6" firstAttribute="leading" secondItem="YqP-ks-v0d" secondAttribute="leading" id="Zdu-ur-ERK"/>
                                 <constraint firstItem="7GB-tj-q96" firstAttribute="centerX" secondItem="YqP-ks-v0d" secondAttribute="centerX" id="aQX-Oj-eBa"/>
                                 <constraint firstItem="9ok-jD-moI" firstAttribute="centerX" secondItem="YqP-ks-v0d" secondAttribute="centerX" id="dun-yk-QVn"/>
-                                <constraint firstItem="7GB-tj-q96" firstAttribute="leading" secondItem="YqP-ks-v0d" secondAttribute="leading" constant="37" id="fMD-Pv-q5F"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5gV-3o-zE2">
@@ -77,7 +76,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="予定追加" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GfL-jU-6Nj">
-                                    <rect key="frame" x="44" y="77" width="43" height="12"/>
+                                    <rect key="frame" x="46.666666666666657" y="77" width="37.666666666666657" height="12"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -93,7 +92,6 @@
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstItem="GfL-jU-6Nj" firstAttribute="leading" secondItem="5gV-3o-zE2" secondAttribute="leading" constant="44" id="6PZ-7J-L6v"/>
                                 <constraint firstItem="GfL-jU-6Nj" firstAttribute="centerX" secondItem="5gV-3o-zE2" secondAttribute="centerX" id="Awi-Xx-KYX"/>
                                 <constraint firstItem="LZS-4Z-lko" firstAttribute="centerY" secondItem="5gV-3o-zE2" secondAttribute="centerY" id="OL4-r8-8M0"/>
                                 <constraint firstItem="J9n-6a-bYA" firstAttribute="leading" secondItem="5gV-3o-zE2" secondAttribute="leading" id="Psu-mS-Be3"/>
