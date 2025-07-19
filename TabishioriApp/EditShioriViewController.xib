@@ -369,7 +369,7 @@
                         <constraint firstAttribute="height" constant="28" id="dVB-kk-JMy"/>
                     </constraints>
                     <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" image="ic_LightArrow" title=""/>
+                    <buttonConfiguration key="configuration" style="plain" image="ic_LeftArrow" title=""/>
                     <connections>
                         <action selector="leftArrowButtonTapped:" destination="-1" eventType="touchUpInside" id="ugt-x3-17z"/>
                     </connections>
@@ -409,7 +409,7 @@
         </view>
     </objects>
     <resources>
-        <image name="ic_LightArrow" width="24" height="28"/>
+        <image name="ic_LeftArrow" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
