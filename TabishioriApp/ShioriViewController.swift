@@ -13,7 +13,8 @@ final class ShioriViewController: UIViewController {
     // MARK: - Stored Properties
     
     private let pageViewController: UIPageViewController = {
-        return UIPageViewController(transitionStyle: .scroll,navigationOrientation: .horizontal,
+        return UIPageViewController(transitionStyle: .scroll,
+                                    navigationOrientation: .horizontal,
                                     options: nil)
     }()
     
@@ -63,21 +64,27 @@ final class ShioriViewController: UIViewController {
         pageViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         pageViewController.didMove(toParent: self)
         
-        pageViewController.setViewControllers([pages[0]], direction: .forward,
-                                              animated: false, completion: nil)
+        pageViewController.setViewControllers([pages[0]],
+                                              direction: .forward,
+                                              animated: false,
+                                              completion: nil)
         pageViewController.dataSource = self
     }
     
     private func configureBarButtonItems() {
         // 編集ボタン
-        let editButton = UIBarButtonItem(image: UIImage(named: "ic_edit"),style: .plain,
-                                         target: self,action: #selector(editButtonTapped))
+        let editButton = UIBarButtonItem(image: UIImage(named: "ic_edit"),
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(editButtonTapped))
         editButton.tintColor = UIColor.black
         navigationItem.rightBarButtonItem = editButton
         
         // 戻るボタン
-        let backButton = UIBarButtonItem(image: UIImage(named: "ic_left_arrow"), style: .plain,
-                                         target: self, action: #selector(backButtonTapped))
+        let backButton = UIBarButtonItem(image: UIImage(named: "ic_left_arrow"),
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(backButtonTapped))
         backButton.tintColor = UIColor.black
         navigationItem.leftBarButtonItem = backButton
     }
@@ -97,15 +104,19 @@ final class ShioriViewController: UIViewController {
 
 extension ShioriViewController: UIPageViewControllerDataSource {
     /// 右にスワイプ（戻る）した場合のメソッド
-    func pageViewController(_ pageViewController: UIPageViewController,
-                            viewControllerBefore viewController: UIViewController) -> UIViewController? {
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        viewControllerBefore viewController: UIViewController
+    ) -> UIViewController? {
         guard let index = pages.firstIndex(of: viewController), index > 0 else { return nil }
         return pages[index - 1]
     }
     
     /// 左にスワイプ（進む）した場合のメソッド
-    func pageViewController(_ pageViewController: UIPageViewController,
-                            viewControllerAfter viewController: UIViewController) -> UIViewController? {
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        viewControllerAfter viewController: UIViewController
+    ) -> UIViewController? {
         guard let index = pages.firstIndex(of: viewController),
               index < pages.count - 1 else { return nil }
         return pages[index + 1]
