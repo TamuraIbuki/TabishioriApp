@@ -25,10 +25,15 @@ final class ShioriContentViewController: UIViewController {
     
     // MARK: - Stored Properties
     
+    /// しおり名ラベル
     private let shioriName: String
+    /// 旅行期間ラベル
     private let dateRange: String
+    /// 日付タイトルラベル
     private let dayTitle: String
+    /// 日数ラベル
     private let day: String
+    /// 合計費用ラベル
     private let totalCost: String
     
     // MARK: - Initializers
