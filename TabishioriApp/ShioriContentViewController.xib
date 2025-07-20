@@ -13,6 +13,7 @@
                 <outlet property="dateRangeLabel" destination="ZXC-5B-A4C" id="9OS-Hu-Bzd"/>
                 <outlet property="dayLabel" destination="ngj-ba-HYX" id="eBY-qR-aUJ"/>
                 <outlet property="dayTitleLabel" destination="mmA-uO-VZU" id="ZLS-GV-Z5P"/>
+                <outlet property="planTableView" destination="tHz-tq-MMb" id="Okb-hY-Yiq"/>
                 <outlet property="shioriNameLabel" destination="Wgg-b3-jzh" id="OMC-pj-Y7g"/>
                 <outlet property="totalCostLabel" destination="ioo-gd-67V" id="MJh-Hy-RbO"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -47,6 +48,10 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tHz-tq-MMb">
+                    <rect key="frame" x="18" y="258" width="371" height="471"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WDu-5x-Z0c">
                     <rect key="frame" x="239" y="739" width="150" height="36"/>
                     <subviews>
@@ -80,13 +85,17 @@
                 <constraint firstItem="ngj-ba-HYX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="119" id="5lF-yS-IbN"/>
                 <constraint firstItem="mmA-uO-VZU" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="AdI-2U-7JJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="WDu-5x-Z0c" secondAttribute="trailing" constant="4" id="CiY-sL-KXL"/>
+                <constraint firstItem="tHz-tq-MMb" firstAttribute="top" secondItem="ngj-ba-HYX" secondAttribute="bottom" id="MY8-cK-laa"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tHz-tq-MMb" secondAttribute="trailing" constant="4" id="V3r-YF-XO1"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ZXC-5B-A4C" secondAttribute="trailing" constant="13" id="XgG-tD-jRu"/>
                 <constraint firstItem="mmA-uO-VZU" firstAttribute="top" secondItem="ZXC-5B-A4C" secondAttribute="bottom" constant="32" id="byr-SR-v9g"/>
+                <constraint firstItem="tHz-tq-MMb" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="18" id="gl0-af-hbM"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="WDu-5x-Z0c" secondAttribute="bottom" constant="9" id="hHf-o4-guX"/>
                 <constraint firstItem="ZXC-5B-A4C" firstAttribute="top" secondItem="Wgg-b3-jzh" secondAttribute="bottom" id="him-ea-5UY"/>
+                <constraint firstItem="WDu-5x-Z0c" firstAttribute="top" secondItem="tHz-tq-MMb" secondAttribute="bottom" constant="10" id="lxW-mf-Jek"/>
                 <constraint firstItem="Wgg-b3-jzh" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="rkD-Iu-puv"/>
             </constraints>
-            <point key="canvasLocation" x="91" y="-12"/>
+            <point key="canvasLocation" x="90.839694656488547" y="-12.67605633802817"/>
         </view>
     </objects>
     <resources>
