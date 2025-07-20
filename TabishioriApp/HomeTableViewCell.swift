@@ -33,7 +33,7 @@ final class HomeTableViewCell: UITableViewCell {
         dateLabel.text = wrappedDate
         
         // 背景色
-        contentView.backgroundColor = UIColor(hex: "#FF9D00", alpha: 0.3)
+        contentView.backgroundColor = UIColor(hex: "#F9D293")
         
         // ストローク用
         let strokeAttributes: [NSAttributedString.Key: Any] = [

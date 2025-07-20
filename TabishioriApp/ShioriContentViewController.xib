@@ -16,6 +16,7 @@
                 <outlet property="planTableView" destination="tHz-tq-MMb" id="Okb-hY-Yiq"/>
                 <outlet property="shioriNameLabel" destination="Wgg-b3-jzh" id="OMC-pj-Y7g"/>
                 <outlet property="totalCostLabel" destination="ioo-gd-67V" id="MJh-Hy-RbO"/>
+                <outlet property="totalCostView" destination="WDu-5x-Z0c" id="31P-ma-teX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -53,10 +54,10 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WDu-5x-Z0c">
-                    <rect key="frame" x="239" y="739" width="150" height="36"/>
+                    <rect key="frame" x="327.66666666666669" y="739" width="61.333333333333314" height="36"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioo-gd-67V">
-                            <rect key="frame" x="54" y="7.6666666666666305" width="42" height="20.666666666666671"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioo-gd-67V">
+                            <rect key="frame" x="10" y="7.6666666666666305" width="41.333333333333336" height="20.666666666666671"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -67,8 +68,9 @@
                         <constraint firstItem="ioo-gd-67V" firstAttribute="top" secondItem="WDu-5x-Z0c" secondAttribute="top" constant="7.6666666666666288" id="61g-Rj-lMA"/>
                         <constraint firstAttribute="height" constant="36" id="DKY-0Z-Xdg"/>
                         <constraint firstItem="ioo-gd-67V" firstAttribute="centerY" secondItem="WDu-5x-Z0c" secondAttribute="centerY" id="PTv-Pt-Szg"/>
-                        <constraint firstAttribute="width" constant="150" id="gjW-zc-1Qj"/>
                         <constraint firstItem="ioo-gd-67V" firstAttribute="centerX" secondItem="WDu-5x-Z0c" secondAttribute="centerX" id="hHR-lC-oce"/>
+                        <constraint firstAttribute="trailing" secondItem="ioo-gd-67V" secondAttribute="trailing" constant="10" id="kuX-VA-0kf"/>
+                        <constraint firstItem="ioo-gd-67V" firstAttribute="leading" secondItem="WDu-5x-Z0c" secondAttribute="leading" constant="10" id="sL1-Mo-ZZ2"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
