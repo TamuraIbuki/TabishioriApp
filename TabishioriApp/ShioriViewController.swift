@@ -18,14 +18,19 @@ final class ShioriViewController: UIViewController {
                                     options: nil)
     }()
     
-    private let pages: [UIViewController] = {
-        let VC = UIViewController()
-        VC.view.backgroundColor = UIColor(hex: "#FF9D00", alpha: 0.4)
-        return [VC]
-    }()
-    
+    private var pages: [UIViewController] = []
     private var currentIndex = 0
     
+    struct ShioriPageData {
+        let dayTitle: String
+        let day: String
+    }
+    
+    // しおり仮データ
+    let commonShioriName = "マレーシア旅行"
+    let commonDateRange = "2025.6.23〜2025.6.28"
+    let commonTotalCost = "合計費用：¥120,000"
+   
     // MARK: - IBOutlets
     
     /// 中央のビュー
@@ -37,6 +42,7 @@ final class ShioriViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configurePages()
         setupPageViewController()
         configureBarButtonItems()
     }
@@ -98,10 +104,46 @@ final class ShioriViewController: UIViewController {
     @objc func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
+    
+    /// 日付仮データ
+    private func configurePages() {
+        let pagesDataList: [ShioriPageData] = [
+            ShioriPageData(dayTitle: "～1日目～", day: "6月23日"),
+            ShioriPageData(dayTitle: "～2日目～", day: "6月24日"),
+            ShioriPageData(dayTitle: "～3日目～", day: "6月25日")
+        ]
+
+        // データを格納
+        self.pages = pagesDataList.map { data in
+            makeContentVC(
+                shioriName: commonShioriName,
+                dateRange: commonDateRange,
+                dayTitle: data.dayTitle,
+                day: data.day,
+                totalCost: commonTotalCost
+            )
+        }
+    }
+    
+    private func makeContentVC(
+        shioriName: String,
+        dateRange: String,
+        dayTitle: String,
+        day: String,
+        totalCost: String
+    ) -> ShioriContentViewController {
+        return ShioriContentViewController(
+            shioriName: shioriName,
+            dateRange: dateRange,
+            dayTitle: dayTitle,
+            day: day,
+            totalCost: totalCost
+        )
+    }
 }
-
-// MARK: - UIPageViewControllerDataSource
-
+    
+    // MARK: - UIPageViewControllerDataSource
+    
 extension ShioriViewController: UIPageViewControllerDataSource {
     /// 右にスワイプ（戻る）した場合のメソッド
     func pageViewController(

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShioriContentViewController" customModule="TabishioriApp" customModuleProvider="target">
+            <connections>
+                <outlet property="dateRangeLabel" destination="ZXC-5B-A4C" id="9OS-Hu-Bzd"/>
+                <outlet property="dayLabel" destination="ngj-ba-HYX" id="eBY-qR-aUJ"/>
+                <outlet property="dayTitleLabel" destination="mmA-uO-VZU" id="ZLS-GV-Z5P"/>
+                <outlet property="planTableView" destination="tHz-tq-MMb" id="Okb-hY-Yiq"/>
+                <outlet property="shioriNameLabel" destination="Wgg-b3-jzh" id="OMC-pj-Y7g"/>
+                <outlet property="totalCostLabel" destination="ioo-gd-67V" id="MJh-Hy-RbO"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="マレーシア旅行" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgg-b3-jzh">
+                    <rect key="frame" x="91.666666666666671" y="117.99999999999999" width="209.66666666666663" height="38.333333333333329"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2025.6.23~2025.6.28" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZXC-5B-A4C">
+                    <rect key="frame" x="231" y="156.33333333333334" width="149" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="~1日目~" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mmA-uO-VZU">
+                    <rect key="frame" x="152" y="206.33333333333334" width="89.333333333333314" height="28.666666666666657"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6月23日" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngj-ba-HYX">
+                    <rect key="frame" x="29.999999999999993" y="237" width="68.333333333333314" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tHz-tq-MMb">
+                    <rect key="frame" x="18" y="258" width="371" height="471"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WDu-5x-Z0c">
+                    <rect key="frame" x="239" y="739" width="150" height="36"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioo-gd-67V">
+                            <rect key="frame" x="54" y="7.6666666666666305" width="42" height="20.666666666666671"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="ioo-gd-67V" firstAttribute="top" secondItem="WDu-5x-Z0c" secondAttribute="top" constant="7.6666666666666288" id="61g-Rj-lMA"/>
+                        <constraint firstAttribute="height" constant="36" id="DKY-0Z-Xdg"/>
+                        <constraint firstItem="ioo-gd-67V" firstAttribute="centerY" secondItem="WDu-5x-Z0c" secondAttribute="centerY" id="PTv-Pt-Szg"/>
+                        <constraint firstAttribute="width" constant="150" id="gjW-zc-1Qj"/>
+                        <constraint firstItem="ioo-gd-67V" firstAttribute="centerX" secondItem="WDu-5x-Z0c" secondAttribute="centerX" id="hHR-lC-oce"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="Wgg-b3-jzh" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="0Tx-Gq-CYv"/>
+                <constraint firstItem="ngj-ba-HYX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="5Of-rS-txW"/>
+                <constraint firstItem="ngj-ba-HYX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="119" id="5lF-yS-IbN"/>
+                <constraint firstItem="mmA-uO-VZU" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="AdI-2U-7JJ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="WDu-5x-Z0c" secondAttribute="trailing" constant="4" id="CiY-sL-KXL"/>
+                <constraint firstItem="tHz-tq-MMb" firstAttribute="top" secondItem="ngj-ba-HYX" secondAttribute="bottom" id="MY8-cK-laa"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tHz-tq-MMb" secondAttribute="trailing" constant="4" id="V3r-YF-XO1"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ZXC-5B-A4C" secondAttribute="trailing" constant="13" id="XgG-tD-jRu"/>
+                <constraint firstItem="mmA-uO-VZU" firstAttribute="top" secondItem="ZXC-5B-A4C" secondAttribute="bottom" constant="32" id="byr-SR-v9g"/>
+                <constraint firstItem="tHz-tq-MMb" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="18" id="gl0-af-hbM"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="WDu-5x-Z0c" secondAttribute="bottom" constant="9" id="hHf-o4-guX"/>
+                <constraint firstItem="ZXC-5B-A4C" firstAttribute="top" secondItem="Wgg-b3-jzh" secondAttribute="bottom" id="him-ea-5UY"/>
+                <constraint firstItem="WDu-5x-Z0c" firstAttribute="top" secondItem="tHz-tq-MMb" secondAttribute="bottom" constant="10" id="lxW-mf-Jek"/>
+                <constraint firstItem="Wgg-b3-jzh" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="rkD-Iu-puv"/>
+            </constraints>
+            <point key="canvasLocation" x="90.839694656488547" y="-12.67605633802817"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
