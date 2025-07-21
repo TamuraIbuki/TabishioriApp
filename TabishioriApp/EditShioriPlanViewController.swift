@@ -13,19 +13,19 @@ final class EditShioriPlanViewController: UIViewController {
     // MARK: - IBOutlets
     
     /// しおり名ラベル
-    @IBOutlet weak var shioriNameLabel: UILabel!
+    @IBOutlet private weak var shioriNameLabel: UILabel!
     /// 旅行期間ラベル
-    @IBOutlet weak var dateRangeLabel: UILabel!
+    @IBOutlet private weak var dateRangeLabel: UILabel!
     /// 日数タイトルラベル
-    @IBOutlet weak var dayTitleLabel: UILabel!
+    @IBOutlet private weak var dayTitleLabel: UILabel!
     /// 日付ラベル
-    @IBOutlet weak var dayLabel: UILabel!
+    @IBOutlet private weak var dayLabel: UILabel!
     /// 合計費用ラベル
-    @IBOutlet weak var totalCostLabel: UILabel!
+    @IBOutlet private weak var totalCostLabel: UILabel!
     /// 合計費用ビュー
-    @IBOutlet weak var totalCostView: UIView!
+    @IBOutlet private weak var totalCostView: UIView!
     /// 予定一覧テーブルビュー
-    @IBOutlet weak var planTableView: UITableView!
+    @IBOutlet private weak var planTableView: UITableView!
     
     // MARK: - View Life-Cycle Methods
     
