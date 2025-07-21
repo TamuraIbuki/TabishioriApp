@@ -32,7 +32,7 @@ final class EditShioriPlanViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
-        setupLabels()
+        setupUI()
     }
     
     // MARK: - IBActions
@@ -74,7 +74,7 @@ final class EditShioriPlanViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    private func setupLabels() {
+    private func setupUI() {
         // 枠線
         totalCostView.layer.borderColor = UIColor.black.cgColor
         totalCostView.layer.borderWidth = 1.0

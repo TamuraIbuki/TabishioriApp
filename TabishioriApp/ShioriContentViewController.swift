@@ -59,12 +59,12 @@ final class ShioriContentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLabels()
+        setupUI()
     }
     
     // MARK: - Other Methods
     
-    private func setupLabels() {
+    private func setupUI() {
         shioriNameLabel.text = shioriName
         dateRangeLabel.text = dateRange
         dayTitleLabel.text = dayTitle
