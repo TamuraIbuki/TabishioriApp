@@ -73,7 +73,6 @@ final class ShioriContentViewController: UIViewController {
         
         // 背景色
         view.backgroundColor = UIColor(hex: "#F9D293")
-        planTableView.backgroundColor = .clear
         totalCostView.layer.borderColor = UIColor.black.cgColor
         totalCostView.layer.borderWidth = 1.0
         

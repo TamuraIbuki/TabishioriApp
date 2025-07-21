@@ -77,7 +77,6 @@ final class EditShioriPlanViewController: UIViewController {
     private func setupLabels() {
         // 背景色
         view.backgroundColor = UIColor(hex: "F9D293")
-        planTableView.backgroundColor = .clear
         totalCostView.layer.borderColor = UIColor.black.cgColor
         totalCostView.layer.borderWidth = 1.0
         
