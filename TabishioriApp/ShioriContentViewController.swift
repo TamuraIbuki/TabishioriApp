@@ -71,8 +71,7 @@ final class ShioriContentViewController: UIViewController {
         dayLabel.text = day
         totalCostLabel.text = totalCost
         
-        // 背景色
-        view.backgroundColor = UIColor(hex: "#F9D293")
+        // 枠線
         totalCostView.layer.borderColor = UIColor.black.cgColor
         totalCostView.layer.borderWidth = 1.0
         

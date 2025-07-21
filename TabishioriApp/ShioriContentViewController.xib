@@ -80,7 +80,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" red="0.97647058823529409" green="0.82352941176470584" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="Wgg-b3-jzh" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="0Tx-Gq-CYv"/>
                 <constraint firstItem="ngj-ba-HYX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="5Of-rS-txW"/>
