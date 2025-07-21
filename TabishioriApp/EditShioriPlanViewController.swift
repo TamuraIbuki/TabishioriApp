@@ -31,7 +31,7 @@ final class EditShioriPlanViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureBarButtonItems()
+        configureNavigationBar()
         setupLabels()
     }
     
@@ -43,7 +43,7 @@ final class EditShioriPlanViewController: UIViewController {
     
     // MARK: - Other Methods
     
-    private func configureBarButtonItems() {
+    private func configureNavigationBar() {
         // 閉じるボタン
         let closeButton = UIBarButtonItem(title: "×",
                                           style: .plain,
