@@ -38,7 +38,7 @@ final class EditShioriPlanViewController: UIViewController {
     // MARK: - IBActions
     
     /// しおり編集ボタンをタップ
-    @IBAction func shioriEditButtonTapped(_ sender: Any) {
+    @IBAction private func shioriEditButtonTapped(_ sender: Any) {
     }
     
     // MARK: - Other Methods
