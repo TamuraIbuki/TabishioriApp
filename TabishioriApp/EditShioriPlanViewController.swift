@@ -8,7 +8,7 @@
 import UIKit
 
 /// しおり予定編集画面
-class EditShioriPlanViewController: UIViewController {
+final class EditShioriPlanViewController: UIViewController {
 
     // MARK: - IBOutlets
     
