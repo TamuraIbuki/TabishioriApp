@@ -45,7 +45,7 @@ final class EditShioriPlanViewController: UIViewController {
     
     private func configureNavigationBar() {
         // 閉じるボタン
-        let closeButton = UIBarButtonItem(title: "×",
+        let closeButton = UIBarButtonItem(image: UIImage(named: "ic_close"),
                                           style: .plain,
                                           target: self,
                                           action: #selector(closeButtonTapped))
