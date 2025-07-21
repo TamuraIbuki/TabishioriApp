@@ -23,9 +23,9 @@ final class ShioriContentViewController: UIViewController {
     /// 合計費用ラベル
     @IBOutlet private weak var totalCostLabel: UILabel!
     /// 合計費用ビュー
-    @IBOutlet weak var totalCostView: UIView!
+    @IBOutlet private weak var totalCostView: UIView!
     /// 予定一覧テーブルビュー
-    @IBOutlet weak var planTableView: UITableView!
+    @IBOutlet private weak var planTableView: UITableView!
     
     // MARK: - Stored Properties
     
