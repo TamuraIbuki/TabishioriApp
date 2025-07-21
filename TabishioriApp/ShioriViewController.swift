@@ -97,7 +97,9 @@ final class ShioriViewController: UIViewController {
     
     /// 編集ボタンをタップ
     @objc func editButtonTapped() {
-        
+        let editVC = EditShioriPlanViewController()
+        let navVC = UINavigationController(rootViewController: editVC)
+        present(navVC, animated: true, completion: nil)
     }
     
     /// 戻るボタンをタップ

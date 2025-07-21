@@ -16,6 +16,7 @@
                 <outlet property="planTableView" destination="tHz-tq-MMb" id="Okb-hY-Yiq"/>
                 <outlet property="shioriNameLabel" destination="Wgg-b3-jzh" id="OMC-pj-Y7g"/>
                 <outlet property="totalCostLabel" destination="ioo-gd-67V" id="MJh-Hy-RbO"/>
+                <outlet property="totalCostView" destination="WDu-5x-Z0c" id="31P-ma-teX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -50,13 +51,13 @@
                 </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tHz-tq-MMb">
                     <rect key="frame" x="18" y="258" width="371" height="471"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WDu-5x-Z0c">
-                    <rect key="frame" x="239" y="739" width="150" height="36"/>
+                    <rect key="frame" x="327.66666666666669" y="739" width="61.333333333333314" height="36"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioo-gd-67V">
-                            <rect key="frame" x="54" y="7.6666666666666305" width="42" height="20.666666666666671"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioo-gd-67V">
+                            <rect key="frame" x="10" y="7.6666666666666305" width="41.333333333333336" height="20.666666666666671"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -67,8 +68,9 @@
                         <constraint firstItem="ioo-gd-67V" firstAttribute="top" secondItem="WDu-5x-Z0c" secondAttribute="top" constant="7.6666666666666288" id="61g-Rj-lMA"/>
                         <constraint firstAttribute="height" constant="36" id="DKY-0Z-Xdg"/>
                         <constraint firstItem="ioo-gd-67V" firstAttribute="centerY" secondItem="WDu-5x-Z0c" secondAttribute="centerY" id="PTv-Pt-Szg"/>
-                        <constraint firstAttribute="width" constant="150" id="gjW-zc-1Qj"/>
                         <constraint firstItem="ioo-gd-67V" firstAttribute="centerX" secondItem="WDu-5x-Z0c" secondAttribute="centerX" id="hHR-lC-oce"/>
+                        <constraint firstAttribute="trailing" secondItem="ioo-gd-67V" secondAttribute="trailing" constant="10" id="kuX-VA-0kf"/>
+                        <constraint firstItem="ioo-gd-67V" firstAttribute="leading" secondItem="WDu-5x-Z0c" secondAttribute="leading" constant="10" id="sL1-Mo-ZZ2"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -78,7 +80,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" red="0.97647058823529409" green="0.82352941176470584" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="Wgg-b3-jzh" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="0Tx-Gq-CYv"/>
                 <constraint firstItem="ngj-ba-HYX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="5Of-rS-txW"/>

@@ -22,8 +22,10 @@ final class ShioriContentViewController: UIViewController {
     @IBOutlet private weak var dayLabel: UILabel!
     /// 合計費用ラベル
     @IBOutlet private weak var totalCostLabel: UILabel!
+    /// 合計費用ビュー
+    @IBOutlet private weak var totalCostView: UIView!
     /// 予定一覧テーブルビュー
-    @IBOutlet weak var planTableView: UITableView!
+    @IBOutlet private weak var planTableView: UITableView!
     
     // MARK: - Stored Properties
     
@@ -57,19 +59,21 @@ final class ShioriContentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLabels()
+        setupUI()
     }
     
     // MARK: - Other Methods
     
-    private func setupLabels() {
+    private func setupUI() {
         shioriNameLabel.text = shioriName
         dateRangeLabel.text = dateRange
         dayTitleLabel.text = dayTitle
         dayLabel.text = day
         totalCostLabel.text = totalCost
-        view.backgroundColor = UIColor(hex: "#FF9D00", alpha: 0.4)
-        planTableView.backgroundColor = .clear
+        
+        // 枠線
+        totalCostView.layer.borderColor = UIColor.black.cgColor
+        totalCostView.layer.borderWidth = 1.0
         
         // フォントを適用
         shioriNameLabel.font = .setFontZenMaruGothic(size: 32)
