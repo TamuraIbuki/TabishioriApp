@@ -102,7 +102,6 @@ final class ShioriPlanTableViewCell: UITableViewCell {
             planImageView.isHidden = true
             planImageHeightConstraint.constant = 0
             
-            layoutIfNeeded()
         }
     }
     
