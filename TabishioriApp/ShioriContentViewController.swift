@@ -108,10 +108,6 @@ final class ShioriContentViewController: UIViewController {
         dayTitleLabel.font = .setFontZenMaruGothic(size: 24)
         dayLabel.font = .setFontZenMaruGothic(size: 18)
         totalCostLabel.font = .setFontZenMaruGothic(size: 13)
-        
-        // テーブルビューの高さ設定
-        planTableView.rowHeight = UITableView.automaticDimension
-        planTableView.estimatedRowHeight = 100
     }
     
     func configureTableView() {
@@ -137,6 +133,11 @@ extension ShioriContentViewController: UITableViewDataSource {
         else {
             return UITableViewCell()
         }
+        
+        // テーブルビューの高さ設定
+        planTableView.rowHeight = UITableView.automaticDimension
+        planTableView.estimatedRowHeight = 100
+        
         // セルに渡す処理
         let item = scheduleItem[indexPath.row]
         cell.configurePlan(with: item)
