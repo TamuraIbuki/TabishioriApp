@@ -85,8 +85,6 @@ final class ShioriContentViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         configureTableView()
-        
-        planTableView.dataSource = self
     }
     
     // MARK: - Other Methods
@@ -111,6 +109,7 @@ final class ShioriContentViewController: UIViewController {
     }
     
     func configureTableView() {
+        planTableView.dataSource = self
         // カスタムセルを登録
         let nib = UINib(nibName: "ShioriPlanTableViewCell", bundle: nil)
         planTableView.register(nib, forCellReuseIdentifier: "ShioriPlanTableViewCellID")
