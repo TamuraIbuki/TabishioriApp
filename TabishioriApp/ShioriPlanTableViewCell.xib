@@ -130,6 +130,7 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="checkBoxButton" destination="2ns-is-Ye0" id="qAi-of-r08"/>
                 <outlet property="costLabel" destination="Kvs-m2-4OW" id="fNB-WG-OdJ"/>
