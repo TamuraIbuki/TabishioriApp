@@ -113,6 +113,10 @@ final class ShioriContentViewController: UIViewController {
         // カスタムセルを登録
         let nib = UINib(nibName: "ShioriPlanTableViewCell", bundle: nil)
         planTableView.register(nib, forCellReuseIdentifier: "ShioriPlanTableViewCellID")
+        
+        // テーブルビューの高さ設定
+        planTableView.rowHeight = UITableView.automaticDimension
+        planTableView.estimatedRowHeight = 100
     }
 }
 
@@ -132,10 +136,6 @@ extension ShioriContentViewController: UITableViewDataSource {
         else {
             return UITableViewCell()
         }
-        
-        // テーブルビューの高さ設定
-        planTableView.rowHeight = UITableView.automaticDimension
-        planTableView.estimatedRowHeight = 100
         
         // セルに渡す処理
         let item = scheduleItem[indexPath.row]
