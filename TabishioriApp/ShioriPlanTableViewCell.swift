@@ -10,6 +10,18 @@ import UIKit
 /// しおり予定セル
 final class ShioriPlanTableViewCell: UITableViewCell {
     
+    // MARK: - Structs
+    
+    struct ScheduleItem {
+        let startTime: String?
+        let endTime: String?
+        let plan: String
+        let isReserved: Bool
+        let cost: Int?
+        let hasURL: Bool
+        let hasImage: Bool
+    }
+    
     // MARK: - IBOutlets
     
     /// 開始時間ラベル
@@ -32,18 +44,6 @@ final class ShioriPlanTableViewCell: UITableViewCell {
     @IBOutlet private weak var planImageView: UIImageView!
     /// 予定イメージビューの高さ設定
     @IBOutlet private weak var planImageHeightConstraint: NSLayoutConstraint!
-    
-    // MARK: - Structs
-    
-    struct ScheduleItem {
-        let startTime: String?
-        let endTime: String?
-        let plan: String
-        let isReserved: Bool
-        let cost: Int?
-        let hasURL: Bool
-        let hasImage: Bool
-    }
     
     // MARK: - IBActions
     

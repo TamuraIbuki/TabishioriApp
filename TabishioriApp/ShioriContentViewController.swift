@@ -10,23 +10,6 @@ import UIKit
 /// しおりの中身の画面
 final class ShioriContentViewController: UIViewController {
     
-    // MARK: - IBOutlets
-    
-    /// しおり名ラベル
-    @IBOutlet private weak var shioriNameLabel: UILabel!
-    /// 旅行期間ラベル
-    @IBOutlet private weak var dateRangeLabel: UILabel!
-    /// 日付タイトルラベル
-    @IBOutlet private weak var dayTitleLabel: UILabel!
-    /// 日数ラベル
-    @IBOutlet private weak var dayLabel: UILabel!
-    /// 合計費用ラベル
-    @IBOutlet private weak var totalCostLabel: UILabel!
-    /// 合計費用ビュー
-    @IBOutlet private weak var totalCostView: UIView!
-    /// 予定一覧テーブルビュー
-    @IBOutlet private weak var planTableView: UITableView!
-    
     // MARK: - Stored Properties
     
     /// しおり名ラベル
@@ -64,6 +47,24 @@ final class ShioriContentViewController: UIViewController {
               hasImage: false)
         ]
     
+    // MARK: - IBOutlets
+    
+    /// しおり名ラベル
+    @IBOutlet private weak var shioriNameLabel: UILabel!
+    /// 旅行期間ラベル
+    @IBOutlet private weak var dateRangeLabel: UILabel!
+    /// 日付タイトルラベル
+    @IBOutlet private weak var dayTitleLabel: UILabel!
+    /// 日数ラベル
+    @IBOutlet private weak var dayLabel: UILabel!
+    /// 合計費用ラベル
+    @IBOutlet private weak var totalCostLabel: UILabel!
+    /// 合計費用ビュー
+    @IBOutlet private weak var totalCostView: UIView!
+    /// 予定一覧テーブルビュー
+    @IBOutlet private weak var planTableView: UITableView!
+    
+
     // MARK: - Initializers
     
     init(shioriName: String, dateRange: String, dayTitle: String, day: String, totalCost: String) {
