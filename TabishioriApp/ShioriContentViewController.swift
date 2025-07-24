@@ -8,7 +8,7 @@
 import UIKit
 
 /// しおりの中身の画面
-final class ShioriContentViewController: UIViewController, UITableViewDelegate {
+final class ShioriContentViewController: UIViewController {
     
     // MARK: - IBOutlets
     
@@ -86,7 +86,6 @@ final class ShioriContentViewController: UIViewController, UITableViewDelegate {
         setupUI()
         configureTableView()
         
-        planTableView.delegate = self
         planTableView.dataSource = self
     }
     
