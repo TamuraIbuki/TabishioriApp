@@ -10,6 +10,13 @@ import UIKit
 /// しおり画面
 final class ShioriViewController: UIViewController {
     
+    // MARK: - Structs
+    
+    struct ShioriPageData {
+        let dayTitle: String
+        let day: String
+    }
+    
     // MARK: - Stored Properties
     
     private let pageViewController: UIPageViewController = {
@@ -20,11 +27,6 @@ final class ShioriViewController: UIViewController {
     
     private var pages: [UIViewController] = []
     private var currentIndex = 0
-    
-    struct ShioriPageData {
-        let dayTitle: String
-        let day: String
-    }
     
     // しおり仮データ
     let commonShioriName = "マレーシア旅行"

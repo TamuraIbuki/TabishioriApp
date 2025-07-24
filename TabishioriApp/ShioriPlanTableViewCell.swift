@@ -33,7 +33,7 @@ final class ShioriPlanTableViewCell: UITableViewCell {
     /// 予定イメージビューの高さ設定
     @IBOutlet private weak var planImageHeightConstraint: NSLayoutConstraint!
     
-    // MARK: - Stored Properties
+    // MARK: - Structs
     
     struct ScheduleItem {
         let startTime: String?
