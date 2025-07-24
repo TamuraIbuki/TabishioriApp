@@ -60,6 +60,7 @@ final class ShioriPlanTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setupUI()
     }
     
     /// 予定情報の表示
