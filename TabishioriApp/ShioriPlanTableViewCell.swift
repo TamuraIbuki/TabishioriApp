@@ -10,7 +10,6 @@ import UIKit
 /// しおり予定セル
 final class ShioriPlanTableViewCell: UITableViewCell {
     
-    
     // MARK: - IBOutlets
     
     /// 開始時間ラベル
