@@ -10,6 +10,43 @@ import UIKit
 /// しおりの中身の画面
 final class ShioriContentViewController: UIViewController {
     
+    // MARK: - Stored Properties
+    
+    /// しおり名ラベル
+    private let shioriName: String
+    /// 旅行期間ラベル
+    private let dateRange: String
+    /// 日付タイトルラベル
+    private let dayTitle: String
+    /// 日数ラベル
+    private let day: String
+    /// 合計費用ラベル
+    private let totalCost: String
+    /// 仮予定データ
+    private var scheduleItem: [ShioriPlanTableViewCell.ScheduleItem] = [
+        .init(startTime: "8:00",
+              endTime: "16:00",
+              plan: "飛行機でマレーシアに移動",
+              isReserved: true,
+              cost: 15000,
+              hasURL: true,
+              hasImage: true),
+        .init(startTime: "17:00",
+              endTime: nil,
+              plan: "色鮮やかな寺院とナイトマーケット巡りをする",
+              isReserved: false,
+              cost: nil,
+              hasURL: false,
+              hasImage: false),
+        .init(startTime: "19:00",
+              endTime: "20:00",
+              plan: "ホテルチェックイン",
+              isReserved: false,
+              cost: 8000,
+              hasURL: true,
+              hasImage: false)
+        ]
+    
     // MARK: - IBOutlets
     
     /// しおり名ラベル
@@ -27,19 +64,7 @@ final class ShioriContentViewController: UIViewController {
     /// 予定一覧テーブルビュー
     @IBOutlet private weak var planTableView: UITableView!
     
-    // MARK: - Stored Properties
-    
-    /// しおり名ラベル
-    private let shioriName: String
-    /// 旅行期間ラベル
-    private let dateRange: String
-    /// 日付タイトルラベル
-    private let dayTitle: String
-    /// 日数ラベル
-    private let day: String
-    /// 合計費用ラベル
-    private let totalCost: String
-    
+
     // MARK: - Initializers
     
     init(shioriName: String, dateRange: String, dayTitle: String, day: String, totalCost: String) {
@@ -60,6 +85,7 @@ final class ShioriContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        configureTableView()
     }
     
     // MARK: - Other Methods
@@ -81,5 +107,40 @@ final class ShioriContentViewController: UIViewController {
         dayTitleLabel.font = .setFontZenMaruGothic(size: 24)
         dayLabel.font = .setFontZenMaruGothic(size: 18)
         totalCostLabel.font = .setFontZenMaruGothic(size: 13)
+    }
+    
+    func configureTableView() {
+        planTableView.dataSource = self
+        // カスタムセルを登録
+        let nib = UINib(nibName: "ShioriPlanTableViewCell", bundle: nil)
+        planTableView.register(nib, forCellReuseIdentifier: "ShioriPlanTableViewCellID")
+        
+        // テーブルビューの高さ設定
+        planTableView.rowHeight = UITableView.automaticDimension
+        planTableView.estimatedRowHeight = 100
+    }
+}
+
+// MARK: - Extentions
+
+extension ShioriContentViewController: UITableViewDataSource {
+    /// セルの数
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return scheduleItem.count
+    }
+    
+    /// セルを設定
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // カスタムセルを指定
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShioriPlanTableViewCellID",
+                                                       for: indexPath)as? ShioriPlanTableViewCell
+        else {
+            return UITableViewCell()
+        }
+        
+        // セルに渡す処理
+        let item = scheduleItem[indexPath.row]
+        cell.configurePlan(with: item)
+        return cell
     }
 }
