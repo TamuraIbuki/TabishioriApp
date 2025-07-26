@@ -50,6 +50,8 @@ final class CreateShioriPlanViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupFont()
+        configureTextField()
+        configureTextView()
     }
     
     // MARK: - IBActions
@@ -115,7 +117,7 @@ final class CreateShioriPlanViewController: UIViewController {
             planTextView,
             costTextField,
             urlTextField
-            ]
+        ]
         
         textFieldLineSet.forEach { view in
             view.layer.borderColor = borderColor
@@ -123,5 +125,40 @@ final class CreateShioriPlanViewController: UIViewController {
             view.layer.cornerRadius = cornerRadius
             view.layer.masksToBounds = true
         }
+    }
+    
+    private func configureTextField() {
+        [dateTextField, startTimeTextField, endTimeTextField, costTextField, urlTextField].forEach {
+            $0?.delegate = self
+        }
+    }
+    
+    private func configureTextView() {
+        planTextView.delegate = self
+    }
+}
+
+// MARK: - Extensions
+
+extension CreateShioriPlanViewController: UITextFieldDelegate {
+    /// returnキーを押された時のメソッド
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // キーボードを閉じる
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+extension CreateShioriPlanViewController: UITextViewDelegate {
+    /// returnキーを押された時のメソッド
+    func textView(_ textView: UITextView,
+                  shouldChangeTextIn range: NSRange,
+                  replacementText text: String) -> Bool {
+        if text == "\n" {
+            // キーボードを閉じる
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
 }
