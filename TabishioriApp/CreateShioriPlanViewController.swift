@@ -32,8 +32,18 @@ final class CreateShioriPlanViewController: UIViewController {
     @IBOutlet private weak var insertImageButton: UIButton!
     /// 追加ボタン
     @IBOutlet private weak var addButton: UIButton!
+    /// 日付記入欄
+    @IBOutlet private weak var dateTextField: UITextField!
+    /// 開始時間記入欄
+    @IBOutlet private weak var startTimeTextField: UITextField!
+    /// 終了時間記入欄
+    @IBOutlet private weak var endTimeTextField: UITextField!
     /// 予定内容記入欄
-    @IBOutlet weak var planTextView: UITextView!
+    @IBOutlet private weak var planTextView: UITextView!
+    /// 費用記入欄
+    @IBOutlet private weak var costTextField: UITextField!
+    /// URL記入欄
+    @IBOutlet private weak var urlTextField: UITextField!
     
     // MARK: - View Life-Cycle Methods
     

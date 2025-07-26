@@ -12,15 +12,20 @@
             <connections>
                 <outlet property="addButton" destination="h6g-h1-0Ny" id="gya-0h-ubC"/>
                 <outlet property="costLabel" destination="cQY-mj-OqS" id="eSj-Y4-ZpW"/>
+                <outlet property="costTextField" destination="O08-qB-Fg6" id="eHP-RH-B8u"/>
                 <outlet property="dateLabel" destination="Rbx-uK-GOb" id="1QH-xQ-vfB"/>
+                <outlet property="dateTextField" destination="r3y-RT-FZn" id="27u-Ku-HEY"/>
                 <outlet property="endTimeLabel" destination="IS1-36-ON3" id="qia-t6-bWJ"/>
+                <outlet property="endTimeTextField" destination="uyu-jS-KXW" id="PJ1-5i-v8b"/>
                 <outlet property="insertImageButton" destination="mWB-bk-1ER" id="K0Q-yS-IdY"/>
                 <outlet property="planLabel" destination="eRf-Ls-eSV" id="WeL-uZ-Gfo"/>
                 <outlet property="planTextView" destination="oT8-xJ-Pn5" id="L7J-mR-fdK"/>
                 <outlet property="reservationLabel" destination="Ce9-Ae-iUE" id="pgM-pQ-EqN"/>
                 <outlet property="startTimeLabel" destination="QlO-Ti-xos" id="osf-LK-m1g"/>
+                <outlet property="startTimeTextField" destination="STe-e6-snH" id="bXF-yN-obE"/>
                 <outlet property="titleLabel" destination="6HB-Vu-boU" id="P55-s4-slO"/>
                 <outlet property="urlLabel" destination="6Yp-Ha-m9l" id="mYo-q9-kWl"/>
+                <outlet property="urlTextField" destination="1BQ-e8-wgK" id="yNy-AK-ssu"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
