@@ -32,6 +32,8 @@ final class CreateShioriPlanViewController: UIViewController {
     @IBOutlet private weak var insertImageButton: UIButton!
     /// 追加ボタン
     @IBOutlet private weak var addButton: UIButton!
+    /// 予定内容記入欄
+    @IBOutlet weak var planTextView: UITextView!
     
     // MARK: - View Life-Cycle Methods
     
