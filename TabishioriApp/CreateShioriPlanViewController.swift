@@ -11,6 +11,7 @@ import UIKit
 final class CreateShioriPlanViewController: UIViewController {
     
     // MARK: - IBOutlets
+    
     /// 新しい予定追加のタイトルラベル
     @IBOutlet private weak var titleLabel: UILabel!
     /// 日付ラベル
