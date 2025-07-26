@@ -41,7 +41,7 @@ final class CreateShioriViewController: UIViewController {
     }
     
     /// クローズボタンをタップ
-    @IBAction private func tapCloseButtonTapped(_ sender: UIButton) {
+    @IBAction private func closeButtonTapped(_ sender: UIButton) {
         // 前の画面に戻る
         dismiss(animated: true, completion: nil)
     }
@@ -91,6 +91,11 @@ final class CreateShioriViewController: UIViewController {
     private func setupFont() {
         // タイトルのフォントを変更
         titleLabel.font = .setFontZenMaruGothic(size: 24)
+        titleLabel.layer.shadowColor = UIColor(white: 0.0, alpha: 0.3).cgColor
+        titleLabel.layer.shadowRadius = 2.0
+        titleLabel.layer.shadowOpacity = 1.0
+        titleLabel.layer.shadowOffset = CGSize(width: 4, height: 4)
+        titleLabel.layer.masksToBounds = false
         // しおり名のフォントを変更
         shioriNameLabel.font = .setFontZenMaruGothic(size: 18)
         // 開始日のフォントを変更

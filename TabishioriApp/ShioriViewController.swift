@@ -57,6 +57,8 @@ final class ShioriViewController: UIViewController {
     
     /// 予定追加ボタンをタップ
     @IBAction private func addPlanButtonTapped(_ sender: UIButton) {
+        let nextVC = CreateShioriPlanViewController()
+        present(nextVC, animated: true)
     }
     
     /// PDFボタンをタップ
