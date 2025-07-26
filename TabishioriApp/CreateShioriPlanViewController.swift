@@ -102,5 +102,26 @@ final class CreateShioriPlanViewController: UIViewController {
         ]
         let insertAttributeTitle = NSAttributedString(string: insertImageTitle, attributes: insertImageAttributes)
         insertImageButton.setAttributedTitle(insertAttributeTitle, for: .normal)
+        
+        // 各テキストフィールドに黒枠を設定
+        let borderColor = UIColor.black.cgColor
+        let borderWidth: CGFloat = 1.0
+        let cornerRadius: CGFloat = 8.0
+        
+        let textFieldLineSet: [UIView] = [
+            dateTextField,
+            startTimeTextField,
+            endTimeTextField,
+            planTextView,
+            costTextField,
+            urlTextField
+            ]
+        
+        textFieldLineSet.forEach { view in
+            view.layer.borderColor = borderColor
+            view.layer.borderWidth = borderWidth
+            view.layer.cornerRadius = cornerRadius
+            view.layer.masksToBounds = true
+        }
     }
 }
