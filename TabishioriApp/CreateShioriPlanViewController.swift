@@ -104,7 +104,9 @@ final class CreateShioriPlanViewController: UIViewController {
         ]
         let insertAttributeTitle = NSAttributedString(string: insertImageTitle, attributes: insertImageAttributes)
         insertImageButton.setAttributedTitle(insertAttributeTitle, for: .normal)
-        
+    }
+    
+    private func configureTextField() {
         // 各テキストフィールドに黒枠を設定
         let borderColor = UIColor.black.cgColor
         let borderWidth: CGFloat = 1.0
@@ -114,7 +116,6 @@ final class CreateShioriPlanViewController: UIViewController {
             dateTextField,
             startTimeTextField,
             endTimeTextField,
-            planTextView,
             costTextField,
             urlTextField
         ]
@@ -125,15 +126,19 @@ final class CreateShioriPlanViewController: UIViewController {
             view.layer.cornerRadius = cornerRadius
             view.layer.masksToBounds = true
         }
-    }
-    
-    private func configureTextField() {
+        
         [dateTextField, startTimeTextField, endTimeTextField, costTextField, urlTextField].forEach {
             $0?.delegate = self
         }
     }
     
     private func configureTextView() {
+        // 各テキストフィールドに黒枠を設定
+        planTextView.layer.borderColor = UIColor.black.cgColor
+        planTextView.layer.borderWidth = 1.0
+        planTextView.layer.cornerRadius = 8.0
+        planTextView.layer.masksToBounds = true
+        
         planTextView.delegate = self
     }
 }
