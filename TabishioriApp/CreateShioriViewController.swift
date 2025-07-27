@@ -143,9 +143,20 @@ final class CreateShioriViewController: UIViewController {
             view.layer.cornerRadius = cornerRadius
             view.layer.masksToBounds = true
         }
+        [shioriNameTextField, startDateTextField, endDateTextField].forEach {
+            $0?.delegate = self
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+}
+extension CreateShioriViewController: UITextFieldDelegate {
+    /// returnキーを押された時のメソッド
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // キーボードを閉じる
+        textField.resignFirstResponder()
+        return true
     }
 }
