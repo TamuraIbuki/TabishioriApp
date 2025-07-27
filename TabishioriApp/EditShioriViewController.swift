@@ -140,6 +140,10 @@ final class EditShioriViewController: UIViewController {
             view.layer.cornerRadius = cornerRadius
             view.layer.masksToBounds = true
         }
+        
+        [shioriNameTextField, startDateTextField, endDateTextField].forEach {
+            $0?.delegate = self
+        }
     }
     
     private func configureBarButtonItems() {
@@ -154,5 +158,20 @@ final class EditShioriViewController: UIViewController {
     
     @objc func backButtonTapped() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+}
+
+// MARK: - Extensions
+
+extension EditShioriViewController: UITextFieldDelegate {
+    /// returnキーを押された時のメソッド
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // キーボードを閉じる
+        textField.resignFirstResponder()
+        return true
     }
 }

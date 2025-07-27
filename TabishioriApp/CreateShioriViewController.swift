@@ -143,6 +143,7 @@ final class CreateShioriViewController: UIViewController {
             view.layer.cornerRadius = cornerRadius
             view.layer.masksToBounds = true
         }
+        
         [shioriNameTextField, startDateTextField, endDateTextField].forEach {
             $0?.delegate = self
         }
@@ -152,6 +153,9 @@ final class CreateShioriViewController: UIViewController {
         self.view.endEditing(true)
     }
 }
+
+// MARK: - Extensions
+
 extension CreateShioriViewController: UITextFieldDelegate {
     /// returnキーを押された時のメソッド
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
