@@ -12,9 +12,12 @@
             <connections>
                 <outlet property="backColorLabel" destination="ea8-ym-ZDH" id="Eh6-Na-lsF"/>
                 <outlet property="endDateLabel" destination="zKY-TO-V37" id="aHk-DA-wej"/>
+                <outlet property="endDateTextField" destination="yWZ-sC-9od" id="v1h-QL-ufY"/>
                 <outlet property="leftArrowButton" destination="USO-Ep-RSd" id="PCi-eP-w2x"/>
                 <outlet property="shioriNameLabel" destination="Xxs-yD-qpO" id="GNU-tp-ybY"/>
+                <outlet property="shioriNameTextField" destination="Wxm-lQ-uBq" id="Q6X-7y-htZ"/>
                 <outlet property="startDateLabel" destination="yIx-KE-npN" id="84u-2W-mqg"/>
+                <outlet property="startDateTextField" destination="a4Z-nq-neh" id="yK8-SG-pSq"/>
                 <outlet property="titleLabel" destination="q7G-EU-bal" id="5kc-1U-X05"/>
                 <outlet property="updateButton" destination="jBA-ja-TfE" id="bET-vR-obM"/>
                 <outlet property="view" destination="ciz-jI-H99" id="7bQ-l4-ceT"/>
