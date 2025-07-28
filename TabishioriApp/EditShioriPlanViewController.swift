@@ -39,6 +39,8 @@ final class EditShioriPlanViewController: UIViewController {
     
     /// しおり編集ボタンをタップ
     @IBAction private func shioriEditButtonTapped(_ sender: Any) {
+        let nextVC = EditShioriViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
     }
     
     // MARK: - Other Methods

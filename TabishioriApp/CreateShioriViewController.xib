@@ -13,8 +13,11 @@
                 <outlet property="backColorLabel" destination="nhn-qH-q1R" id="XHO-3n-byb"/>
                 <outlet property="createButton" destination="aAC-Bw-FTB" id="Drx-Iw-Muc"/>
                 <outlet property="endDateLabel" destination="qYe-Qg-HBr" id="NMk-SB-RCv"/>
+                <outlet property="endDateTextField" destination="1g8-MU-nTd" id="VTH-J0-D82"/>
                 <outlet property="shioriNameLabel" destination="96n-kV-L1m" id="baH-cP-7Rn"/>
+                <outlet property="shioriNameTextField" destination="fkc-ax-ELQ" id="j9j-y3-JVi"/>
                 <outlet property="startDateLabel" destination="d87-UN-ym1" id="jnT-Dg-dDK"/>
+                <outlet property="startDateTextField" destination="IHy-iQ-Piz" id="U8b-Ih-wnz"/>
                 <outlet property="titleLabel" destination="R39-5Q-d6h" id="hGR-62-9Ha"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="whiteColorButton" destination="FzS-fl-whb" id="tWr-Of-NjO"/>
@@ -71,7 +74,7 @@
                         <constraint firstAttribute="width" constant="311" id="2sc-UX-npY"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <integer key="value" value="8"/>
@@ -101,7 +104,7 @@
                         <constraint firstAttribute="height" constant="33" id="RUj-ca-Ene"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <integer key="value" value="8"/>
@@ -131,7 +134,7 @@
                         <constraint firstAttribute="height" constant="33" id="i53-8j-0I6"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <integer key="value" value="8"/>
@@ -162,7 +165,7 @@
                         <fontDescription key="titleFontDescription" type="system" pointSize="24"/>
                     </buttonConfiguration>
                     <connections>
-                        <action selector="tapCloseButtonTapped:" destination="-1" eventType="touchUpInside" id="vcu-Mn-pI6"/>
+                        <action selector="closeButtonTapped:" destination="-1" eventType="touchUpInside" id="vcu-Mn-pI6"/>
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TR4-DR-noc">

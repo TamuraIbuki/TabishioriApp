@@ -26,14 +26,21 @@ final class CreateShioriViewController: UIViewController {
     @IBOutlet private weak var createButton: UIButton!
     /// ホワイトボタン
     @IBOutlet private weak var whiteColorButton: UIButton!
+    /// しおり名記入欄
+    @IBOutlet private weak var shioriNameTextField: UITextField!
+    /// 開始日記入欄
+    @IBOutlet private weak var startDateTextField: UITextField!
+    /// 終了日記入欄
+    @IBOutlet private weak var endDateTextField: UITextField!
     
     // MARK: - View Life-Cycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupFont()
+        configureTextField()
     }
-
+    
     // MARK: - IBActions
     
     /// 作成ボタンをタップ
@@ -41,7 +48,7 @@ final class CreateShioriViewController: UIViewController {
     }
     
     /// クローズボタンをタップ
-    @IBAction private func tapCloseButtonTapped(_ sender: UIButton) {
+    @IBAction private func closeButtonTapped(_ sender: UIButton) {
         // 前の画面に戻る
         dismiss(animated: true, completion: nil)
     }
@@ -91,6 +98,11 @@ final class CreateShioriViewController: UIViewController {
     private func setupFont() {
         // タイトルのフォントを変更
         titleLabel.font = .setFontZenMaruGothic(size: 24)
+        titleLabel.layer.shadowColor = UIColor(white: 0.0, alpha: 0.3).cgColor
+        titleLabel.layer.shadowRadius = 2.0
+        titleLabel.layer.shadowOpacity = 1.0
+        titleLabel.layer.shadowOffset = CGSize(width: 4, height: 4)
+        titleLabel.layer.masksToBounds = false
         // しおり名のフォントを変更
         shioriNameLabel.font = .setFontZenMaruGothic(size: 18)
         // 開始日のフォントを変更
@@ -112,5 +124,43 @@ final class CreateShioriViewController: UIViewController {
         whiteColorButton.layer.borderWidth = 1
         whiteColorButton.layer.borderColor = UIColor.black.cgColor
     }
+    
+    private func configureTextField() {
+        // 各テキストフィールドに黒枠を設定
+        let borderColor = UIColor.black.cgColor
+        let borderWidth: CGFloat = 1.0
+        let cornerRadius: CGFloat = 8.0
+        
+        let textFieldLineSet: [UIView] = [
+            shioriNameTextField,
+            startDateTextField,
+            endDateTextField,
+        ]
+        
+        textFieldLineSet.forEach { view in
+            view.layer.borderColor = borderColor
+            view.layer.borderWidth = borderWidth
+            view.layer.cornerRadius = cornerRadius
+            view.layer.masksToBounds = true
+        }
+        
+        [shioriNameTextField, startDateTextField, endDateTextField].forEach {
+            $0?.delegate = self
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
+// MARK: - Extensions
+
+extension CreateShioriViewController: UITextFieldDelegate {
+    /// returnキーを押された時のメソッド
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // キーボードを閉じる
+        textField.resignFirstResponder()
+        return true
+    }
+}
