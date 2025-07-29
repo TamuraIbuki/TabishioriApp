@@ -1,18 +1,18 @@
 //
-//  CreateShioriPlanViewController.swift
+//  EditShioriPlanDetailViewController.swift
 //  TabishioriApp
 //
-//  Created by 田村伊吹 on 2025/07/25.
+//  Created by 田村伊吹 on 2025/07/28.
 //
 
 import UIKit
 
-/// 新しい予定作成画面
-final class CreateShioriPlanViewController: UIViewController {
+/// しおり予定情報編集画面
+final class EditShioriPlanDetailViewController: UIViewController {
     
     // MARK: - IBOutlets
     
-    /// 新しい予定追加のタイトルラベル
+    /// 予定情報の修正ラベル
     @IBOutlet private weak var titleLabel: UILabel!
     /// 日付ラベル
     @IBOutlet private weak var dateLabel: UILabel!
@@ -30,8 +30,8 @@ final class CreateShioriPlanViewController: UIViewController {
     @IBOutlet private weak var urlLabel: UILabel!
     /// 画像挿入ボタン
     @IBOutlet private weak var insertImageButton: UIButton!
-    /// 追加ボタン
-    @IBOutlet private weak var addButton: UIButton!
+    /// 修正ボタン
+    @IBOutlet private weak var editButton: UIButton!
     /// 日付記入欄
     @IBOutlet private weak var dateTextField: UITextField!
     /// 開始時間記入欄
@@ -52,6 +52,7 @@ final class CreateShioriPlanViewController: UIViewController {
         setupFont()
         configureTextField()
         configureTextView()
+        configureBarButtonItems()
     }
     
     // MARK: - IBActions
@@ -63,11 +64,8 @@ final class CreateShioriPlanViewController: UIViewController {
     /// 画像をを挿入するボタンをタップ
     @IBAction private func insertImageButtonTapped(_ sender: UIButton) {
     }
-    
-    /// 閉じるボタンをタップ
-    @IBAction private func closeButtonTapped(_ sender: UIButton) {
-        // 前の画面に戻る
-        dismiss(animated: true, completion: nil)
+    /// 「編集」ボタンをタップ
+    @IBAction private func editButtonTapped(_ sender: UIButton) {
     }
     
     // MARK: - Other Methods
@@ -88,14 +86,14 @@ final class CreateShioriPlanViewController: UIViewController {
         }
         
         // 追加ボタンのフォントを設定
-        let addButtonTitle = "追加"
+        let addButtonTitle = "修正"
         let addButtonFont = UIFont.setFontZenMaruGothic(size: 24)
         let addButtonAttributes: [NSAttributedString.Key: Any] = [
             .font: addButtonFont,
             .foregroundColor: UIColor.white
         ]
         let addButtonAttributedTitle = NSAttributedString(string: addButtonTitle, attributes: addButtonAttributes)
-        addButton.setAttributedTitle(addButtonAttributedTitle, for: .normal)
+        editButton.setAttributedTitle(addButtonAttributedTitle, for: .normal)
         
         // 画像挿入ボタンのフォントを設定
         let insertImageFont = UIFont.setFontZenMaruGothic(size: 18)
@@ -148,11 +146,25 @@ final class CreateShioriPlanViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
+    private func configureBarButtonItems() {
+        // 戻るボタン
+        let backButton = UIBarButtonItem(image: UIImage(named: "ic_left_arrow"),
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(backButtonTapped))
+        backButton.tintColor = UIColor.black
+        navigationItem.leftBarButtonItem = backButton
+    }
+    
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 // MARK: - Extensions
 
-extension CreateShioriPlanViewController: UITextFieldDelegate {
+extension EditShioriPlanDetailViewController: UITextFieldDelegate {
     /// returnキーを押された時のメソッド
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // キーボードを閉じる
@@ -161,7 +173,7 @@ extension CreateShioriPlanViewController: UITextFieldDelegate {
     }
 }
 
-extension CreateShioriPlanViewController: UITextViewDelegate {
+extension EditShioriPlanDetailViewController: UITextViewDelegate {
     /// returnキーを押された時のメソッド
     func textView(_ textView: UITextView,
                   shouldChangeTextIn range: NSRange,
