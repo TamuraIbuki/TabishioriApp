@@ -57,12 +57,14 @@ final class EditShioriPlanDetailViewController: UIViewController {
     
     // MARK: - IBActions
     
+    /// 要予約のチェックボックスをタップ
     @IBAction private func checkBoxButtonTapped(_ sender: UIButton) {
     }
     
+    /// 画像をを挿入するボタンをタップ
     @IBAction private func insertImageButtonTapped(_ sender: UIButton) {
     }
-    
+    /// 「編集」ボタンをタップ
     @IBAction private func editButtonTapped(_ sender: UIButton) {
     }
     

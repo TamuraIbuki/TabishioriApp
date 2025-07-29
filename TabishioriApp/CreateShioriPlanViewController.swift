@@ -56,12 +56,15 @@ final class CreateShioriPlanViewController: UIViewController {
     
     // MARK: - IBActions
     
+    /// 要予約のチェックボックスをタップ
     @IBAction private func checkBoxButtonTapped(_ sender: UIButton) {
     }
     
+    /// 画像をを挿入するボタンをタップ
     @IBAction private func insertImageButtonTapped(_ sender: UIButton) {
     }
     
+    /// 閉じるボタンをタップ
     @IBAction private func closeButtonTapped(_ sender: UIButton) {
         // 前の画面に戻る
         dismiss(animated: true, completion: nil)
