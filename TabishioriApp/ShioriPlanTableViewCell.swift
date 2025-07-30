@@ -55,7 +55,6 @@ final class ShioriPlanTableViewCell: UITableViewCell {
     @IBAction private func urlButtonTapped(_ sender: UIButton) {
     }
     
-    
     // MARK: - Other Methods
     
     override func awakeFromNib() {
