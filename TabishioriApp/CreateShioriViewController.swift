@@ -39,6 +39,7 @@ final class CreateShioriViewController: UIViewController {
         super.viewDidLoad()
         setupFont()
         configureTextField()
+        configureNavigationBar()
     }
     
     // MARK: - IBActions

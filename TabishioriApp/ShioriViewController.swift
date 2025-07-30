@@ -54,16 +54,15 @@ final class ShioriViewController: UIViewController {
     /// 持ち物リストボタンをタップ
     @IBAction private func luggageButtonTapped(_ sender: UIButton) {
         let nextVC = PackingListViewController()
-        let navVC = UINavigationController(rootViewController: nextVC)
-        present(navVC, animated: true)
+        let navi = UINavigationController(rootViewController: nextVC)
+        navigationController?.present(navi, animated: true)
     }
     
     /// 予定追加ボタンをタップ
     @IBAction private func addPlanButtonTapped(_ sender: UIButton) {
         let nextVC = CreateShioriPlanViewController()
-        let navVC = UINavigationController(rootViewController: nextVC)
-        present(navVC, animated: true)
-
+        let navi = UINavigationController(rootViewController: nextVC)
+        navigationController?.present(navi, animated: true)
     }
     
     /// PDFボタンをタップ

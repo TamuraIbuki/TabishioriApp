@@ -52,6 +52,7 @@ final class CreateShioriPlanViewController: UIViewController {
         setupFont()
         configureTextField()
         configureTextView()
+        configureNavigationBar()
     }
     
     // MARK: - IBActions
