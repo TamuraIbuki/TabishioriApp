@@ -39,18 +39,13 @@ final class CreateShioriViewController: UIViewController {
         super.viewDidLoad()
         setupFont()
         configureTextField()
+        configureNavigationBar()
     }
     
     // MARK: - IBActions
     
     /// 作成ボタンをタップ
     @IBAction private func createButtonTapped(_ sender: UIButton) {
-    }
-    
-    /// クローズボタンをタップ
-    @IBAction private func closeButtonTapped(_ sender: UIButton) {
-        // 前の画面に戻る
-        dismiss(animated: true, completion: nil)
     }
     
     /// 赤を選択
@@ -151,6 +146,21 @@ final class CreateShioriViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    private func configureNavigationBar() {
+        // 閉じるボタン
+        let closeButton = UIBarButtonItem(image: UIImage(named: "ic_close"),
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(closeButtonTapped))
+        closeButton.tintColor = UIColor.black
+        navigationItem.rightBarButtonItem = closeButton
+    }
+    
+    /// 編集画面の閉じるボタンをタップ
+    @objc func closeButtonTapped() {
+        dismiss(animated: true, completion: nil)
     }
 }
 

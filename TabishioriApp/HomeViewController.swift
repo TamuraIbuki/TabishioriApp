@@ -33,7 +33,8 @@ final class HomeViewController: UIViewController {
     /// 新しいしおりを作成ボタンをタップ
     @IBAction private func createButtonTapped(_ sender: UIButton) {
         let nextVC = CreateShioriViewController()
-        present(nextVC, animated: true)
+        let navi = UINavigationController(rootViewController: nextVC)
+        navigationController?.present(navi, animated: true)
     }
     
     // MARK: - Other Methods

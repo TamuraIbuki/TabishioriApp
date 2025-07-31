@@ -115,7 +115,7 @@
                             <constraint firstAttribute="width" constant="33" id="yny-tU-Rkp"/>
                         </constraints>
                         <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="plain" image="ic_url2"/>
+                        <buttonConfiguration key="configuration" style="plain" image="ic_url"/>
                         <connections>
                             <action selector="urlButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="CgZ-Es-3FN"/>
                         </connections>
@@ -148,6 +148,6 @@
     </objects>
     <resources>
         <image name="ic_check_box_out" width="15" height="15"/>
-        <image name="ic_url2" width="33" height="33"/>
+        <image name="ic_url" width="33" height="33"/>
     </resources>
 </document>
