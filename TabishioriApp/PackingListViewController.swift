@@ -17,7 +17,7 @@ final class PackingListViewController: UIViewController {
     /// 説明ラベル
     @IBOutlet private weak var descriptionLabel: UILabel!
     /// 持ち物リストテーブルビュー
-    @IBOutlet private weak var PackingListTableView: UITableView!
+    @IBOutlet private weak var packingListTableView: UITableView!
     
     // MARK: - View Life-Cycle Methods
     
@@ -43,8 +43,8 @@ final class PackingListViewController: UIViewController {
         descriptionLabel.font = .setFontZenMaruGothic(size: 13)
         
         // テーブルビューに黒い枠線をつける
-        PackingListTableView.layer.borderWidth = 1
-        PackingListTableView.layer.borderColor = UIColor.black.cgColor
+        packingListTableView.layer.borderWidth = 1
+        packingListTableView.layer.borderColor = UIColor.black.cgColor
     }
     
     private func configureNavigationBar() {
