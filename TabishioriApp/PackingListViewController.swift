@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// 持ち物リスト画面
 final class PackingListViewController: UIViewController {
 
     // MARK: - IBOutlets
