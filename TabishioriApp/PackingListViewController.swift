@@ -11,6 +11,7 @@ import UIKit
 final class PackingListViewController: UIViewController {
 
     // MARK: - IBOutlets
+    
     /// タイトルラベル
     @IBOutlet private weak var titleLabel: UILabel!
     /// 説明ラベル
