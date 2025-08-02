@@ -38,9 +38,26 @@ final class PackingListTableViewCell: UITableViewCell {
         contentView.layer.borderColor = UIColor.black.cgColor
         contentView.layer.borderWidth = 1.0
         contentView.clipsToBounds = true
+        self.backgroundColor = .clear
+        contentView.backgroundColor = .white
     }
     
     func setup(packingItem: String?) {
         packingItemLabel.text = packingItem?.isEmpty == false ? packingItem : nil
+    }
+    
+    /// セルの上下の角を丸める
+    func setupCorner(isFirst: Bool, isLast: Bool) {
+        var maskedCorners: CACornerMask = []
+        
+        if isFirst {
+            maskedCorners.insert([.layerMinXMinYCorner, .layerMaxXMinYCorner])
+        }
+        if isLast {
+            maskedCorners.insert([.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+        }
+        contentView.layer.cornerRadius = 8
+        contentView.layer.maskedCorners = maskedCorners
+        contentView.layer.masksToBounds = true
     }
 }
