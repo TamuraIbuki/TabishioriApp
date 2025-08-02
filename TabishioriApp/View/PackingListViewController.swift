@@ -120,9 +120,11 @@ extension PackingListViewController: UITableViewDelegate {
         
         return footerView
     }
+    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 50
     }
+    
     @objc private func addButtonTapped() {
     }
 }
