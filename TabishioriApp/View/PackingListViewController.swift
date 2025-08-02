@@ -60,7 +60,7 @@ final class PackingListViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    func configureTableView() {
+    private func configureTableView() {
         packingListTableView.dataSource = self
         packingListTableView.delegate = self
         // カスタムセルを登録
