@@ -88,13 +88,11 @@ extension PackingListViewController: UITableViewDataSource {
         
         //カスタムセルを指定
         let cell = tableView.dequeueReusableCell(withIdentifier: "PackingListCellID", for: indexPath)as! PackingListTableViewCell
-        cell.setup(packingItem: "パスポート")
         
         // セルの最初と最後を確認
         let isFirstCell = indexPath.row == 0
         let isLastCell = indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1
-        cell.setupCorner(isFirst: isFirstCell, isLast: isLastCell)
-        
+        cell.setup(packingItem: "パスポート", isFirst: isFirstCell, isLast: isLastCell)
         return cell
     }
 }

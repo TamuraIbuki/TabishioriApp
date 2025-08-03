@@ -42,12 +42,10 @@ final class PackingListTableViewCell: UITableViewCell {
         contentView.backgroundColor = .white
     }
     
-    func setup(packingItem: String?) {
+    func setup(packingItem: String?, isFirst: Bool, isLast: Bool) {
         packingItemLabel.text = packingItem?.isEmpty == false ? packingItem : nil
-    }
-    
-    /// セルの上下の角を丸める
-    func setupCorner(isFirst: Bool, isLast: Bool) {
+        
+        // セルの上下の角を丸める
         var maskedCorners: CACornerMask = []
         
         if isFirst {
