@@ -117,7 +117,7 @@
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" image="ic_url"/>
                         <connections>
-                            <action selector="urlButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="CgZ-Es-3FN"/>
+                            <action selector="rightButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="CgZ-Es-3FN"/>
                         </connections>
                     </button>
                 </subviews>
@@ -139,9 +139,9 @@
                 <outlet property="planImageView" destination="ILO-gD-cpb" id="982-Cb-gqX"/>
                 <outlet property="planLabel" destination="P2f-2C-eTY" id="WQP-cR-rqd"/>
                 <outlet property="reservationLabel" destination="PqX-Le-Hgn" id="sMa-1o-fQT"/>
+                <outlet property="rightButton" destination="a63-vQ-L6g" id="gkl-vS-871"/>
                 <outlet property="startTimeLabel" destination="5QU-oz-BNo" id="zUX-4X-U5V"/>
                 <outlet property="timeRangeLabel" destination="IU3-6q-kZz" id="i8W-lZ-aXT"/>
-                <outlet property="urlButton" destination="a63-vQ-L6g" id="gkl-vS-871"/>
             </connections>
             <point key="canvasLocation" x="387.02290076335879" y="50.352112676056343"/>
         </tableViewCell>
