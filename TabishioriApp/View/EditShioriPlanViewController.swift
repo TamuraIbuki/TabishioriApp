@@ -106,7 +106,7 @@ final class EditShioriPlanViewController: UIViewController {
         // テーブルビューの高さ設定
         planTableView.rowHeight = UITableView.automaticDimension
         planTableView.estimatedRowHeight = 100
-        }
+    }
 }
 
 // MARK: - Extentions
