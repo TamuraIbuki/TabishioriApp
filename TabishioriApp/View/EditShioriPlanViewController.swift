@@ -15,7 +15,7 @@ final class EditShioriPlanViewController: UIViewController {
     /// しおり仮データ
     private var scheduleItem = ShioriDummyData.scheduleItems
     /// 編集モード
-    var isEditMode: Bool = true
+    private var isEditMode: Bool = true
 
     // MARK: - IBOutlets
     
