@@ -25,7 +25,7 @@ final class ShioriContentViewController: UIViewController {
     /// 予定仮データ
     private var scheduleItem = ShioriDummyData.scheduleItems
     /// 編集モード
-    var isEditMode: Bool = false
+    private var isEditMode: Bool = false
     
     // MARK: - IBOutlets
     
