@@ -77,6 +77,8 @@ final class ShioriPlanTableViewCell: UITableViewCell {
     
     /// 予定情報の表示
     func configurePlan(with item: ScheduleItem, isEditMode: Bool) {
+        self.isEditMode = isEditMode
+        
         startTimeLabel.text = item.startTime
         startTimeLabel.isHidden = item.startTime == nil
         
@@ -98,7 +100,6 @@ final class ShioriPlanTableViewCell: UITableViewCell {
             costLabel.isHidden = true
         }
         
-        self.isEditMode = isEditMode
         if isEditMode{
             // 修正ボタンを表示
             rightButton.setImage(UIImage(named: "ic_edit"), for: .normal)
