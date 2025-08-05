@@ -22,7 +22,7 @@ final class ShioriPlanTableViewCell: UITableViewCell {
         let hasImage: Bool
     }
     /// 編集モード初期値
-    var isEditMode: Bool = false
+    private var isEditMode: Bool = false
     
     // MARK: - IBOutlets
     
