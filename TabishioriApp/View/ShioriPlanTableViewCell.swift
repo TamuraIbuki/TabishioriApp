@@ -7,6 +7,14 @@
 
 import UIKit
 
+// MARK: - Protocols
+
+protocol ShioriPlanTableViewCellDelegate: AnyObject {
+    func didTapRightButton(in cell: ShioriPlanTableViewCell)
+}
+
+// MARK: - Main Type
+
 /// しおり予定セル
 final class ShioriPlanTableViewCell: UITableViewCell {
     
@@ -23,6 +31,10 @@ final class ShioriPlanTableViewCell: UITableViewCell {
     }
     /// 編集モード初期値
     private var isEditMode: Bool = false
+    
+    // MARK: - Stored Properties
+    
+    weak var delegate: ShioriPlanTableViewCellDelegate?
     
     // MARK: - IBOutlets
     
@@ -55,17 +67,7 @@ final class ShioriPlanTableViewCell: UITableViewCell {
     
     /// URLボタンをタップ
     @IBAction private func rightButtonTapped(_ sender: UIButton) {
-        if isEditMode {
-            let nextVC = EditShioriPlanDetailViewController()
-            if let parentVC = self.parentViewController(),
-               let nav = parentVC.navigationController {
-                nav.pushViewController(nextVC, animated: true)
-            }
-        } else {
-            if let url = URL(string: "https://ios-academia.com/") {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-        }
+        delegate?.didTapRightButton(in: self)
     }
     
     // MARK: - Other Methods
