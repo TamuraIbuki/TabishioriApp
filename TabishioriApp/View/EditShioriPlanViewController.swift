@@ -97,7 +97,7 @@ final class EditShioriPlanViewController: UIViewController {
         totalCostLabel.font = .setFontZenMaruGothic(size: 13)
     }
     
-    func configureTableView() {
+    private func configureTableView() {
         planTableView.dataSource = self
         // カスタムセルを登録
         let nib = UINib(nibName: "ShioriPlanTableViewCell", bundle: nil)
