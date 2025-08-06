@@ -121,6 +121,7 @@ extension ShioriContentViewController: UITableViewDataSource {
         // セルに渡す処理
         let item = scheduleItem[indexPath.row]
         cell.configurePlan(with: item, isEditMode: isEditMode)
+        cell.delegate = self
         return cell
     }
 }
