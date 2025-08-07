@@ -130,14 +130,8 @@ extension ShioriContentViewController: ShioriPlanTableViewCellDelegate {
     func didTapRightButton(in cell: ShioriPlanTableViewCell) {
         if let indexPath = planTableView.indexPath(for: cell) {
             let item = scheduleItem[indexPath.row]
-            
-            if isEditMode {
-                let nextVC = EditShioriPlanDetailViewController()
-                navigationController?.pushViewController(nextVC, animated: true)
-            } else if item.hasURL {
-                if let url = URL(string: "https://ios-academia.com/") {
-                    UIApplication.shared.open(url)
-                }
+            if let url = URL(string: "https://ios-academia.com/") {
+                UIApplication.shared.open(url)
             }
         }
     }
