@@ -24,8 +24,6 @@ final class ShioriContentViewController: UIViewController {
     private let totalCost: String
     /// 予定仮データ
     private var scheduleItem = ShioriDummyData.scheduleItems
-    /// 編集モード
-    private var isEditMode: Bool = false
     
     // MARK: - IBOutlets
     
@@ -121,7 +119,7 @@ extension ShioriContentViewController: UITableViewDataSource {
         cell.delegate = self
         // セルに渡す処理
         let item = scheduleItem[indexPath.row]
-        cell.configurePlan(with: item, isEditMode: isEditMode)
+        cell.configurePlan(with: item, isEditMode: false)
         return cell
     }
 }
