@@ -127,7 +127,7 @@ extension EditShioriPlanViewController: UITableViewDataSource {
         cell.delegate = self
         // セルに渡す処理
         let item = scheduleItem[indexPath.row]
-        cell.configurePlan(with: item, isEditMode: isEditMode)
+        cell.configurePlan(with: item, isEditMode: true)
         return cell
     }
 }
@@ -136,15 +136,8 @@ extension EditShioriPlanViewController: ShioriPlanTableViewCellDelegate {
     func didTapRightButton(in cell: ShioriPlanTableViewCell) {
         if let indexPath = planTableView.indexPath(for: cell) {
             let item = scheduleItem[indexPath.row]
-            
-            if isEditMode {
-                let nextVC = EditShioriPlanDetailViewController()
-                navigationController?.pushViewController(nextVC, animated: true)
-            } else if item.hasURL {
-                if let url = URL(string: "https://ios-academia.com/") {
-                    UIApplication.shared.open(url)
-                }
-            }
+            let nextVC = EditShioriPlanDetailViewController()
+            navigationController?.pushViewController(nextVC, animated: true)
         }
     }
 }
