@@ -113,15 +113,15 @@ extension ShioriContentViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // カスタムセルを指定
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShioriPlanTableViewCellID",
-                                                       for: indexPath)as? ShioriPlanTableViewCell
+                                                       for: indexPath) as? ShioriPlanTableViewCell
         else {
             return UITableViewCell()
         }
         
+        cell.delegate = self
         // セルに渡す処理
         let item = scheduleItem[indexPath.row]
         cell.configurePlan(with: item, isEditMode: isEditMode)
-        cell.delegate = self
         return cell
     }
 }
