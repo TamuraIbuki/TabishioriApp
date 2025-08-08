@@ -7,6 +7,14 @@
 
 import UIKit
 
+// MARK: - Protocols
+
+protocol ShioriPlanTableViewCellDelegate: AnyObject {
+    func didTapRightButton(in cell: ShioriPlanTableViewCell)
+}
+
+// MARK: - Main Type
+
 /// しおり予定セル
 final class ShioriPlanTableViewCell: UITableViewCell {
     
@@ -21,6 +29,12 @@ final class ShioriPlanTableViewCell: UITableViewCell {
         let hasURL: Bool
         let hasImage: Bool
     }
+    /// 編集モード初期値
+    private var isEditMode: Bool = false
+    
+    // MARK: - Stored Properties
+    
+    weak var delegate: ShioriPlanTableViewCellDelegate?
     
     // MARK: - IBOutlets
     
@@ -39,7 +53,7 @@ final class ShioriPlanTableViewCell: UITableViewCell {
     /// 費用ラベル
     @IBOutlet private weak var costLabel: UILabel!
     /// URLボタン
-    @IBOutlet private weak var urlButton: UIButton!
+    @IBOutlet private weak var rightButton: UIButton!
     /// 予定イメージビュー
     @IBOutlet private weak var planImageView: UIImageView!
     /// 予定イメージビューの高さ設定
@@ -52,7 +66,8 @@ final class ShioriPlanTableViewCell: UITableViewCell {
     }
     
     /// URLボタンをタップ
-    @IBAction private func urlButtonTapped(_ sender: UIButton) {
+    @IBAction private func rightButtonTapped(_ sender: UIButton) {
+        delegate?.didTapRightButton(in: self)
     }
     
     // MARK: - Other Methods
@@ -63,7 +78,9 @@ final class ShioriPlanTableViewCell: UITableViewCell {
     }
     
     /// 予定情報の表示
-    func configurePlan(with item: ScheduleItem) {
+    func configurePlan(with item: ScheduleItem, isEditMode: Bool) {
+        self.isEditMode = isEditMode
+        
         startTimeLabel.text = item.startTime
         startTimeLabel.isHidden = item.startTime == nil
         
@@ -85,11 +102,18 @@ final class ShioriPlanTableViewCell: UITableViewCell {
             costLabel.isHidden = true
         }
         
-        // URLがあるなら画像を表示
-        if item.hasURL {
-            urlButton.isHidden = false
+        if isEditMode{
+            // 修正ボタンを表示
+            rightButton.setImage(UIImage(named: "ic_edit"), for: .normal)
         } else {
-            urlButton.isHidden = true
+            // URLボタンを表示
+            rightButton.setImage(UIImage(named: "ic_url"), for: .normal)
+            // URLがあるなら画像を表示
+            if item.hasURL {
+                rightButton.isHidden = false
+            } else {
+                rightButton.isHidden = true
+            }
         }
         
         // 画像がある場合表示
@@ -100,7 +124,6 @@ final class ShioriPlanTableViewCell: UITableViewCell {
         } else {
             planImageView.isHidden = true
             planImageHeightConstraint.constant = 0
-            
         }
     }
     
@@ -112,3 +135,4 @@ final class ShioriPlanTableViewCell: UITableViewCell {
         }
     }
 }
+

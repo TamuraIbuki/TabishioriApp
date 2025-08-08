@@ -22,30 +22,8 @@ final class ShioriContentViewController: UIViewController {
     private let day: String
     /// 合計費用ラベル
     private let totalCost: String
-    /// 仮予定データ
-    private var scheduleItem: [ShioriPlanTableViewCell.ScheduleItem] = [
-        .init(startTime: "8:00",
-              endTime: "16:00",
-              plan: "飛行機でマレーシアに移動",
-              isReserved: true,
-              cost: 15000,
-              hasURL: true,
-              hasImage: true),
-        .init(startTime: "17:00",
-              endTime: nil,
-              plan: "色鮮やかな寺院とナイトマーケット巡りをする",
-              isReserved: false,
-              cost: nil,
-              hasURL: false,
-              hasImage: false),
-        .init(startTime: "19:00",
-              endTime: "20:00",
-              plan: "ホテルチェックイン",
-              isReserved: false,
-              cost: 8000,
-              hasURL: true,
-              hasImage: false)
-        ]
+    /// 予定仮データ
+    private var scheduleItem = ShioriDummyData.scheduleItems
     
     // MARK: - IBOutlets
     
@@ -133,14 +111,26 @@ extension ShioriContentViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // カスタムセルを指定
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShioriPlanTableViewCellID",
-                                                       for: indexPath)as? ShioriPlanTableViewCell
+                                                       for: indexPath) as? ShioriPlanTableViewCell
         else {
             return UITableViewCell()
         }
         
+        cell.delegate = self
         // セルに渡す処理
         let item = scheduleItem[indexPath.row]
-        cell.configurePlan(with: item)
+        cell.configurePlan(with: item, isEditMode: false)
         return cell
+    }
+}
+
+extension ShioriContentViewController: ShioriPlanTableViewCellDelegate {
+    func didTapRightButton(in cell: ShioriPlanTableViewCell) {
+        if let indexPath = planTableView.indexPath(for: cell) {
+            let item = scheduleItem[indexPath.row]
+            if let url = URL(string: "https://ios-academia.com/") {
+                UIApplication.shared.open(url)
+            }
+        }
     }
 }

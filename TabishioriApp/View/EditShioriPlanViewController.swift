@@ -9,6 +9,11 @@ import UIKit
 
 /// しおり予定編集画面
 final class EditShioriPlanViewController: UIViewController {
+    
+    // MARK: - Stored Properties
+    
+    /// しおり仮データ
+    private var scheduleItem = ShioriDummyData.scheduleItems
 
     // MARK: - IBOutlets
     
@@ -33,6 +38,7 @@ final class EditShioriPlanViewController: UIViewController {
         super.viewDidLoad()
         configureNavigationBar()
         setupUI()
+        configureTableView()
     }
     
     // MARK: - IBActions
@@ -87,5 +93,51 @@ final class EditShioriPlanViewController: UIViewController {
         dayTitleLabel.font = .setFontZenMaruGothic(size: 24)
         dayLabel.font = .setFontZenMaruGothic(size: 18)
         totalCostLabel.font = .setFontZenMaruGothic(size: 13)
+    }
+    
+    private func configureTableView() {
+        planTableView.dataSource = self
+        // カスタムセルを登録
+        let nib = UINib(nibName: "ShioriPlanTableViewCell", bundle: nil)
+        planTableView.register(nib, forCellReuseIdentifier: "ShioriPlanTableViewCellID")
+        
+        // テーブルビューの高さ設定
+        planTableView.rowHeight = UITableView.automaticDimension
+        planTableView.estimatedRowHeight = 100
+    }
+}
+
+// MARK: - Extentions
+
+extension EditShioriPlanViewController: UITableViewDataSource {
+    /// セルの数
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return scheduleItem.count
+    }
+    
+    /// セルを設定
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // カスタムセルを指定
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShioriPlanTableViewCellID",
+                                                       for: indexPath)as? ShioriPlanTableViewCell
+        else {
+            return UITableViewCell()
+        }
+        
+        cell.delegate = self
+        // セルに渡す処理
+        let item = scheduleItem[indexPath.row]
+        cell.configurePlan(with: item, isEditMode: true)
+        return cell
+    }
+}
+
+extension EditShioriPlanViewController: ShioriPlanTableViewCellDelegate {
+    func didTapRightButton(in cell: ShioriPlanTableViewCell) {
+        if let indexPath = planTableView.indexPath(for: cell) {
+            let item = scheduleItem[indexPath.row]
+            let nextVC = EditShioriPlanDetailViewController()
+            navigationController?.pushViewController(nextVC, animated: true)
+        }
     }
 }
