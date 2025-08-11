@@ -46,46 +46,68 @@ final class CreateShioriViewController: UIViewController {
     
     /// 作成ボタンをタップ
     @IBAction private func createButtonTapped(_ sender: UIButton) {
+        shioriNameLabel.text = shioriNameTextField.text
+        print("shioriNameLabelの内容: \(shioriNameLabel.text ?? "なし")")
     }
     
     /// 赤を選択
     @IBAction private func redButtonTapped(_ sender: UIButton) {
+        let hexColor = UIColor(hex: "#FFA5A5")
+        changeBackGroundColor(to: hexColor)
     }
     
     /// ピンクを選択
     @IBAction private func pinkButtonTapped(_ sender: UIButton) {
+        let hexColor = UIColor(hex: "#FFC1E4")
+        changeBackGroundColor(to: hexColor)
     }
     
     /// 紫を選択
     @IBAction private func purpleButtonTapped(_ sender: UIButton) {
+        let hexColor = UIColor(hex: "#D1A0FF")
+        changeBackGroundColor(to: hexColor)
     }
     
     /// 青を選択
     @IBAction private func buleButtonTapped(_ sender: UIButton) {
+        let hexColor = UIColor(hex: "#B4B3FF")
+        changeBackGroundColor(to: hexColor)
     }
     
     /// 水色を選択
     @IBAction private func skyBuleButtonTapped(_ sender: UIButton) {
+        let hexColor = UIColor(hex: "#A5FFF9")
+        changeBackGroundColor(to: hexColor)
     }
     
     /// 緑を選択
     @IBAction private func greenButtonTapped(_ sender: UIButton) {
+        let hexColor = UIColor(hex: "#B8FFBF")
+        changeBackGroundColor(to: hexColor)
     }
     
     /// 黄緑色を選択
     @IBAction private func lightGreenButtonTapped(_ sender: UIButton) {
+        let hexColor = UIColor(hex: "#E2FF0C")
+        changeBackGroundColor(to: hexColor)
     }
     
     /// 黄色を選択
     @IBAction private func yellowButtonTapped(_ sender: UIButton) {
+        let hexColor = UIColor(hex: "#FFF755")
+        changeBackGroundColor(to: hexColor)
     }
     
     /// 橙を選択
     @IBAction private func orangeButtonTapped(_ sender: UIButton) {
+        let hexColor = UIColor(hex: "#F9D293")
+        changeBackGroundColor(to: hexColor)
     }
     
     /// 白を選択
     @IBAction private func whiteButtonTapped(_ sender: UIButton) {
+        let hexColor = UIColor(hex: "#FFFFFF")
+        changeBackGroundColor(to: hexColor)
     }
     
     // MARK: - Other Methods
@@ -161,6 +183,26 @@ final class CreateShioriViewController: UIViewController {
     /// 編集画面の閉じるボタンをタップ
     @objc func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    private func changeBackGroundColor(to color: UIColor) {
+        // 確認用
+        print("変更後の背景色: \(color)")
+        
+        // それぞれの背景色を変更
+        if let packingListVC = self.navigationController?.viewControllers
+            .first(where: { $0 is PackingListViewController }) as? PackingListViewController {
+            packingListVC.view.backgroundColor = color
+            
+        }
+        if let editShioriPlanVC = self.navigationController?.viewControllers
+            .first(where: { $0 is EditShioriPlanViewController }) as? EditShioriPlanViewController {
+            editShioriPlanVC.view.backgroundColor = color
+        }
+        if let shioriContentVC = self.navigationController?.viewControllers
+            .first(where: { $0 is ShioriContentViewController }) as? ShioriContentViewController {
+            shioriContentVC.view.backgroundColor = color
+        }
     }
 }
 

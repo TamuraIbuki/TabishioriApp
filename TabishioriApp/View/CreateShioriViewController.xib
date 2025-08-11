@@ -353,7 +353,6 @@
                                     </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="skyBuleButtonTapped:" destination="-1" eventType="touchUpInside" id="4Oe-r6-UAg"/>
-                                        <action selector="skybuleButtonTapped:" destination="-1" eventType="touchUpInside" id="MqI-9x-qdX"/>
                                     </connections>
                                 </button>
                             </subviews>
