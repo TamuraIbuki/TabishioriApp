@@ -24,8 +24,8 @@ final class CreateShioriViewController: UIViewController {
     @IBOutlet private weak var backColorLabel: UILabel!
     /// 作成ボタン
     @IBOutlet private weak var createButton: UIButton!
-    /// ホワイトボタン
-    @IBOutlet private weak var whiteColorButton: UIButton!
+    /// 背景ボタン
+    @IBOutlet private var colorButtons: [UIButton]!
     /// しおり名記入欄
     @IBOutlet private weak var shioriNameTextField: UITextField!
     /// 開始日記入欄
@@ -57,60 +57,70 @@ final class CreateShioriViewController: UIViewController {
     @IBAction private func redButtonTapped(_ sender: UIButton) {
         let hexColor = UIColor(hex: "#FFA5A5")
         changeBackGroundColor(to: hexColor)
+        selectBackColorButton(sender)
     }
     
     /// ピンクを選択
     @IBAction private func pinkButtonTapped(_ sender: UIButton) {
         let hexColor = UIColor(hex: "#FFC1E4")
         changeBackGroundColor(to: hexColor)
+        selectBackColorButton(sender)
     }
     
     /// 紫を選択
     @IBAction private func purpleButtonTapped(_ sender: UIButton) {
         let hexColor = UIColor(hex: "#D1A0FF")
         changeBackGroundColor(to: hexColor)
+        selectBackColorButton(sender)
     }
     
     /// 青を選択
     @IBAction private func buleButtonTapped(_ sender: UIButton) {
         let hexColor = UIColor(hex: "#B4B3FF")
         changeBackGroundColor(to: hexColor)
+        selectBackColorButton(sender)
     }
     
     /// 水色を選択
     @IBAction private func skyBuleButtonTapped(_ sender: UIButton) {
         let hexColor = UIColor(hex: "#A5FFF9")
         changeBackGroundColor(to: hexColor)
+        selectBackColorButton(sender)
     }
     
     /// 緑を選択
     @IBAction private func greenButtonTapped(_ sender: UIButton) {
         let hexColor = UIColor(hex: "#B8FFBF")
         changeBackGroundColor(to: hexColor)
+        selectBackColorButton(sender)
     }
     
     /// 黄緑色を選択
     @IBAction private func lightGreenButtonTapped(_ sender: UIButton) {
         let hexColor = UIColor(hex: "#E2FF0C")
         changeBackGroundColor(to: hexColor)
+        selectBackColorButton(sender)
     }
     
     /// 黄色を選択
     @IBAction private func yellowButtonTapped(_ sender: UIButton) {
         let hexColor = UIColor(hex: "#FFF755")
         changeBackGroundColor(to: hexColor)
+        selectBackColorButton(sender)
     }
     
     /// 橙を選択
     @IBAction private func orangeButtonTapped(_ sender: UIButton) {
         let hexColor = UIColor(hex: "#F9D293")
         changeBackGroundColor(to: hexColor)
+        selectBackColorButton(sender)
     }
     
     /// 白を選択
     @IBAction private func whiteButtonTapped(_ sender: UIButton) {
         let hexColor = UIColor(hex: "#FFFFFF")
         changeBackGroundColor(to: hexColor)
+        selectBackColorButton(sender)
     }
     
     // MARK: - Other Methods
@@ -140,9 +150,11 @@ final class CreateShioriViewController: UIViewController {
         ]
         let attributedTitle = NSAttributedString(string: title, attributes: attributes)
         createButton.setAttributedTitle(attributedTitle, for: .normal)
-        // 白の背景ボタンに黒い枠線をつける
-        whiteColorButton.layer.borderWidth = 1
-        whiteColorButton.layer.borderColor = UIColor.black.cgColor
+        // 背景ボタンに黒い枠線をつける
+        colorButtons.forEach { buttons in
+            buttons.layer.borderWidth = 1
+            buttons.layer.borderColor = UIColor.black.cgColor
+        }
     }
     
     private func configureTextField() {
@@ -206,6 +218,18 @@ final class CreateShioriViewController: UIViewController {
             .first(where: { $0 is ShioriContentViewController }) as? ShioriContentViewController {
             shioriContentVC.view.backgroundColor = color
         }
+    }
+    
+    private func selectBackColorButton(_ selectedButton: UIButton) {
+        colorButtons.forEach { buttons in
+            // 他のボタンを選択時は黒枠線に戻す
+            buttons.layer.borderWidth = 1
+            buttons.layer.borderColor = UIColor.black.cgColor
+        }
+        
+        // 選択時青い太い枠線を付ける
+        selectedButton.layer.borderWidth = 3
+        selectedButton.layer.borderColor = UIColor.systemBlue.cgColor
     }
 }
 

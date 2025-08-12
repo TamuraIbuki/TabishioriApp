@@ -20,7 +20,16 @@
                 <outlet property="startDateTextField" destination="IHy-iQ-Piz" id="U8b-Ih-wnz"/>
                 <outlet property="titleLabel" destination="R39-5Q-d6h" id="hGR-62-9Ha"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
-                <outlet property="whiteColorButton" destination="FzS-fl-whb" id="tWr-Of-NjO"/>
+                <outletCollection property="colorButtons" destination="hZt-eK-WeJ" collectionClass="NSMutableArray" id="N3e-R7-mci"/>
+                <outletCollection property="colorButtons" destination="TVj-Qa-7hm" collectionClass="NSMutableArray" id="djR-wv-Lfl"/>
+                <outletCollection property="colorButtons" destination="nQj-vx-m8Q" collectionClass="NSMutableArray" id="upy-Mz-gxm"/>
+                <outletCollection property="colorButtons" destination="XF8-EX-7eH" collectionClass="NSMutableArray" id="r3k-aw-Qkd"/>
+                <outletCollection property="colorButtons" destination="7WU-wj-JiE" collectionClass="NSMutableArray" id="rsJ-0V-YgX"/>
+                <outletCollection property="colorButtons" destination="jEG-0d-P9l" collectionClass="NSMutableArray" id="AmR-n0-8Ey"/>
+                <outletCollection property="colorButtons" destination="gTW-Ra-ab2" collectionClass="NSMutableArray" id="S5D-Sl-yYA"/>
+                <outletCollection property="colorButtons" destination="OSs-4S-aS2" collectionClass="NSMutableArray" id="M7U-p5-tV9"/>
+                <outletCollection property="colorButtons" destination="Xag-C2-UDm" collectionClass="NSMutableArray" id="5aO-Kw-rhd"/>
+                <outletCollection property="colorButtons" destination="FzS-fl-whb" collectionClass="NSMutableArray" id="Hxf-HB-uCV"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -205,6 +214,7 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="35" id="1zp-Ak-U3B"/>
                                         <constraint firstAttribute="height" constant="35" id="cTZ-i5-BUr"/>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="ksh-2l-QRG"/>
                                     </constraints>
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain"/>
