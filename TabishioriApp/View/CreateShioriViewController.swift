@@ -46,8 +46,11 @@ final class CreateShioriViewController: UIViewController {
     
     /// 作成ボタンをタップ
     @IBAction private func createButtonTapped(_ sender: UIButton) {
-        shioriNameLabel.text = shioriNameTextField.text
-        print("shioriNameLabelの内容: \(shioriNameLabel.text ?? "なし")")
+        // しおり名を登録
+        let shioriName = shioriNameTextField.text ?? "しおり名"
+        let shioriViewController = ShioriViewController()
+        shioriViewController.commonShioriName = shioriName
+        print("shioriNameの内容: \(shioriViewController.commonShioriName)")
     }
     
     /// 赤を選択
