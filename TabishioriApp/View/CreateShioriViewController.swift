@@ -197,26 +197,6 @@ final class CreateShioriViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    private func changeBackGroundColor(to color: UIColor) {
-        // 確認用
-        print("変更後の背景色: \(color)")
-        
-        // それぞれの背景色を変更
-        if let packingListVC = self.navigationController?.viewControllers
-            .first(where: { $0 is PackingListViewController }) as? PackingListViewController {
-            packingListVC.view.backgroundColor = color
-            
-        }
-        if let editShioriPlanVC = self.navigationController?.viewControllers
-            .first(where: { $0 is EditShioriPlanViewController }) as? EditShioriPlanViewController {
-            editShioriPlanVC.view.backgroundColor = color
-        }
-        if let shioriContentVC = self.navigationController?.viewControllers
-            .first(where: { $0 is ShioriContentViewController }) as? ShioriContentViewController {
-            shioriContentVC.view.backgroundColor = color
-        }
-    }
-    
     private func selectBackColorButton(_ selectedButton: UIButton, hexColor: String) {
         colorButtons.forEach { buttons in
             // 他のボタンを選択時は黒枠線に戻す
