@@ -10,6 +10,13 @@ import UIKit
 /// 新しいしおり作成画面
 final class CreateShioriViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    /// しおり名
+    private var selectedShioriName: String = ""
+    /// 背景色
+    private var selectedBackgroundColor: String = ""
+    
     // MARK: - IBOutlets
     
     /// 画面タイトル
@@ -47,80 +54,70 @@ final class CreateShioriViewController: UIViewController {
     /// 作成ボタンをタップ
     @IBAction private func createButtonTapped(_ sender: UIButton) {
         // しおり名を登録
-        let shioriName = shioriNameTextField.text ?? "しおり名"
-        print("shioriNameの内容: \(shioriName)")
+        selectedShioriName = shioriNameTextField.text ?? "しおり名"
+        print("shioriNameの内容: \(selectedShioriName)")
         
         // TODO: あとでしおり名、開始日終了日、背景の色の保存処理を実装
     }
     
     /// 赤を選択
     @IBAction private func redButtonTapped(_ sender: UIButton) {
-        let hexColor = UIColor(hex: "#FFA5A5")
-        changeBackGroundColor(to: hexColor)
-        selectBackColorButton(sender)
+        let hex = "#FFA5A5"
+        selectBackColorButton(sender, hexColor: hex)
     }
     
     /// ピンクを選択
     @IBAction private func pinkButtonTapped(_ sender: UIButton) {
-        let hexColor = UIColor(hex: "#FFC1E4")
-        changeBackGroundColor(to: hexColor)
-        selectBackColorButton(sender)
+        let hex = "#FFC1E4"
+        selectBackColorButton(sender, hexColor: hex)
     }
     
     /// 紫を選択
     @IBAction private func purpleButtonTapped(_ sender: UIButton) {
-        let hexColor = UIColor(hex: "#D1A0FF")
-        changeBackGroundColor(to: hexColor)
-        selectBackColorButton(sender)
+        let hex = "#D1A0FF"
+        selectBackColorButton(sender, hexColor: hex)
     }
     
     /// 青を選択
     @IBAction private func buleButtonTapped(_ sender: UIButton) {
-        let hexColor = UIColor(hex: "#B4B3FF")
-        changeBackGroundColor(to: hexColor)
-        selectBackColorButton(sender)
+        let hex = "#B4B3FF"
+        selectBackColorButton(sender, hexColor: hex)
     }
     
     /// 水色を選択
     @IBAction private func skyBuleButtonTapped(_ sender: UIButton) {
-        let hexColor = UIColor(hex: "#A5FFF9")
-        changeBackGroundColor(to: hexColor)
-        selectBackColorButton(sender)
+        let hex = "#A5FFF9"
+        selectBackColorButton(sender, hexColor: hex)
     }
     
     /// 緑を選択
     @IBAction private func greenButtonTapped(_ sender: UIButton) {
-        let hexColor = UIColor(hex: "#B8FFBF")
-        changeBackGroundColor(to: hexColor)
-        selectBackColorButton(sender)
+        let hex = "#B8FFBF"
+        selectBackColorButton(sender, hexColor: hex)
     }
     
     /// 黄緑色を選択
     @IBAction private func lightGreenButtonTapped(_ sender: UIButton) {
-        let hexColor = UIColor(hex: "#E2FF0C")
-        changeBackGroundColor(to: hexColor)
-        selectBackColorButton(sender)
+        let hex = "#E2FF0C"
+        selectBackColorButton(sender, hexColor: hex)
     }
     
     /// 黄色を選択
     @IBAction private func yellowButtonTapped(_ sender: UIButton) {
-        let hexColor = UIColor(hex: "#FFF755")
-        changeBackGroundColor(to: hexColor)
-        selectBackColorButton(sender)
+        let hex = "#FFF755"
+        selectBackColorButton(sender, hexColor: hex)
     }
     
     /// 橙を選択
     @IBAction private func orangeButtonTapped(_ sender: UIButton) {
-        let hexColor = UIColor(hex: "#F9D293")
-        changeBackGroundColor(to: hexColor)
-        selectBackColorButton(sender)
+        let hex = "#F9D293"
+        selectBackColorButton(sender, hexColor: hex)
     }
     
     /// 白を選択
     @IBAction private func whiteButtonTapped(_ sender: UIButton) {
-        let hexColor = UIColor(hex: "#FFFFFF")
-        changeBackGroundColor(to: hexColor)
-        selectBackColorButton(sender)
+        let hex = "#FFFFFF"
+        selectBackColorButton(sender, hexColor: hex)
     }
     
     // MARK: - Other Methods
@@ -220,7 +217,7 @@ final class CreateShioriViewController: UIViewController {
         }
     }
     
-    private func selectBackColorButton(_ selectedButton: UIButton) {
+    private func selectBackColorButton(_ selectedButton: UIButton, hexColor: String) {
         colorButtons.forEach { buttons in
             // 他のボタンを選択時は黒枠線に戻す
             buttons.layer.borderWidth = 1
@@ -230,6 +227,11 @@ final class CreateShioriViewController: UIViewController {
         // 選択時青い太い枠線を付ける
         selectedButton.layer.borderWidth = 3
         selectedButton.layer.borderColor = UIColor.systemBlue.cgColor
+        
+        // 選択した色のHexをプロパティに保存
+        selectedBackgroundColor = hexColor
+        // 確認用
+        print("変更後の背景色: \(hexColor)")
     }
 }
 
