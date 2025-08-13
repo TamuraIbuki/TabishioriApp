@@ -48,9 +48,9 @@ final class CreateShioriViewController: UIViewController {
     @IBAction private func createButtonTapped(_ sender: UIButton) {
         // しおり名を登録
         let shioriName = shioriNameTextField.text ?? "しおり名"
-        let shioriViewController = ShioriViewController()
-        shioriViewController.commonShioriName = shioriName
-        print("shioriNameの内容: \(shioriViewController.commonShioriName)")
+        print("shioriNameの内容: \(shioriName)")
+        
+        // TODO: あとでしおり名、開始日終了日、背景の色の保存処理を実装
     }
     
     /// 赤を選択
