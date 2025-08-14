@@ -29,7 +29,7 @@ final class ShioriViewController: UIViewController {
     private var currentIndex = 0
     
     // しおり仮データ
-    var commonShioriName = "マレーシア旅行"
+    let commonShioriName = "マレーシア旅行"
     let commonDateRange = "2025.6.23〜2025.6.28"
     let commonTotalCost = "合計費用：¥120,000"
    
