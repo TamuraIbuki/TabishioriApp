@@ -16,6 +16,10 @@ final class CreateShioriViewController: UIViewController {
     private var selectedShioriName: String = ""
     /// 背景色
     private var selectedBackgroundColor: String = ""
+    /// 開始日
+    private var selectedStartDate: Date?
+    /// 終了日
+    private var selectedEndDate: Date?
     
     // MARK: - IBOutlets
     
@@ -47,6 +51,15 @@ final class CreateShioriViewController: UIViewController {
         setupFont()
         configureTextField()
         configureNavigationBar()
+        
+        // 日付を取得
+        attachCalendarPopup(to: startDateTextField) { [weak self] date in
+            self?.selectedStartDate = date
+        }
+        
+        attachCalendarPopup(to: endDateTextField) { [weak self] date in
+            self?.selectedEndDate = date
+        }
     }
     
     // MARK: - IBActions
@@ -55,7 +68,10 @@ final class CreateShioriViewController: UIViewController {
     @IBAction private func createButtonTapped(_ sender: UIButton) {
         // しおり名を登録
         selectedShioriName = shioriNameTextField.text ?? "しおり名"
+        
         print("shioriNameの内容: \(selectedShioriName)")
+        print("selectedStartDay: \(String(describing: selectedStartDate))")
+        print("selectedEndtDay: \(String(describing: selectedEndDate))")
         
         // TODO: あとでしおり名、開始日終了日、背景の色の保存処理を実装
     }
