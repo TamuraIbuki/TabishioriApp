@@ -8,7 +8,7 @@
 import UIKit
 
 /// カレンダーポップアップのヘルパークラス
-class CalendarPopupHandler: NSObject, UITextFieldDelegate {
+final class CalendarPopupHandler: NSObject, UITextFieldDelegate {
     
     // MARK: - Stored Properties
     
