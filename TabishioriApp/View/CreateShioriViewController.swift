@@ -20,6 +20,8 @@ final class CreateShioriViewController: UIViewController {
     private var selectedStartDate: Date?
     /// 終了日
     private var selectedEndDate: Date?
+    /// RealmManagerのシングルトンインスタンスを取得
+    let realmManager = RealmManager.shared
     
     // MARK: - IBOutlets
     
@@ -73,7 +75,7 @@ final class CreateShioriViewController: UIViewController {
         print("selectedStartDay: \(String(describing: selectedStartDate))")
         print("selectedEndtDay: \(String(describing: selectedEndDate))")
         
-        // TODO: あとでしおり名、開始日終了日、背景の色の保存処理を実装
+        shioriCreate()
     }
     
     /// 赤を選択
@@ -228,6 +230,62 @@ final class CreateShioriViewController: UIViewController {
         selectedBackgroundColor = hexColor
         // 確認用
         print("変更後の背景色: \(hexColor)")
+    }
+    
+    ///しおりを登録する
+    private func shioriCreate() {
+        // しおり名がない場合
+        if selectedShioriName.isEmpty {
+            showAlert(title: "しおり名がありません")
+            return
+        }
+        
+        // 開始日がない場合
+        guard let startDate = selectedStartDate else {
+            showAlert(title: "開始日がありません")
+            return
+        }
+        
+        // 終了日がない場合
+        guard let endDate = selectedEndDate else {
+            showAlert(title: "終了日がありません")
+            return
+        }
+        
+        // 終了日が開始日よりも前になっている場合
+        guard startDate <= endDate else {
+            showAlert(title: "終了日は開始日以降にしてください")
+            return
+        }
+        
+        // 背景色が未選択の場合は白を設定
+        if selectedBackgroundColor.isEmpty {
+            selectedBackgroundColor = "#FFFFFF"
+        }
+        
+        let dataModel = ShioriDataModel()
+        dataModel.shioriName = selectedShioriName
+        dataModel.startDate = startDate
+        dataModel.endDate = endDate
+        dataModel.backgroundColor = selectedBackgroundColor
+        
+        realmManager.addShiori(dataModel, onSuccess: {
+            // 成功時の処理
+            print("Object added successfully")
+            self.showAlert(title: "保存しました")
+        }, onFailure: { error in
+            // 失敗時の処理
+            print("Failed to add object to Realm: \(error)")
+        })
+    }
+    
+    /// アラートを表示
+    private func showAlert(title: String) {
+        let alert = UIAlertController(title: title,
+                                      message: "",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
