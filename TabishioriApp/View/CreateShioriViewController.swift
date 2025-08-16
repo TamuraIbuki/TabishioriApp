@@ -299,7 +299,7 @@ final class CreateShioriViewController: UIViewController {
         dataModel.endDate = endDate
         dataModel.backgroundColor = selectedBackgroundColor
         
-        realmManager.addShiori(dataModel, onSuccess: {
+        realmManager.add(dataModel, onSuccess: {
             // 成功時の処理
             print("Object added successfully")
             self.showAlert(title: "登録しました")

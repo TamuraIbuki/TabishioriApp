@@ -36,7 +36,7 @@ final class RealmManager {
     // MARK: - Other Methods
     
     /// Create: オブジェクトをRealmに追加
-    func addShiori<Shiori: Object>(_ object: Shiori,
+    func add<T: Object>(_ object: T,
                                    onSuccess: (() -> Void)? = nil,
                                    onFailure: ((Error) -> Void)? = nil) {
         do {
@@ -50,11 +50,11 @@ final class RealmManager {
     }
     
     /// Read: オブジェクトを取得
-    func getShiori<Shiori: Object>(_ type: Shiori.Type) -> Results<Shiori> {
+    func getObjects<T: Object>(_ type: T.Type) -> Results<T> {
         return realm.objects(type)
     }
     
-    func updateShiori(onSuccess: (() -> Void)? = nil,
+    func update(onSuccess: (() -> Void)? = nil,
                       onFailure: ((Error) -> Void)? = nil,
                       _ block: () -> Void) {
         do {
@@ -68,7 +68,7 @@ final class RealmManager {
     }
     
     /// Delete: オブジェクトを削除
-    func deleteShiori<Shiori: Object>(_ object: Shiori,
+    func delete<T: Object>(_ object: T,
                                       onSuccess: (() -> Void)? = nil,
                                       onFailure: ((Error) -> Void)? = nil) {
         do {
