@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 /// Rrealmの管理クラス
-class RealmManager {
+final class RealmManager {
     
     // MARK: - Type Properties
     
