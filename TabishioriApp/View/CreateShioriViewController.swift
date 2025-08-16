@@ -75,7 +75,7 @@ final class CreateShioriViewController: UIViewController {
         print("selectedStartDay: \(String(describing: selectedStartDate))")
         print("selectedEndtDay: \(String(describing: selectedEndDate))")
         
-        shioriCreate()
+        validateShioriForm()
     }
     
     /// 赤を選択
@@ -232,31 +232,39 @@ final class CreateShioriViewController: UIViewController {
         print("変更後の背景色: \(hexColor)")
     }
     
-    ///しおりを登録する
-    private func shioriCreate() {
+    /// バリデーション
+    private func validateShioriForm() {
+        var validateTitles: [String] = []
+        let validateMessage = "%@がありません"
+        
         // しおり名がない場合
         if selectedShioriName.isEmpty {
-            showAlert(title: "しおり名がありません")
-            return
+            validateTitles.append("「しおり名」")
         }
         
         // 開始日がない場合
-        guard let startDate = selectedStartDate else {
-            showAlert(title: "開始日がありません")
-            return
+        if selectedStartDate == nil {
+            validateTitles.append("「開始日」")
         }
         
         // 終了日がない場合
-        guard let endDate = selectedEndDate else {
-            showAlert(title: "終了日がありません")
-            return
+        if selectedEndDate == nil {
+            validateTitles.append("「終了日」")
         }
         
-        // 終了日が開始日よりも前になっている場合
-        guard startDate <= endDate else {
-            showAlert(title: "終了日は開始日以降にしてください")
-            return
+        if validateTitles.isEmpty {
+            // 未入力項目がない場合、登録処理を行う
+            let startDate = selectedStartDate!
+            let endDate = selectedEndDate!
+            shioriCreate(startDate: startDate, endDate: endDate)
+        } else {
+            // 未入力項目がある場合、アラートを表示
+            showAlert(title: String(format: validateMessage, validateTitles.joined(separator: "、")))
         }
+    }
+
+    ///しおりを登録する
+    private func shioriCreate(startDate: Date, endDate: Date) {
         
         // 背景色が未選択の場合は白を設定
         if selectedBackgroundColor.isEmpty {
