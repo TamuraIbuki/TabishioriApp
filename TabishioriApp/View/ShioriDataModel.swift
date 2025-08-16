@@ -8,6 +8,7 @@
 import Foundation
 import RealmSwift
 
+/// しおりデータのモデル
 final class ShioriDataModel: Object {
     @Persisted var shioriName: String = UUID().uuidString
     @Persisted var startDate: Date
