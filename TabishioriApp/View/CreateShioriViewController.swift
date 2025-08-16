@@ -57,10 +57,12 @@ final class CreateShioriViewController: UIViewController {
         // 日付を取得
         attachCalendarPopup(to: startDateTextField) { [weak self] date in
             self?.selectedStartDate = date
+            self?.checkAndSwapDates()
         }
         
         attachCalendarPopup(to: endDateTextField) { [weak self] date in
             self?.selectedEndDate = date
+            self?.checkAndSwapDates()
         }
     }
     
@@ -260,6 +262,26 @@ final class CreateShioriViewController: UIViewController {
         } else {
             // 未入力項目がある場合、アラートを表示
             showAlert(title: String(format: validateMessage, validateTitles.joined(separator: "、")))
+        }
+    }
+    
+    /// 開始日終了日の逆転をチェック
+    private func checkAndSwapDates() {
+        // 開始日より終了日が前だったら逆転させる
+        if let startDate = selectedStartDate,
+           let endDate = selectedEndDate,
+           startDate > endDate {
+            selectedStartDate = endDate
+            selectedEndDate = startDate
+            
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "ja_JP")
+            formatter.dateFormat = "yyyy年M月d日"
+            
+            startDateTextField.text = formatter.string(from: selectedStartDate!)
+            endDateTextField.text = formatter.string(from: selectedEndDate!)
+            
+            print("開始日と終了日を入れ替えました")
         }
     }
 
