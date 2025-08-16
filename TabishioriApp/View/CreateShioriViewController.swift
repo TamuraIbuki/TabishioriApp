@@ -256,7 +256,7 @@ final class CreateShioriViewController: UIViewController {
             // 未入力項目がない場合、登録処理を行う
             let startDate = selectedStartDate!
             let endDate = selectedEndDate!
-            shioriCreate(startDate: startDate, endDate: endDate)
+            createShiori(startDate: startDate, endDate: endDate)
         } else {
             // 未入力項目がある場合、アラートを表示
             showAlert(title: String(format: validateMessage, validateTitles.joined(separator: "、")))
@@ -264,7 +264,7 @@ final class CreateShioriViewController: UIViewController {
     }
 
     ///しおりを登録する
-    private func shioriCreate(startDate: Date, endDate: Date) {
+    private func createShiori(startDate: Date, endDate: Date) {
         
         // 背景色が未選択の場合は白を設定
         if selectedBackgroundColor.isEmpty {
