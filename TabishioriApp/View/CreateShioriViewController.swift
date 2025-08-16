@@ -280,10 +280,11 @@ final class CreateShioriViewController: UIViewController {
         realmManager.addShiori(dataModel, onSuccess: {
             // 成功時の処理
             print("Object added successfully")
-            self.showAlert(title: "保存しました")
+            self.showAlert(title: "登録しました")
         }, onFailure: { error in
             // 失敗時の処理
             print("Failed to add object to Realm: \(error)")
+            self.showAlert(title: "登録に失敗しました")
         })
     }
     
