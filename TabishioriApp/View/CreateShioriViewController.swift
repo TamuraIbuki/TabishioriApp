@@ -20,6 +20,8 @@ final class CreateShioriViewController: UIViewController {
     private var selectedStartDate: Date?
     /// 終了日
     private var selectedEndDate: Date?
+    /// RealmManagerのシングルトンインスタンスを取得
+    let realmManager = RealmManager.shared
     
     // MARK: - IBOutlets
     
@@ -55,10 +57,12 @@ final class CreateShioriViewController: UIViewController {
         // 日付を取得
         attachCalendarPopup(to: startDateTextField) { [weak self] date in
             self?.selectedStartDate = date
+            self?.checkAndSwapDates()
         }
         
         attachCalendarPopup(to: endDateTextField) { [weak self] date in
             self?.selectedEndDate = date
+            self?.checkAndSwapDates()
         }
     }
     
@@ -73,7 +77,7 @@ final class CreateShioriViewController: UIViewController {
         print("selectedStartDay: \(String(describing: selectedStartDate))")
         print("selectedEndtDay: \(String(describing: selectedEndDate))")
         
-        // TODO: あとでしおり名、開始日終了日、背景の色の保存処理を実装
+        validateShioriForm()
     }
     
     /// 赤を選択
@@ -228,6 +232,91 @@ final class CreateShioriViewController: UIViewController {
         selectedBackgroundColor = hexColor
         // 確認用
         print("変更後の背景色: \(hexColor)")
+    }
+    
+    /// バリデーション
+    private func validateShioriForm() {
+        var validateTitles: [String] = []
+        let validateMessage = "%@がありません"
+        
+        // しおり名がない場合
+        if selectedShioriName.isEmpty {
+            validateTitles.append("「しおり名」")
+        }
+        
+        // 開始日がない場合
+        if selectedStartDate == nil {
+            validateTitles.append("「開始日」")
+        }
+        
+        // 終了日がない場合
+        if selectedEndDate == nil {
+            validateTitles.append("「終了日」")
+        }
+        
+        if validateTitles.isEmpty {
+            // 未入力項目がない場合、登録処理を行う
+            let startDate = selectedStartDate!
+            let endDate = selectedEndDate!
+            createShiori(startDate: startDate, endDate: endDate)
+        } else {
+            // 未入力項目がある場合、アラートを表示
+            showAlert(title: String(format: validateMessage, validateTitles.joined(separator: "、")))
+        }
+    }
+    
+    /// 開始日終了日の逆転をチェック
+    private func checkAndSwapDates() {
+        // 開始日より終了日が前だったら逆転させる
+        if let startDate = selectedStartDate,
+           let endDate = selectedEndDate,
+           startDate > endDate {
+            selectedStartDate = endDate
+            selectedEndDate = startDate
+            
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "ja_JP")
+            formatter.dateFormat = "yyyy年M月d日"
+            
+            startDateTextField.text = formatter.string(from: selectedStartDate!)
+            endDateTextField.text = formatter.string(from: selectedEndDate!)
+            
+            print("開始日と終了日を入れ替えました")
+        }
+    }
+
+    ///しおりを登録する
+    private func createShiori(startDate: Date, endDate: Date) {
+        
+        // 背景色が未選択の場合は白を設定
+        if selectedBackgroundColor.isEmpty {
+            selectedBackgroundColor = "#FFFFFF"
+        }
+        
+        let dataModel = ShioriDataModel()
+        dataModel.shioriName = selectedShioriName
+        dataModel.startDate = startDate
+        dataModel.endDate = endDate
+        dataModel.backgroundColor = selectedBackgroundColor
+        
+        realmManager.add(dataModel, onSuccess: {
+            // 成功時の処理
+            print("Object added successfully")
+            self.showAlert(title: "登録しました")
+        }, onFailure: { error in
+            // 失敗時の処理
+            print("Failed to add object to Realm: \(error)")
+            self.showAlert(title: "登録に失敗しました")
+        })
+    }
+    
+    /// アラートを表示
+    private func showAlert(title: String) {
+        let alert = UIAlertController(title: title,
+                                      message: "",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
