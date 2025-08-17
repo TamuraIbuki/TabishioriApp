@@ -16,7 +16,7 @@ final class HomeViewController: UIViewController {
     /// RealmManagerのシングルトンインスタンスを取得
     private let realmManager = RealmManager.shared
     /// 取得したデータの格納先
-    private var data: Results<ShioriDataModel>!
+    private var data: Results<ShioriDataModel>?
     
     // MARK: - IBOutlets
     
@@ -110,10 +110,11 @@ final class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDataSource {
     /// セルの数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return data?.count ?? 0
     }
     /// セルを設定
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let data = data else { return UITableViewCell() }
         // カスタムセルを指定
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCellID",
                                                  for: indexPath)as! HomeTableViewCell
