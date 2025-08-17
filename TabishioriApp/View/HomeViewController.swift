@@ -6,9 +6,17 @@
 //
 
 import UIKit
+import RealmSwift
 
 /// Home画面
 final class HomeViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    /// RealmManagerのシングルトンインスタンスを取得
+    private let realmManager = RealmManager.shared
+    /// 取得したデータの格納先
+    private var data: Results<ShioriDataModel>!
     
     // MARK: - IBOutlets
     
@@ -24,8 +32,10 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupFont()
+        setBackground()
         configureTableView()
         tableView.delegate = self
+        fetchData()
     }
     
     // MARK: - IBActions
@@ -33,6 +43,10 @@ final class HomeViewController: UIViewController {
     /// 新しいしおりを作成ボタンをタップ
     @IBAction private func createButtonTapped(_ sender: UIButton) {
         let nextVC = CreateShioriViewController()
+        nextVC.onSaved = { [weak self] in
+            self?.fetchData()
+            self?.tableView.reloadData()
+        }
         let navi = UINavigationController(rootViewController: nextVC)
         navigationController?.present(navi, animated: true)
     }
@@ -67,6 +81,28 @@ final class HomeViewController: UIViewController {
         let nib = UINib(nibName: "HomeTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "HomeTableViewCellID")
     }
+    
+    /// しおりデータを取得する
+    private func fetchData() {
+        let results = realmManager.getObjects(ShioriDataModel.self)
+        data = results
+        tableView.reloadData()
+    }
+    
+    /// 日付をセットする
+    private func setDate(start: Date, end: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.dateFormat = "yyyy.MM.dd"
+        return "\(formatter.string(from: start))~\(formatter.string(from: end))"
+    }
+    
+    /// 背景を設定
+    private func setBackground(){
+        if let bgImage = UIImage(named: "ic_home_background") {
+            view.backgroundColor = UIColor(patternImage: bgImage)
+        }
+    }
 }
 
 // MARK: - Extentions
@@ -74,15 +110,17 @@ final class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDataSource {
     /// セルの数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return data.count
     }
     /// セルを設定
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // カスタムセルを指定
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCellID",
                                                  for: indexPath)as! HomeTableViewCell
-        // ここにセルに渡す処理を書く
-        cell.setup(shioriName: "マレーシア旅行", shioriDate: "2025.07.24~2025.07.28")
+        let item = data[indexPath.row]
+        cell.setup(shioriName: item.shioriName,
+                   shioriDate: setDate(start: item.startDate, end: item.endDate),
+                   backgroundColorHex: item.backgroundColor)
         return cell
     }
 }

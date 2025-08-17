@@ -22,6 +22,8 @@ final class CreateShioriViewController: UIViewController {
     private var selectedEndDate: Date?
     /// RealmManagerのシングルトンインスタンスを取得
     let realmManager = RealmManager.shared
+    /// しおり保存後に呼び出される処理
+    var onSaved: (() -> Void)?
     
     // MARK: - IBOutlets
     
@@ -72,11 +74,6 @@ final class CreateShioriViewController: UIViewController {
     @IBAction private func createButtonTapped(_ sender: UIButton) {
         // しおり名を登録
         selectedShioriName = shioriNameTextField.text ?? "しおり名"
-        
-        print("shioriNameの内容: \(selectedShioriName)")
-        print("selectedStartDay: \(String(describing: selectedStartDate))")
-        print("selectedEndtDay: \(String(describing: selectedEndDate))")
-        
         validateShioriForm()
     }
     
@@ -230,8 +227,6 @@ final class CreateShioriViewController: UIViewController {
         
         // 選択した色のHexをプロパティに保存
         selectedBackgroundColor = hexColor
-        // 確認用
-        print("変更後の背景色: \(hexColor)")
     }
     
     /// バリデーション
@@ -299,14 +294,23 @@ final class CreateShioriViewController: UIViewController {
         dataModel.endDate = endDate
         dataModel.backgroundColor = selectedBackgroundColor
         
-        realmManager.add(dataModel, onSuccess: {
+        realmManager.add(dataModel, onSuccess: { [weak self] in
             // 成功時の処理
-            print("Object added successfully")
-            self.showAlert(title: "登録しました")
-        }, onFailure: { error in
+            DispatchQueue.main.async {
+                print("Object added successfully")
+                let alert = UIAlertController(title: "登録しました", message: nil, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                    self?.onSaved?()
+                    self?.navigationController?.dismiss(animated: true)
+                })
+                self?.present(alert, animated: true)
+            }
+        }, onFailure: { [weak self] error in
             // 失敗時の処理
             print("Failed to add object to Realm: \(error)")
-            self.showAlert(title: "登録に失敗しました")
+            DispatchQueue.main.async {
+                self?.showAlert(title: "登録に失敗しました")
+            }
         })
     }
     
