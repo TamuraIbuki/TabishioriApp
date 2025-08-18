@@ -25,7 +25,7 @@ final class HomeTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func setup(shioriName: String, shioriDate: String) {
+    func setup(shioriName: String, shioriDate: String, backgroundColorHex: String) {
         let font = UIFont.setFontKiwiMaru(size: 24)
         
         // 日付ラベル処理
@@ -33,7 +33,8 @@ final class HomeTableViewCell: UITableViewCell {
         dateLabel.text = wrappedDate
         
         // 背景色
-        contentView.backgroundColor = UIColor(hex: "#F9D293")
+        let bgColor = UIColor(hex: backgroundColorHex)
+        contentView.backgroundColor = bgColor
         
         // ストローク用
         let strokeAttributes: [NSAttributedString.Key: Any] = [
@@ -44,10 +45,17 @@ final class HomeTableViewCell: UITableViewCell {
         ]
         shioriNameStrokeLabel.attributedText = NSAttributedString(string: shioriName,
                                                                   attributes: strokeAttributes)
+        // 背景が白の場合はテキストを黒色にする
+        let textColor: UIColor
+        if backgroundColorHex.uppercased() == "#FFFFFF" {
+            textColor = .black
+        } else {
+            textColor = bgColor
+        }
         
         // 塗り用（通常表示）
         shioriNameFillLabel.font = font
-        shioriNameFillLabel.textColor = UIColor(hex: "#FF9D00")
+        shioriNameFillLabel.textColor = textColor
         shioriNameFillLabel.text = shioriName
     }
 }
