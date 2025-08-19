@@ -10,6 +10,39 @@ import UIKit
 /// 新しい予定作成画面
 final class CreateShioriPlanViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    /// 日付
+    private var selectedDate: Date?
+    /// 開始時間
+    private var selectedStartTime: Date?
+    /// 終了時間
+    private var selectedEndTime: Date?
+    /// 予定の内容
+    private var selectedPlan: String = ""
+    /// 予約要否
+    private var selectedReservation: Bool = false
+    /// 費用
+    private var selectedCost: Int?
+    /// URL
+    private var selectedURL: String = ""
+    ///画像
+    private var selectedImage: String = ""
+    /// 日付ピッカー
+    private let datePickerDate = UIDatePicker()
+    /// 開始時間ピッカー
+    private let datePickerStartTime = UIDatePicker()
+    /// 終了時間ピッカー
+    private let datePickerEndTime = UIDatePicker()
+    /// 日付・時間取得のフォーマット
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = .init(identifier: "ja_JP")
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter
+    }()
+    
     // MARK: - IBOutlets
     
     /// 新しい予定追加のタイトルラベル
@@ -44,6 +77,8 @@ final class CreateShioriPlanViewController: UIViewController {
     @IBOutlet private weak var costTextField: UITextField!
     /// URL記入欄
     @IBOutlet private weak var urlTextField: UITextField!
+    /// 画像プレビュー
+    @IBOutlet private weak var planImageView: UIImageView!
     
     // MARK: - View Life-Cycle Methods
     
@@ -53,16 +88,48 @@ final class CreateShioriPlanViewController: UIViewController {
         configureTextField()
         configureTextView()
         configureNavigationBar()
+        configureDatePicker()
     }
     
     // MARK: - IBActions
     
     /// 要予約のチェックボックスをタップ
     @IBAction private func checkBoxButtonTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        selectedReservation = sender.isSelected
+        
+        if sender.isSelected {
+            sender.setImage(UIImage(named: "ic_check_box_in"), for: .normal)
+        } else {
+            sender.setImage(UIImage(named: "ic_check_box_out"), for: .normal)
+        }
     }
     
     /// 画像をを挿入するボタンをタップ
     @IBAction private func insertImageButtonTapped(_ sender: UIButton) {
+        // イメージピッカーを表示
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        present(imagePickerController, animated: true, completion: nil)
+     }
+    
+    /// 追加ボタンをタップ
+    @IBAction private func addButtonTapped(_ sender: UIButton) {
+        // 予定を登録
+        selectedPlan = planTextView.text
+        // 費用を登録
+        selectedCost = Int(costTextField.text ?? "")
+        // URLを登録
+        selectedURL = urlTextField.text ?? ""
+        // 確認用
+        print("selectedDate: \(String(describing: selectedDate))")
+        print("selectedStartTime: \(String(describing: selectedStartTime))")
+        print("selectedEndTime: \(String(describing: selectedEndTime))")
+        print("selectedPlan: \(selectedPlan)")
+        print("selectedReservation: \(selectedReservation)")
+        print("selectedCost: \(selectedCost?.description ?? "nil")")
+        print("selectedURL: \(selectedURL)")
     }
     
     // MARK: - Other Methods
@@ -158,6 +225,100 @@ final class CreateShioriPlanViewController: UIViewController {
     @objc func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
+    
+    private func configureDatePicker() {
+        
+        [datePickerDate, datePickerStartTime, datePickerEndTime].forEach {
+            $0.locale = .init(identifier: "ja_JP")
+            $0.preferredDatePickerStyle = .wheels
+        }
+        
+        let tb = configureToolbar()
+        
+        datePickerDate.datePickerMode = .date
+        datePickerDate.addTarget(self, action: #selector(dateChanged),  for: .valueChanged)
+        dateTextField.inputView = datePickerDate
+        dateTextField.inputAccessoryView = tb
+        
+        datePickerStartTime.datePickerMode = .time
+        datePickerStartTime.addTarget(self, action: #selector(startTimeChanged), for: .valueChanged)
+        startTimeTextField.inputView = datePickerStartTime
+        startTimeTextField.inputAccessoryView = tb
+        
+        datePickerEndTime.datePickerMode = .time
+        datePickerEndTime.addTarget(self, action: #selector(endTimeChanged),   for: .valueChanged)
+        endTimeTextField.inputView = datePickerEndTime
+        endTimeTextField.inputAccessoryView = tb
+    }
+
+    @objc private func dateChanged() {
+        dateTextField.text = dateFormat(datePickerDate.date, pattern: "yyyy年M月d日")
+        // 日付を登録
+        selectedDate = datePickerDate.date
+    }
+    
+    @objc private func startTimeChanged() {
+        startTimeTextField.text = dateFormat(datePickerStartTime.date, pattern: "HH:mm")
+        // 開始時間を登録
+        selectedStartTime = datePickerStartTime.date
+    }
+    @objc private func endTimeChanged() {
+        endTimeTextField.text = dateFormat(datePickerEndTime.date, pattern: "HH:mm")
+        // 終了時間を登録
+        selectedEndTime = datePickerEndTime.date
+    }
+    
+    private func dateFormat(_ date: Date, pattern: String) -> String {
+        dateFormatter.dateFormat = pattern
+        return dateFormatter.string(from: date)
+    }
+    
+    /// ツールバーの設定
+    private func configureToolbar() -> UIToolbar {
+        let toolbar = UIToolbar()
+        //let width = UIScreen.main.bounds.width
+        //let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: width, height: 44))
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "決定",
+                                         style: .done,
+                                         target: self,
+                                         action: #selector(doneButtonTapped))
+        let cancelButton = UIBarButtonItem(title: "キャンセル",
+                                           style: .plain,
+                                           target: self,
+                                           action: #selector(cancelButtonTapped))
+        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        //toolbar.setItems([cancelButton,
+                      //    UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
+                       //                   target: nil,
+                         //                 action: nil),
+                          //doneButton],
+                         //animated: false)
+        toolbar.items = [cancelButton, flex, doneButton]
+        return toolbar
+    }
+    
+    // 「決定」をタップ時
+    @objc private func doneButtonTapped() {
+        if dateTextField.isFirstResponder {
+            dateChanged()
+            dateTextField.resignFirstResponder()
+        } else if startTimeTextField.isFirstResponder {
+            startTimeChanged()
+            startTimeTextField.resignFirstResponder()
+        } else if endTimeTextField.isFirstResponder {
+            endTimeChanged()
+            endTimeTextField.resignFirstResponder()
+        }
+    }
+    
+    /// 「キャンセル」をタップ時
+    @objc private func cancelButtonTapped() {
+        // ピッカーを閉じる
+        view.endEditing(true)
+        // dateTextField.resignFirstResponder()
+    }
 }
 
 // MARK: - Extensions
@@ -182,5 +343,22 @@ extension CreateShioriPlanViewController: UITextViewDelegate {
             return false
         }
         return true
+    }
+}
+
+// MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate
+
+extension CreateShioriPlanViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage,
+           let imageData = image.jpegData(compressionQuality: 0.8) {
+            selectedImage = imageData.base64EncodedString()
+            planImageView.image = image
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
     }
 }

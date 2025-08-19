@@ -71,7 +71,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ns-is-Ye0">
-                                <rect key="frame" x="266" y="4" width="15" height="15"/>
+                                <rect key="frame" x="264" y="4" width="15" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="15" id="EY0-Jr-UCX"/>
                                     <constraint firstAttribute="height" constant="15" id="dKB-fc-Hbd"/>
@@ -98,7 +98,7 @@
                             <constraint firstAttribute="bottom" secondItem="ILO-gD-cpb" secondAttribute="bottom" constant="6" id="XUu-AR-BKq"/>
                             <constraint firstAttribute="trailing" secondItem="PqX-Le-Hgn" secondAttribute="trailing" constant="4" id="YC2-8j-2aB"/>
                             <constraint firstItem="swj-eW-R0T" firstAttribute="top" relation="greaterThanOrEqual" secondItem="IU3-6q-kZz" secondAttribute="bottom" constant="7" id="YDb-Iq-5l9"/>
-                            <constraint firstItem="PqX-Le-Hgn" firstAttribute="leading" secondItem="2ns-is-Ye0" secondAttribute="trailing" constant="3" id="Yfg-lY-VKX"/>
+                            <constraint firstItem="PqX-Le-Hgn" firstAttribute="leading" secondItem="2ns-is-Ye0" secondAttribute="trailing" constant="5" id="Yfg-lY-VKX"/>
                             <constraint firstItem="PqX-Le-Hgn" firstAttribute="centerY" secondItem="2ns-is-Ye0" secondAttribute="centerY" id="d9t-ep-qRs"/>
                             <constraint firstItem="swj-eW-R0T" firstAttribute="centerX" secondItem="5QU-oz-BNo" secondAttribute="centerX" id="gmc-39-Jyk"/>
                             <constraint firstItem="ILO-gD-cpb" firstAttribute="top" secondItem="P2f-2C-eTY" secondAttribute="bottom" constant="4" id="lCB-JZ-caK"/>
@@ -147,7 +147,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ic_check_box_out" width="15" height="15"/>
+        <image name="ic_check_box_out" width="30" height="30"/>
         <image name="ic_url" width="33" height="33"/>
     </resources>
 </document>
