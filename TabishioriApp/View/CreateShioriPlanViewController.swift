@@ -26,7 +26,7 @@ final class CreateShioriPlanViewController: UIViewController {
     private var selectedCost: Int?
     /// URL
     private var selectedURL: String = ""
-    ///画像
+    /// 画像
     private var selectedImage: String = ""
     /// 日付ピッカー
     private let datePickerDate = UIDatePicker()
