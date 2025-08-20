@@ -233,22 +233,22 @@ final class CreateShioriPlanViewController: UIViewController {
             $0.preferredDatePickerStyle = .wheels
         }
         
-        let tb = configureToolbar()
+        let pickerToolbar = configureToolbar()
         
         datePickerDate.datePickerMode = .date
         datePickerDate.addTarget(self, action: #selector(dateChanged),  for: .valueChanged)
         dateTextField.inputView = datePickerDate
-        dateTextField.inputAccessoryView = tb
+        dateTextField.inputAccessoryView = pickerToolbar
         
         datePickerStartTime.datePickerMode = .time
         datePickerStartTime.addTarget(self, action: #selector(startTimeChanged), for: .valueChanged)
         startTimeTextField.inputView = datePickerStartTime
-        startTimeTextField.inputAccessoryView = tb
+        startTimeTextField.inputAccessoryView = pickerToolbar
         
         datePickerEndTime.datePickerMode = .time
         datePickerEndTime.addTarget(self, action: #selector(endTimeChanged),   for: .valueChanged)
         endTimeTextField.inputView = datePickerEndTime
-        endTimeTextField.inputAccessoryView = tb
+        endTimeTextField.inputAccessoryView = pickerToolbar
     }
 
     @objc private func dateChanged() {
