@@ -291,7 +291,7 @@ final class CreateShioriPlanViewController: UIViewController {
         return toolbar
     }
     
-    // 「決定」をタップ時
+    ///「決定」をタップ時
     @objc private func doneButtonTapped() {
         if dateTextField.isFirstResponder {
             dateChanged()
