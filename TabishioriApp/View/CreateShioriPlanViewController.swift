@@ -261,12 +261,14 @@ final class CreateShioriPlanViewController: UIViewController {
         startTimeTextField.text = dateFormat(datePickerStartTime.date, pattern: "HH:mm")
         // 開始時間を登録
         selectedStartTime = datePickerStartTime.date
+        checkAndSwapTimes()
     }
     
     @objc private func endTimeChanged() {
         endTimeTextField.text = dateFormat(datePickerEndTime.date, pattern: "HH:mm")
         // 終了時間を登録
         selectedEndTime = datePickerEndTime.date
+        checkAndSwapTimes()
     }
     
     private func dateFormat(_ date: Date, pattern: String) -> String {
@@ -310,6 +312,25 @@ final class CreateShioriPlanViewController: UIViewController {
         // ピッカーを閉じる
         view.endEditing(true)
         // dateTextField.resignFirstResponder()
+    }
+    
+    /// 開始終了時間の逆転をチェック
+    private func checkAndSwapTimes() {
+        // 開始日より終了日が前だったら逆転させる
+        if let startTime = selectedStartTime,
+           let endTime = selectedEndTime,
+           startTime > endTime {
+            selectedStartTime = endTime
+            selectedEndTime = startTime
+            
+            datePickerStartTime.setDate(endTime, animated: true)
+            datePickerEndTime.setDate(startTime, animated: true)
+            
+            startTimeTextField.text = dateFormat(endTime, pattern: "HH:mm")
+            endTimeTextField.text   = dateFormat(startTime, pattern: "HH:mm")
+            
+            print("開始時間と終了時間を入れ替えました")
+        }
     }
 }
 
