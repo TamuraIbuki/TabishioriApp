@@ -277,8 +277,6 @@ final class CreateShioriPlanViewController: UIViewController {
     /// ツールバーの設定
     private func configureToolbar() -> UIToolbar {
         let toolbar = UIToolbar()
-        //let width = UIScreen.main.bounds.width
-        //let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: width, height: 44))
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(title: "決定",
                                          style: .done,
@@ -289,13 +287,6 @@ final class CreateShioriPlanViewController: UIViewController {
                                            target: self,
                                            action: #selector(cancelButtonTapped))
         let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
-        //toolbar.setItems([cancelButton,
-                      //    UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
-                       //                   target: nil,
-                         //                 action: nil),
-                          //doneButton],
-                         //animated: false)
         toolbar.items = [cancelButton, flex, doneButton]
         return toolbar
     }
