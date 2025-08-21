@@ -18,6 +18,7 @@
                 <outlet property="endTimeLabel" destination="IS1-36-ON3" id="qia-t6-bWJ"/>
                 <outlet property="endTimeTextField" destination="uyu-jS-KXW" id="PJ1-5i-v8b"/>
                 <outlet property="insertImageButton" destination="mWB-bk-1ER" id="K0Q-yS-IdY"/>
+                <outlet property="planImageView" destination="YTH-DL-nVM" id="kvr-50-lgN"/>
                 <outlet property="planLabel" destination="eRf-Ls-eSV" id="WeL-uZ-Gfo"/>
                 <outlet property="planTextView" destination="oT8-xJ-Pn5" id="L7J-mR-fdK"/>
                 <outlet property="reservationLabel" destination="Ce9-Ae-iUE" id="pgM-pQ-EqN"/>
@@ -59,6 +60,9 @@
                             <integer key="value" value="8"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="addButtonTapped:" destination="-1" eventType="touchUpInside" id="GHs-V3-eyK"/>
+                    </connections>
                 </button>
                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r3y-RT-FZn">
                     <rect key="frame" x="125" y="207" width="173" height="33"/>
@@ -130,7 +134,7 @@
                         <constraint firstAttribute="width" constant="263" id="xBD-NK-Ged"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                 </textField>
                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1BQ-e8-wgK">
                     <rect key="frame" x="81" y="481.33333333333331" width="263" height="32.999999999999943"/>
@@ -167,11 +171,10 @@
                         <action selector="insertImageButtonTapped:" destination="-1" eventType="touchUpInside" id="kyQ-7h-C4x"/>
                     </connections>
                 </button>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_sample" translatesAutoresizingMaskIntoConstraints="NO" id="YTH-DL-nVM">
-                    <rect key="frame" x="38" y="522.33333333333337" width="188" height="188"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YTH-DL-nVM">
+                    <rect key="frame" x="38" y="522.33333333333337" width="188" height="153.66666666666663"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="188" id="9Ij-pY-xUZ"/>
-                        <constraint firstAttribute="height" constant="188" id="HRk-6n-gly"/>
                     </constraints>
                 </imageView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="oT8-xJ-Pn5">
@@ -201,6 +204,7 @@
                 <constraint firstItem="6Yp-Ha-m9l" firstAttribute="top" secondItem="cQY-mj-OqS" secondAttribute="bottom" constant="17" id="GIo-bj-rQ9"/>
                 <constraint firstItem="YTH-DL-nVM" firstAttribute="leading" secondItem="6Yp-Ha-m9l" secondAttribute="leading" id="J0o-lk-Vaf"/>
                 <constraint firstItem="Rbx-uK-GOb" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="38" id="LeZ-5Z-Ufp"/>
+                <constraint firstItem="h6g-h1-0Ny" firstAttribute="top" secondItem="YTH-DL-nVM" secondAttribute="bottom" constant="10" id="NgJ-CP-xI9"/>
                 <constraint firstItem="mWB-bk-1ER" firstAttribute="top" secondItem="1BQ-e8-wgK" secondAttribute="bottom" constant="15" id="NpK-wR-LnT"/>
                 <constraint firstItem="eRf-Ls-eSV" firstAttribute="leading" secondItem="IS1-36-ON3" secondAttribute="leading" id="W2g-4I-NIR"/>
                 <constraint firstItem="O08-qB-Fg6" firstAttribute="centerY" secondItem="cQY-mj-OqS" secondAttribute="centerY" id="W4i-R9-Le3"/>
@@ -234,7 +238,6 @@
     </objects>
     <resources>
         <image name="ic_check_box_out" width="15" height="15"/>
-        <image name="ic_sample" width="1416" height="1191"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
