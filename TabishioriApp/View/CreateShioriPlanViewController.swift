@@ -355,7 +355,7 @@ final class CreateShioriPlanViewController: UIViewController {
         if validateTitles.isEmpty {
             // 日付と内容が記載されている場合、登録処理を行う
             let planDate = selectedDate!
-            recordPlanData(planDate: planDate)
+            savePlanData(planDate: planDate)
         } else {
             // 未入力項目がある場合、アラートを表示
             showAlert(title: String(format: validateMessage, validateTitles.joined(separator: "、")))
@@ -363,7 +363,7 @@ final class CreateShioriPlanViewController: UIViewController {
     }
     
     /// データを保存する
-    private func recordPlanData(planDate: Date) {
+    private func savePlanData(planDate: Date) {
         let planDataModel = PlanDataModel()
         planDataModel.planDate = planDate
         planDataModel.startTime = selectedStartTime
