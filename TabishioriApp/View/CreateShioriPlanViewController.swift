@@ -34,6 +34,8 @@ final class CreateShioriPlanViewController: UIViewController {
     private let datePickerStartTime = UIDatePicker()
     /// 終了時間ピッカー
     private let datePickerEndTime = UIDatePicker()
+    /// RealmManagerのシングルトンインスタンスを登録
+    let realmManager = RealmManager.shared
     /// 日付・時間取得のフォーマット
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -42,8 +44,6 @@ final class CreateShioriPlanViewController: UIViewController {
         formatter.timeStyle = .none
         return formatter
     }()
-    /// RealmManagerのシングルトンインスタンスを登録
-    let realmManager = RealmManager.shared
     
     // MARK: - IBOutlets
     
