@@ -19,13 +19,15 @@ final class ShioriViewController: UIViewController {
     
     // MARK: - Stored Properties
     
+    /// ページ管理用の UIPageViewController
     private let pageViewController: UIPageViewController = {
         return UIPageViewController(transitionStyle: .scroll,
                                     navigationOrientation: .horizontal,
                                     options: nil)
     }()
-    
+    /// 表示するページ一覧
     private var pages: [UIViewController] = []
+    /// 現在表示しているページのインデックス
     private var currentIndex = 0
     
     // しおり仮データ
@@ -61,6 +63,12 @@ final class ShioriViewController: UIViewController {
     /// 予定追加ボタンをタップ
     @IBAction private func addPlanButtonTapped(_ sender: UIButton) {
         let nextVC = CreateShioriPlanViewController()
+        nextVC.onSaved = { [weak self] in
+            DispatchQueue.main.async {
+                (self?.pageViewController.viewControllers?.first as? ShioriContentViewController)?
+                    .fetchData()
+            }
+        }
         let navi = UINavigationController(rootViewController: nextVC)
         navigationController?.present(navi, animated: true)
     }
