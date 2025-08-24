@@ -36,6 +36,8 @@ final class CreateShioriPlanViewController: UIViewController {
     private let datePickerEndTime = UIDatePicker()
     /// RealmManagerのシングルトンインスタンスを登録
     let realmManager = RealmManager.shared
+    /// しおり保存後に呼び出される処理
+    var onSaved: (() -> Void)?
     /// 日付・時間取得のフォーマット
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -347,6 +349,11 @@ final class CreateShioriPlanViewController: UIViewController {
             validateTitles.append("「日付」")
         }
         
+        // 開始時間がない場合
+        if selectedStartTime == nil {
+            validateTitles.append("「開始時間」")
+        }
+        
         // 予定内容がない場合
         if selectedPlan.isEmpty {
             validateTitles.append("「内容」")
@@ -355,7 +362,8 @@ final class CreateShioriPlanViewController: UIViewController {
         if validateTitles.isEmpty {
             // 日付と内容が記載されている場合、登録処理を行う
             let planDate = selectedDate!
-            savePlanData(planDate: planDate)
+            let startTime = selectedStartTime!
+            savePlanData(planDate: planDate, startTime: startTime)
         } else {
             // 未入力項目がある場合、アラートを表示
             showAlert(title: String(format: validateMessage, validateTitles.joined(separator: "、")))
@@ -363,10 +371,10 @@ final class CreateShioriPlanViewController: UIViewController {
     }
     
     /// データを保存する
-    private func savePlanData(planDate: Date) {
+    private func savePlanData(planDate: Date, startTime: Date) {
         let planDataModel = PlanDataModel()
         planDataModel.planDate = planDate
-        planDataModel.startTime = selectedStartTime
+        planDataModel.startTime = startTime
         planDataModel.endTime = selectedEndTime
         planDataModel.planContent = selectedPlan
         planDataModel.planReservation = selectedReservation
@@ -374,14 +382,22 @@ final class CreateShioriPlanViewController: UIViewController {
         planDataModel.planURL = selectedURL
         planDataModel.planImage = selectedImage
         
-        realmManager.add(planDataModel, onSuccess: {
+        realmManager.add(planDataModel, onSuccess: { [weak self] in
             // 成功時の処理
-            print("Object added successfully")
-            self.showAlert(title: "登録しました")
-        }, onFailure: { error in
+            DispatchQueue.main.async {
+                print("Object added successfully")
+                let alert = UIAlertController(title: "登録しました", message: nil, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                    self?.onSaved?()
+                    self?.navigationController?.dismiss(animated: true)
+                })
+                self?.present(alert, animated: true)
+            }
+        }, onFailure: { [weak self] error in
             // 失敗の処理
-            print("Failed to add object to Realm: \(error)")
-            self.showAlert(title: "登録に失敗しました")
+            DispatchQueue.main.async {
+                self?.showAlert(title: "登録に失敗しました")
+            }
         })
     }
     

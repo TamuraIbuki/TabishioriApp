@@ -6,14 +6,10 @@
 //
 
 import UIKit
+import RealmSwift
 
 /// しおり予定編集画面
 final class EditShioriPlanViewController: UIViewController {
-    
-    // MARK: - Stored Properties
-    
-    /// しおり仮データ
-    private var scheduleItem = ShioriDummyData.scheduleItems
 
     // MARK: - IBOutlets
     
@@ -31,6 +27,10 @@ final class EditShioriPlanViewController: UIViewController {
     @IBOutlet private weak var totalCostView: UIView!
     /// 予定一覧テーブルビュー
     @IBOutlet private weak var planTableView: UITableView!
+    /// RealmManagerのシングルトンインスタンスを取得
+    private let realmManager = RealmManager.shared
+    /// 取得したデータの格納先
+    private var data: Results<PlanDataModel>?
     
     // MARK: - View Life-Cycle Methods
     
@@ -39,6 +39,7 @@ final class EditShioriPlanViewController: UIViewController {
         configureNavigationBar()
         setupUI()
         configureTableView()
+        fetchData()
     }
     
     // MARK: - IBActions
@@ -105,6 +106,30 @@ final class EditShioriPlanViewController: UIViewController {
         planTableView.rowHeight = UITableView.automaticDimension
         planTableView.estimatedRowHeight = 100
     }
+    
+    /// 予定データを取得する
+    private func fetchData() {
+        let results = realmManager.getObjects(PlanDataModel.self)
+        data = results
+        planTableView.reloadData()
+    }
+    
+    /// データモデルをCellに渡せる形にする
+    private func makeScheduleItem(from plan: PlanDataModel) -> ShioriPlanTableViewCell.ScheduleItem {
+        let trimmedURL = plan.planURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        let hasURL = !trimmedURL.isEmpty
+        let rawImage = plan.planImage?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let imageName: String? = (rawImage?.isEmpty == false) ? rawImage : nil
+
+        
+        return .init(startTime: plan.startTime,
+                     endTime: plan.endTime,
+                     plan: plan.planContent,
+                     isReserved: plan.planReservation,
+                     cost: plan.planCost,
+                     hasURL: hasURL,
+                     planImage: imageName)
+    }
 }
 
 // MARK: - Extentions
@@ -112,7 +137,7 @@ final class EditShioriPlanViewController: UIViewController {
 extension EditShioriPlanViewController: UITableViewDataSource {
     /// セルの数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return scheduleItem.count
+        return data?.count ?? 0
     }
     
     /// セルを設定
@@ -126,8 +151,10 @@ extension EditShioriPlanViewController: UITableViewDataSource {
         
         cell.delegate = self
         // セルに渡す処理
-        let item = scheduleItem[indexPath.row]
-        cell.configurePlan(with: item, isEditMode: true)
+        if let item = data?[indexPath.row] {
+            let item = makeScheduleItem(from: item)
+            cell.configurePlan(with: item, isEditMode: true)
+        }
         return cell
     }
 }
@@ -135,7 +162,6 @@ extension EditShioriPlanViewController: UITableViewDataSource {
 extension EditShioriPlanViewController: ShioriPlanTableViewCellDelegate {
     func didTapRightButton(in cell: ShioriPlanTableViewCell) {
         if let indexPath = planTableView.indexPath(for: cell) {
-            let item = scheduleItem[indexPath.row]
             let nextVC = EditShioriPlanDetailViewController()
             navigationController?.pushViewController(nextVC, animated: true)
         }

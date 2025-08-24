@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 /// しおりの中身の画面
 final class ShioriContentViewController: UIViewController {
@@ -22,8 +23,10 @@ final class ShioriContentViewController: UIViewController {
     private let day: String
     /// 合計費用ラベル
     private let totalCost: String
-    /// 予定仮データ
-    private var scheduleItem = ShioriDummyData.scheduleItems
+    /// RealmManagerのシングルトンインスタンスを取得
+    private let realmManager = RealmManager.shared
+    /// 取得したデータの格納先
+    private var data: Results<PlanDataModel>?
     
     // MARK: - IBOutlets
     
@@ -42,7 +45,6 @@ final class ShioriContentViewController: UIViewController {
     /// 予定一覧テーブルビュー
     @IBOutlet private weak var planTableView: UITableView!
     
-
     // MARK: - Initializers
     
     init(shioriName: String, dateRange: String, dayTitle: String, day: String, totalCost: String) {
@@ -64,6 +66,7 @@ final class ShioriContentViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         configureTableView()
+        fetchData()
     }
     
     // MARK: - Other Methods
@@ -97,40 +100,66 @@ final class ShioriContentViewController: UIViewController {
         planTableView.rowHeight = UITableView.automaticDimension
         planTableView.estimatedRowHeight = 100
     }
-}
-
-// MARK: - Extentions
-
-extension ShioriContentViewController: UITableViewDataSource {
-    /// セルの数
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return scheduleItem.count
+    
+    /// 予定データを取得する
+    func fetchData() {
+        let results = realmManager.getObjects(PlanDataModel.self)
+        data = results.sorted(byKeyPath: "startTime", ascending: true)
+        planTableView.reloadData()
     }
     
-    /// セルを設定
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // カスタムセルを指定
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShioriPlanTableViewCellID",
-                                                       for: indexPath) as? ShioriPlanTableViewCell
-        else {
-            return UITableViewCell()
+    /// データモデルをCellに渡せる形にする
+    private func makeScheduleItem(from plan: PlanDataModel) -> ShioriPlanTableViewCell.ScheduleItem {
+        let trimmedURL = plan.planURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        let hasURL = !trimmedURL.isEmpty
+        let rawImage = plan.planImage?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let imageName: String? = (rawImage?.isEmpty == false) ? rawImage : nil
+
+        
+        return .init(startTime: plan.startTime,
+                     endTime: plan.endTime,
+                     plan: plan.planContent,
+                     isReserved: plan.planReservation,
+                     cost: plan.planCost,
+                     hasURL: hasURL,
+                     planImage: imageName)
+    }
+}
+    
+    // MARK: - Extentions
+    
+    extension ShioriContentViewController: UITableViewDataSource {
+        /// セルの数
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return data?.count ?? 0
         }
         
-        cell.delegate = self
-        // セルに渡す処理
-        let item = scheduleItem[indexPath.row]
-        cell.configurePlan(with: item, isEditMode: false)
-        return cell
-    }
-}
-
-extension ShioriContentViewController: ShioriPlanTableViewCellDelegate {
-    func didTapRightButton(in cell: ShioriPlanTableViewCell) {
-        if let indexPath = planTableView.indexPath(for: cell) {
-            let item = scheduleItem[indexPath.row]
-            if let url = URL(string: "https://ios-academia.com/") {
-                UIApplication.shared.open(url)
+        /// セルを設定
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            // カスタムセルを指定
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShioriPlanTableViewCellID",
+                                                           for: indexPath) as? ShioriPlanTableViewCell
+            else {
+                return UITableViewCell()
             }
+            
+            cell.delegate = self
+            // セルに渡す処理
+            if let item = data?[indexPath.row] {
+                let item = makeScheduleItem(from: item)
+                cell.configurePlan(with: item, isEditMode: false)
+            }
+            return cell
         }
     }
-}
+    
+    extension ShioriContentViewController: ShioriPlanTableViewCellDelegate {
+        func didTapRightButton(in cell: ShioriPlanTableViewCell) {
+            if let indexPath = planTableView.indexPath(for: cell),
+               let urlString = data?[indexPath.row].planURL,
+               !urlString.isEmpty,
+               let url = URL(string: urlString) {
+                UIApplication.shared.open(url)
+                }
+            }
+        }
