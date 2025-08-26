@@ -7,9 +7,18 @@
 
 import UIKit
 
+// MARK: - Protocols
+
+/// デリゲートのプロトコル
+protocol ShioriViewControllerDelegate: AnyObject {
+    func fetchData()
+}
+
+// MARK: - Main Type
+
 /// しおり画面
 final class ShioriViewController: UIViewController {
-    
+        
     // MARK: - Structs
     
     struct ShioriPageData {
@@ -29,6 +38,8 @@ final class ShioriViewController: UIViewController {
     private var pages: [UIViewController] = []
     /// 現在表示しているページのインデックス
     private var currentIndex = 0
+    /// デリゲートのプロパティ
+    weak var delegate: ShioriViewControllerDelegate?
     
     // しおり仮データ
     let commonShioriName = "マレーシア旅行"
@@ -64,13 +75,13 @@ final class ShioriViewController: UIViewController {
     @IBAction private func addPlanButtonTapped(_ sender: UIButton) {
         let nextVC = CreateShioriPlanViewController()
         nextVC.onSaved = { [weak self] in
+            guard let self else { return }
             DispatchQueue.main.async {
-                (self?.pageViewController.viewControllers?.first as? ShioriContentViewController)?
-                    .fetchData()
+                self.delegate?.fetchData()
             }
         }
         let navi = UINavigationController(rootViewController: nextVC)
-        navigationController?.present(navi, animated: true)
+        self.present(navi, animated: true)
     }
     
     /// PDFボタンをタップ
@@ -91,6 +102,11 @@ final class ShioriViewController: UIViewController {
                                               animated: false,
                                               completion: nil)
         pageViewController.dataSource = self
+        
+        if let current = pageViewController.viewControllers?.first as? (UIViewController & ShioriViewControllerDelegate) {
+            current.loadViewIfNeeded()
+            self.delegate = current
+        }
     }
     
     private func configureBarButtonItems() {
@@ -180,5 +196,18 @@ extension ShioriViewController: UIPageViewControllerDataSource {
         guard let index = pages.firstIndex(of: viewController),
               index < pages.count - 1 else { return nil }
         return pages[index + 1]
+    }
+}
+
+extension ShioriViewController: UIPageViewControllerDelegate {
+    func pageViewController(_ pvc: UIPageViewController,
+                            didFinishAnimating finished: Bool,
+                            previousViewControllers: [UIViewController],
+                            transitionCompleted completed: Bool) {
+        guard completed,
+              let currentVC = pvc.viewControllers?.first as? UIViewController,
+              let reloader = currentVC as? ShioriViewControllerDelegate else { return }
+        currentVC.loadViewIfNeeded()
+        self.delegate = reloader
     }
 }

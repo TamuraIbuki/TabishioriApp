@@ -22,7 +22,7 @@ final class ShioriPlanTableViewCell: UITableViewCell {
     private static let timeFormatter: DateFormatter = {
         let timeFormatt = DateFormatter()
         timeFormatt.locale = Locale(identifier: "ja_JP")
-        timeFormatt.dateFormat = "hh:mm"
+        timeFormatt.dateFormat = "HH:mm"
         return timeFormatt
     } ()
     

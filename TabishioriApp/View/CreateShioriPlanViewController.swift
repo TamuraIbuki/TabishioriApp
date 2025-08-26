@@ -387,9 +387,12 @@ final class CreateShioriPlanViewController: UIViewController {
             DispatchQueue.main.async {
                 print("Object added successfully")
                 let alert = UIAlertController(title: "登録しました", message: nil, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-                    self?.onSaved?()
-                    self?.navigationController?.dismiss(animated: true)
+                alert.addAction(UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+                    guard let self = self else { return }
+                    self.presentingViewController?.dismiss(animated: true) { [weak self] in
+                        self?.onSaved?()
+                        self?.navigationController?.dismiss(animated: true)
+                    }
                 })
                 self?.present(alert, animated: true)
             }

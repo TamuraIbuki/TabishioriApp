@@ -24,7 +24,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P2f-2C-eTY">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P2f-2C-eTY">
                                 <rect key="frame" x="59.666666666666657" y="0.0" width="195" height="19"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="195" id="Vwo-Nq-E6T"/>
@@ -67,7 +67,7 @@
                                 <rect key="frame" x="59.666666666666657" y="23" width="120" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="Tc8-7F-ekL"/>
-                                    <constraint firstAttribute="height" constant="120" id="U0Z-oI-Msy"/>
+                                    <constraint firstAttribute="height" priority="750" constant="120" id="U0Z-oI-Msy"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ns-is-Ye0">
@@ -147,7 +147,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ic_check_box_out" width="30" height="30"/>
+        <image name="ic_check_box_out" width="15" height="15"/>
         <image name="ic_url" width="33" height="33"/>
     </resources>
 </document>
