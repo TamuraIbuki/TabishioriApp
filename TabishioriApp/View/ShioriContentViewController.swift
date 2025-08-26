@@ -90,7 +90,7 @@ final class ShioriContentViewController: UIViewController {
         totalCostLabel.font = .setFontZenMaruGothic(size: 13)
     }
     
-    func configureTableView() {
+    private func configureTableView() {
         planTableView.dataSource = self
         // カスタムセルを登録
         let nib = UINib(nibName: "ShioriPlanTableViewCell", bundle: nil)
@@ -102,7 +102,7 @@ final class ShioriContentViewController: UIViewController {
     }
     
     /// 予定データを取得する
-    func fetchData() {
+    private func fetchData() {
         let results = realmManager.getObjects(PlanDataModel.self)
         data = results.sorted(byKeyPath: "startTime", ascending: true)
         planTableView.reloadData()
