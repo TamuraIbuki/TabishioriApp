@@ -161,7 +161,7 @@ extension EditShioriPlanViewController: UITableViewDataSource {
 
 extension EditShioriPlanViewController: ShioriPlanTableViewCellDelegate {
     func didTapRightButton(in cell: ShioriPlanTableViewCell) {
-        if let indexPath = planTableView.indexPath(for: cell) {
+        if let _ = planTableView.indexPath(for: cell) {
             let nextVC = EditShioriPlanDetailViewController()
             navigationController?.pushViewController(nextVC, animated: true)
         }
