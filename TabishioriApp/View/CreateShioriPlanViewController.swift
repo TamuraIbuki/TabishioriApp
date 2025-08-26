@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol CreateShioriPlanViewControllerDelegate: AnyObject {
+    func didSaveNewPlan()
+}
+
 /// 新しい予定作成画面
 final class CreateShioriPlanViewController: UIViewController {
     
@@ -36,8 +40,8 @@ final class CreateShioriPlanViewController: UIViewController {
     private let datePickerEndTime = UIDatePicker()
     /// RealmManagerのシングルトンインスタンスを登録
     let realmManager = RealmManager.shared
-    /// しおり保存後に呼び出される処理
-    var onSaved: (() -> Void)?
+    /// デリゲートのプロパティ
+    weak var delegate: CreateShioriPlanViewControllerDelegate?
     /// 日付・時間取得のフォーマット
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -386,15 +390,15 @@ final class CreateShioriPlanViewController: UIViewController {
             // 成功時の処理
             DispatchQueue.main.async {
                 print("Object added successfully")
+                guard let self = self else { return }
                 let alert = UIAlertController(title: "登録しました", message: nil, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default) { [weak self] _ in
                     guard let self = self else { return }
                     self.presentingViewController?.dismiss(animated: true) { [weak self] in
-                        self?.onSaved?()
-                        self?.navigationController?.dismiss(animated: true)
+                        self?.delegate?.didSaveNewPlan()
                     }
                 })
-                self?.present(alert, animated: true)
+                self.present(alert, animated: true)
             }
         }, onFailure: { [weak self] error in
             // 失敗の処理

@@ -18,7 +18,7 @@ protocol ShioriViewControllerDelegate: AnyObject {
 
 /// しおり画面
 final class ShioriViewController: UIViewController {
-        
+    
     // MARK: - Structs
     
     struct ShioriPageData {
@@ -45,7 +45,7 @@ final class ShioriViewController: UIViewController {
     let commonShioriName = "マレーシア旅行"
     let commonDateRange = "2025.6.23〜2025.6.28"
     let commonTotalCost = "合計費用：¥120,000"
-   
+    
     // MARK: - IBOutlets
     
     /// 中央のビュー
@@ -74,12 +74,7 @@ final class ShioriViewController: UIViewController {
     /// 予定追加ボタンをタップ
     @IBAction private func addPlanButtonTapped(_ sender: UIButton) {
         let nextVC = CreateShioriPlanViewController()
-        nextVC.onSaved = { [weak self] in
-            guard let self else { return }
-            DispatchQueue.main.async {
-                self.delegate?.fetchData()
-            }
-        }
+        nextVC.delegate = self
         let navi = UINavigationController(rootViewController: nextVC)
         self.present(navi, animated: true)
     }
@@ -146,7 +141,7 @@ final class ShioriViewController: UIViewController {
             ShioriPageData(dayTitle: "～2日目～", day: "6月24日"),
             ShioriPageData(dayTitle: "～3日目～", day: "6月25日")
         ]
-
+        
         // データを格納
         self.pages = pagesDataList.map { data in
             makeContentVC(
@@ -175,9 +170,9 @@ final class ShioriViewController: UIViewController {
         )
     }
 }
-    
-    // MARK: - UIPageViewControllerDataSource
-    
+
+// MARK: - UIPageViewControllerDataSource
+
 extension ShioriViewController: UIPageViewControllerDataSource {
     /// 右にスワイプ（戻る）した場合のメソッド
     func pageViewController(
@@ -205,9 +200,21 @@ extension ShioriViewController: UIPageViewControllerDelegate {
                             previousViewControllers: [UIViewController],
                             transitionCompleted completed: Bool) {
         guard completed,
-              let currentVC = pvc.viewControllers?.first as? UIViewController,
-              let reloader = currentVC as? ShioriViewControllerDelegate else { return }
+              let currentVC = pvc.viewControllers?.first as? (UIViewController & ShioriViewControllerDelegate)
+        else { return }
         currentVC.loadViewIfNeeded()
-        self.delegate = reloader
+        self.delegate = currentVC
+    }
+}
+
+extension ShioriViewController: CreateShioriPlanViewControllerDelegate {
+    func didSaveNewPlan() {
+        DispatchQueue.main.async {
+            guard let current = self.pageViewController.viewControllers?.first
+                    as? (UIViewController & ShioriViewControllerDelegate) else { return }
+            (current as UIViewController).loadViewIfNeeded()
+            self.delegate = current
+            self.delegate?.fetchData()
+        }
     }
 }
