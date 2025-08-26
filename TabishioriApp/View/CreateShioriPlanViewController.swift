@@ -7,10 +7,13 @@
 
 import UIKit
 
+// MARK: - Protocols
+
 protocol CreateShioriPlanViewControllerDelegate: AnyObject {
     func didSaveNewPlan()
 }
 
+// MARK: - Main Type
 /// 新しい予定作成画面
 final class CreateShioriPlanViewController: UIViewController {
     
