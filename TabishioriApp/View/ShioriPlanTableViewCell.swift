@@ -94,20 +94,20 @@ final class ShioriPlanTableViewCell: UITableViewCell {
     
     /// 画像の型の変更
     private func imageFromIdentifier(_ identifier: String) -> UIImage? {
-        let id = identifier.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !id.isEmpty else { return nil }
+        let trimmedIdentifier = identifier.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedIdentifier.isEmpty else { return nil }
         
-        if id.hasPrefix("data:image/"),
-           let comma = id.firstIndex(of: ",") {
-            let b64 = String(id[id.index(after: comma)...])
-            if let data = Data(base64Encoded: b64, options: .ignoreUnknownCharacters) {
+        if trimmedIdentifier.hasPrefix("data:image/"),
+           let commaIndex = trimmedIdentifier.firstIndex(of: ",") {
+            let base64String = String(trimmedIdentifier[trimmedIdentifier.index(after: commaIndex)...])
+            if let data = Data(base64Encoded: base64String, options: .ignoreUnknownCharacters) {
                 return UIImage(data: data)
             }
         }
-        if let data = Data(base64Encoded: id, options: .ignoreUnknownCharacters) {
+        if let data = Data(base64Encoded: trimmedIdentifier, options: .ignoreUnknownCharacters) {
             return UIImage(data: data)
         }
-        return UIImage(named: id)
+        return UIImage(named: trimmedIdentifier)
     }
     
     /// 予定情報の表示
