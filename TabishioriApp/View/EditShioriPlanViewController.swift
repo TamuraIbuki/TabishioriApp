@@ -159,11 +159,14 @@ extension EditShioriPlanViewController: UITableViewDataSource {
     }
 }
 
+/// セル横の編集ボタンをタップ
 extension EditShioriPlanViewController: ShioriPlanTableViewCellDelegate {
     func didTapRightButton(in cell: ShioriPlanTableViewCell) {
-        if let _ = planTableView.indexPath(for: cell) {
-            let nextVC = EditShioriPlanDetailViewController()
-            navigationController?.pushViewController(nextVC, animated: true)
+        navigateToEditShioriPlanDetail()
         }
+    
+    private func navigateToEditShioriPlanDetail() {
+        let nextVC = EditShioriPlanDetailViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
     }
 }
