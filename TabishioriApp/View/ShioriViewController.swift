@@ -74,7 +74,9 @@ final class ShioriViewController: UIViewController {
     /// 予定追加ボタンをタップ
     @IBAction private func addPlanButtonTapped(_ sender: UIButton) {
         let nextVC = CreateShioriPlanViewController()
-        nextVC.delegate = self
+        if let current = pageViewController.viewControllers?.first as? ShioriContentViewController {
+            nextVC.delegate = current
+        }
         let navi = UINavigationController(rootViewController: nextVC)
         self.present(navi, animated: true)
     }
@@ -204,17 +206,5 @@ extension ShioriViewController: UIPageViewControllerDelegate {
         else { return }
         currentVC.loadViewIfNeeded()
         self.delegate = currentVC
-    }
-}
-
-extension ShioriViewController: CreateShioriPlanViewControllerDelegate {
-    func didSaveNewPlan() {
-        DispatchQueue.main.async {
-            guard let current = self.pageViewController.viewControllers?.first
-                    as? (UIViewController & ShioriViewControllerDelegate) else { return }
-            (current as UIViewController).loadViewIfNeeded()
-            self.delegate = current
-            self.delegate?.fetchData()
-        }
     }
 }

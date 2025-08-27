@@ -107,7 +107,6 @@ final class ShioriContentViewController: UIViewController {
         let hasURL = !trimmedURL.isEmpty
         let rawImage = plan.planImage?.trimmingCharacters(in: .whitespacesAndNewlines)
         let imageName: String? = (rawImage?.isEmpty == false) ? rawImage : nil
-
         
         return .init(startTime: plan.startTime,
                      endTime: plan.endTime,
@@ -116,6 +115,13 @@ final class ShioriContentViewController: UIViewController {
                      cost: plan.planCost,
                      hasURL: hasURL,
                      planImage: imageName)
+    }
+    
+    /// 予定データを開始時間の昇順でソートする
+    private func fetchData() {
+        let results = realmManager.getObjects(PlanDataModel.self)
+        data = results.sorted(byKeyPath: "startTime", ascending: true)
+        planTableView.reloadData()
     }
 }
     
@@ -157,10 +163,8 @@ extension ShioriContentViewController: ShioriPlanTableViewCellDelegate {
     }
 }
 
-extension ShioriContentViewController: ShioriViewControllerDelegate {
-    func fetchData() {
-        let results = realmManager.getObjects(PlanDataModel.self)
-        data = results.sorted(byKeyPath: "startTime", ascending: true)
-        planTableView.reloadData()
+extension ShioriContentViewController: CreateShioriPlanViewControllerDelegate {
+    func didSaveNewPlan() {
+        fetchData()
     }
 }
