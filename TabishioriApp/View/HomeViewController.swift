@@ -75,7 +75,7 @@ final class HomeViewController: UIViewController {
         createButton.setAttributedTitle(attributedTitle, for: .normal)
     }
     
-    func configureTableView() {
+    private func configureTableView() {
         tableView.dataSource = self
         // カスタムセルを登録
         let nib = UINib(nibName: "HomeTableViewCell", bundle: nil)
@@ -132,6 +132,9 @@ extension HomeViewController: UITableViewDelegate {
     /// テーブルビューセルをタップした時しおり画面に遷移
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let shioriVC = ShioriViewController(nibName: "ShioriViewController", bundle: nil)
+        if let data = data {
+            shioriVC.selectedShiori = data[indexPath.row] // 単一のShioriDataModelを渡す
+        }
         navigationController?.pushViewController(shioriVC, animated: true)
     }
 }

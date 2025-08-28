@@ -19,21 +19,23 @@ final class ShioriViewController: UIViewController {
     
     // MARK: - Stored Properties
     
+    /// 表示するページ一覧
+    private var pages: [UIViewController] = []
+    /// 現在表示しているページのインデックス
+    private var currentIndex = 0
+    /// 取得したデータの格納先
+    private var dailyPlans: [PlanDataModel] = []
+    /// 選択したしおりデータ
+    var selectedShiori: ShioriDataModel?
+    
+    // MARK: - Computed Properties
+    
     /// ページ管理用の UIPageViewController
     private let pageViewController: UIPageViewController = {
         return UIPageViewController(transitionStyle: .scroll,
                                     navigationOrientation: .horizontal,
                                     options: nil)
     }()
-    /// 表示するページ一覧
-    private var pages: [UIViewController] = []
-    /// 現在表示しているページのインデックス
-    private var currentIndex = 0
-    
-    // しおり仮データ
-    let commonShioriName = "マレーシア旅行"
-    let commonDateRange = "2025.6.23〜2025.6.28"
-    let commonTotalCost = "合計費用：¥120,000"
     
     // MARK: - IBOutlets
     
@@ -46,9 +48,11 @@ final class ShioriViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configurePages()
+        guard let shiori = selectedShiori else { return }
+        configurePages(shiori: shiori)
         setupPageViewController()
         configureBarButtonItems()
+        updateAllPagesWithPlans()
     }
     
     // MARK: - IBActions
@@ -62,10 +66,14 @@ final class ShioriViewController: UIViewController {
     
     /// 予定追加ボタンをタップ
     @IBAction private func addPlanButtonTapped(_ sender: UIButton) {
-        let nextVC = CreateShioriPlanViewController()
-        if let current = pageViewController.viewControllers?.first as? ShioriContentViewController {
-            nextVC.delegate = current
+        // 現在のページ
+        guard let currentVC = pageViewController.viewControllers?.first as? ShioriContentViewController else {
+            return
         }
+        // 新しい予定作成画面へ遷移
+        let nextVC = CreateShioriPlanViewController()
+        nextVC.delegate = self
+        nextVC.preselectedDate = currentVC.pageDate
         let navi = UINavigationController(rootViewController: nextVC)
         self.present(navi, animated: true)
     }
@@ -83,10 +91,12 @@ final class ShioriViewController: UIViewController {
         pageViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         pageViewController.didMove(toParent: self)
         
-        pageViewController.setViewControllers([pages[0]],
-                                              direction: .forward,
-                                              animated: false,
-                                              completion: nil)
+        if let firstPage = pages.first {
+            pageViewController.setViewControllers([firstPage],
+                                                  direction: .forward,
+                                                  animated: false,
+                                                  completion: nil)
+        }
         pageViewController.dataSource = self
     }
     
@@ -120,40 +130,44 @@ final class ShioriViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    /// 日付仮データ
-    private func configurePages() {
-        let pagesDataList: [ShioriPageData] = [
-            ShioriPageData(dayTitle: "～1日目～", day: "6月23日"),
-            ShioriPageData(dayTitle: "～2日目～", day: "6月24日"),
-            ShioriPageData(dayTitle: "～3日目～", day: "6月25日")
-        ]
+    /// 日毎のページを作成
+    private func configurePages(shiori: ShioriDataModel) {
+        pages = []
+        let calendar = Calendar.current
+        var date = shiori.startDate
         
-        // データを格納
-        self.pages = pagesDataList.map { data in
-            makeContentVC(
-                shioriName: commonShioriName,
-                dateRange: commonDateRange,
-                dayTitle: data.dayTitle,
-                day: data.day,
-                totalCost: commonTotalCost
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M月d日"
+        
+        while date <= shiori.endDate {
+            let dayNumber = calendar.dateComponents([.day], from: shiori.startDate, to: date).day! + 1
+            let dayTitle = "〜\(dayNumber)日目〜"
+            
+            let dailyPlans = shiori.dailyPlans.filter { plan in
+                calendar.isDate(plan.planDate, inSameDayAs: date)
+            }
+            let totalCost = "合計費用：¥\(dailyPlans.reduce(0) { $0 + $1.planCost })"
+            
+            let page = ShioriContentViewController(
+                shioriName: shiori.shioriName,
+                dateRange: "\(formatter.string(from: shiori.startDate))〜\(formatter.string(from: shiori.endDate))",
+                dayTitle: dayTitle,
+                pageDate: date,
+                totalCost: totalCost
             )
+            
+            pages.append(page)
+            date = calendar.date(byAdding: .day, value: 1, to: date)!
         }
     }
     
-    private func makeContentVC(
-        shioriName: String,
-        dateRange: String,
-        dayTitle: String,
-        day: String,
-        totalCost: String
-    ) -> ShioriContentViewController {
-        return ShioriContentViewController(
-            shioriName: shioriName,
-            dateRange: dateRange,
-            dayTitle: dayTitle,
-            day: day,
-            totalCost: totalCost
-        )
+    /// 各ページに日付ごとの予定を取得して更新させる
+    private func updateAllPagesWithPlans() {
+        for page in pages {
+            if let contentVC = page as? ShioriContentViewController {
+                contentVC.fetchAndDistributePlans()
+            }
+        }
     }
 }
 
@@ -177,5 +191,21 @@ extension ShioriViewController: UIPageViewControllerDataSource {
         guard let index = pages.firstIndex(of: viewController),
               index < pages.count - 1 else { return nil }
         return pages[index + 1]
+    }
+}
+
+// MARK: - CreateShioriPlanViewControllerDelegate
+
+extension ShioriViewController: CreateShioriPlanViewControllerDelegate {
+    /// 予定追加画面で登録後に画面を更新
+    func didSaveNewPlan(for date: Date) {
+        let calendar = Calendar.current
+        for page in pages {
+            if let contentVC = page as? ShioriContentViewController,
+               calendar.isDate(contentVC.pageDate, inSameDayAs: date) {
+                contentVC.fetchAndDistributePlans()
+                break
+            }
+        }
     }
 }

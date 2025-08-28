@@ -10,7 +10,7 @@ import UIKit
 // MARK: - Protocols
 
 protocol CreateShioriPlanViewControllerDelegate: AnyObject {
-    func didSaveNewPlan()
+    func didSaveNewPlan(for date: Date)
 }
 
 // MARK: - Main Type
@@ -19,6 +19,8 @@ final class CreateShioriPlanViewController: UIViewController {
     
     // MARK: - Properties
     
+    /// 事前に選択された日付
+    var preselectedDate: Date?
     /// 日付
     private var selectedDate: Date?
     /// 開始時間
@@ -42,9 +44,12 @@ final class CreateShioriPlanViewController: UIViewController {
     /// 終了時間ピッカー
     private let datePickerEndTime = UIDatePicker()
     /// RealmManagerのシングルトンインスタンスを登録
-    let realmManager = RealmManager.shared
+    private let realmManager = RealmManager.shared
     /// デリゲートのプロパティ
     weak var delegate: CreateShioriPlanViewControllerDelegate?
+    
+    // MARK: - Computed Properties
+    
     /// 日付・時間取得のフォーマット
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -95,6 +100,12 @@ final class CreateShioriPlanViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 受け取った日付を初期値としてセット
+        if let date = preselectedDate {
+            selectedDate = date
+            dateTextField.text = dateFormat(date, pattern: "yyyy年M月d日")
+            datePickerDate.date = date
+        }
         setupFont()
         configureTextField()
         configureTextView()
@@ -398,7 +409,7 @@ final class CreateShioriPlanViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "OK", style: .default) { [weak self] _ in
                     guard let self = self else { return }
                     self.presentingViewController?.dismiss(animated: true) { [weak self] in
-                        self?.delegate?.didSaveNewPlan()
+                        self?.delegate?.didSaveNewPlan(for: planDataModel.planDate)
                     }
                 })
                 self.present(alert, animated: true)
