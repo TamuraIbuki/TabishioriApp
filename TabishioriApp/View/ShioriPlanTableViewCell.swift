@@ -18,16 +18,24 @@ protocol ShioriPlanTableViewCellDelegate: AnyObject {
 /// しおり予定セル
 final class ShioriPlanTableViewCell: UITableViewCell {
     
+    /// 日付をString型に変換
+    private static let timeFormatter: DateFormatter = {
+        let timeFormatt = DateFormatter()
+        timeFormatt.locale = Locale(identifier: "ja_JP")
+        timeFormatt.dateFormat = "HH:mm"
+        return timeFormatt
+    } ()
+    
     // MARK: - Structs
     
     struct ScheduleItem {
-        let startTime: String?
-        let endTime: String?
+        let startTime: Date
+        let endTime: Date?
         let plan: String
         let isReserved: Bool
         let cost: Int?
         let hasURL: Bool
-        let hasImage: Bool
+        let planImage: String?
     }
     /// 編集モード初期値
     private var isEditMode: Bool = false
@@ -63,6 +71,13 @@ final class ShioriPlanTableViewCell: UITableViewCell {
     
     /// チェックボックスをタップ
     @IBAction private func checkBoxButtonTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        if sender.isSelected {
+            sender.setImage(UIImage(named: "ic_check_box_in"), for: .normal)
+        } else {
+            sender.setImage(UIImage(named: "ic_check_box_out"), for: .normal)
+        }
     }
     
     /// URLボタンをタップ
@@ -77,14 +92,32 @@ final class ShioriPlanTableViewCell: UITableViewCell {
         setupUI()
     }
     
+    /// 画像の型の変更
+    private func imageFromIdentifier(_ identifier: String) -> UIImage? {
+        let trimmedIdentifier = identifier.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedIdentifier.isEmpty else { return nil }
+        
+        if trimmedIdentifier.hasPrefix("data:image/"),
+           let commaIndex = trimmedIdentifier.firstIndex(of: ",") {
+            let base64String = String(trimmedIdentifier[trimmedIdentifier.index(after: commaIndex)...])
+            if let data = Data(base64Encoded: base64String, options: .ignoreUnknownCharacters) {
+                return UIImage(data: data)
+            }
+        }
+        if let data = Data(base64Encoded: trimmedIdentifier, options: .ignoreUnknownCharacters) {
+            return UIImage(data: data)
+        }
+        return UIImage(named: trimmedIdentifier)
+    }
+    
     /// 予定情報の表示
     func configurePlan(with item: ScheduleItem, isEditMode: Bool) {
         self.isEditMode = isEditMode
+        let timeFormatt = Self.timeFormatter
         
-        startTimeLabel.text = item.startTime
-        startTimeLabel.isHidden = item.startTime == nil
+        startTimeLabel.text = timeFormatt.string(from: item.startTime)
         
-        endTimeLabel.text = item.endTime
+        endTimeLabel.text = item.endTime.map { timeFormatt.string(from: $0) }
         endTimeLabel.isHidden = item.endTime == nil
         
         timeRangeLabel.isHidden = item.endTime == nil
@@ -117,8 +150,8 @@ final class ShioriPlanTableViewCell: UITableViewCell {
         }
         
         // 画像がある場合表示
-        if item.hasImage {
-            planImageView.image = UIImage(named: "ic_sample")
+        if let id = item.planImage, let decodedImage = imageFromIdentifier(id){
+            planImageView.image = decodedImage
             planImageView.isHidden = false
             planImageHeightConstraint.constant = 120
         } else {

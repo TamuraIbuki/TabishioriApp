@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 /// しおりの中身の画面
 final class ShioriContentViewController: UIViewController {
@@ -19,11 +20,13 @@ final class ShioriContentViewController: UIViewController {
     /// 日付タイトルラベル
     private let dayTitle: String
     /// 日数ラベル
-    private let day: String
+    let pageDate: Date
     /// 合計費用ラベル
     private let totalCost: String
-    /// 予定仮データ
-    private var scheduleItem = ShioriDummyData.scheduleItems
+    /// 日毎の予定
+    private var dailyPlans: [PlanDataModel] = []
+    /// まだ保存されていない、追加途中の予定
+    private var pendingPlans: [PlanDataModel]?
     
     // MARK: - IBOutlets
     
@@ -42,14 +45,13 @@ final class ShioriContentViewController: UIViewController {
     /// 予定一覧テーブルビュー
     @IBOutlet private weak var planTableView: UITableView!
     
-
     // MARK: - Initializers
     
-    init(shioriName: String, dateRange: String, dayTitle: String, day: String, totalCost: String) {
+    init(shioriName: String, dateRange: String, dayTitle: String, pageDate: Date, totalCost: String) {
         self.shioriName = shioriName
         self.dateRange = dateRange
         self.dayTitle = dayTitle
-        self.day = day
+        self.pageDate = pageDate
         self.totalCost = totalCost
         super.init(nibName: "ShioriContentViewController", bundle: nil)
     }
@@ -64,6 +66,12 @@ final class ShioriContentViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         configureTableView()
+        
+        // pendingPlans があれば反映
+        if let plans = pendingPlans {
+            updateUIWithPlans(plans)
+            pendingPlans = nil
+        }
     }
     
     // MARK: - Other Methods
@@ -72,7 +80,7 @@ final class ShioriContentViewController: UIViewController {
         shioriNameLabel.text = shioriName
         dateRangeLabel.text = dateRange
         dayTitleLabel.text = dayTitle
-        dayLabel.text = day
+        dayLabel.text = formattedDate(pageDate)
         totalCostLabel.text = totalCost
         
         // 枠線
@@ -87,7 +95,13 @@ final class ShioriContentViewController: UIViewController {
         totalCostLabel.font = .setFontZenMaruGothic(size: 13)
     }
     
-    func configureTableView() {
+    private func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M月d日"
+        return formatter.string(from: date)
+    }
+    
+    private func configureTableView() {
         planTableView.dataSource = self
         // カスタムセルを登録
         let nib = UINib(nibName: "ShioriPlanTableViewCell", bundle: nil)
@@ -97,40 +111,82 @@ final class ShioriContentViewController: UIViewController {
         planTableView.rowHeight = UITableView.automaticDimension
         planTableView.estimatedRowHeight = 100
     }
-}
-
-// MARK: - Extentions
-
-extension ShioriContentViewController: UITableViewDataSource {
-    /// セルの数
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return scheduleItem.count
+    
+    // MARK: - Data Fetch
+    
+    func fetchAndDistributePlans() {
+        guard isViewLoaded else {
+            pendingPlans = fetchPlansForThisDay()
+            return
+        }
+        updateUIWithPlans(fetchPlansForThisDay())
     }
     
-    /// セルを設定
+    /// 予定を取得
+    private func fetchPlansForThisDay() -> [PlanDataModel] {
+        let results = RealmManager.shared.getObjects(PlanDataModel.self)
+            .filter { Calendar.current.isDate($0.planDate, inSameDayAs: self.pageDate) }
+        return Array(results)
+    }
+    
+    private func updateUIWithPlans(_ plans: [PlanDataModel]) {
+        self.dailyPlans = plans
+        planTableView.reloadData()
+    }
+}
+
+// MARK: - UITableViewDataSource
+
+extension ShioriContentViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dailyPlans.count
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // カスタムセルを指定
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShioriPlanTableViewCellID",
-                                                       for: indexPath) as? ShioriPlanTableViewCell
-        else {
+        
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: "ShioriPlanTableViewCellID",
+            for: indexPath
+        ) as? ShioriPlanTableViewCell else {
             return UITableViewCell()
         }
         
-        cell.delegate = self
-        // セルに渡す処理
-        let item = scheduleItem[indexPath.row]
+        let plan = dailyPlans[indexPath.row]
+        let item = makeScheduleItem(from: plan)
         cell.configurePlan(with: item, isEditMode: false)
+        cell.delegate = self
         return cell
+    }
+    
+    private func makeScheduleItem(from plan: PlanDataModel) -> ShioriPlanTableViewCell.ScheduleItem {
+        let trimmedURL = plan.planURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        let hasURL = !trimmedURL.isEmpty
+        let rawImage = plan.planImage?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let imageName: String? = (rawImage?.isEmpty == false) ? rawImage : nil
+        
+        return .init(
+            startTime: plan.startTime,
+            endTime: plan.endTime,
+            plan: plan.planContent,
+            isReserved: plan.planReservation,
+            cost: plan.planCost,
+            hasURL: hasURL,
+            planImage: imageName
+        )
     }
 }
 
+// MARK: - ShioriPlanTableViewCellDelegate
+
 extension ShioriContentViewController: ShioriPlanTableViewCellDelegate {
     func didTapRightButton(in cell: ShioriPlanTableViewCell) {
-        if let indexPath = planTableView.indexPath(for: cell) {
-            let item = scheduleItem[indexPath.row]
-            if let url = URL(string: "https://ios-academia.com/") {
-                UIApplication.shared.open(url)
-            }
-        }
+        guard let indexPath = planTableView.indexPath(for: cell) else { return }
+        
+        let plan = dailyPlans[indexPath.row]
+        let urlString = plan.planURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        guard !urlString.isEmpty, let url = URL(string: urlString) else { return }
+        
+        UIApplication.shared.open(url)
     }
 }
