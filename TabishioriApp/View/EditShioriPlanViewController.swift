@@ -10,7 +10,24 @@ import RealmSwift
 
 /// しおり予定編集画面
 final class EditShioriPlanViewController: UIViewController {
-
+    
+    // MARK: - Stored Properties
+    
+    /// しおり名
+    private let shioriName: String
+    /// 旅行期間
+    private let dateRange: String
+    /// 日付タイトル
+    private let dayTitle: String
+    /// 日数
+    let pageDate: Date
+    /// 合計費用
+    private let totalCost: String
+    /// 日毎の予定
+    private var dailyPlans: [PlanDataModel] = []
+    /// RealmManagerのシングルトンインスタンスを取得
+    private let realmManager = RealmManager.shared
+    
     // MARK: - IBOutlets
     
     /// しおり名ラベル
@@ -27,10 +44,21 @@ final class EditShioriPlanViewController: UIViewController {
     @IBOutlet private weak var totalCostView: UIView!
     /// 予定一覧テーブルビュー
     @IBOutlet private weak var planTableView: UITableView!
-    /// RealmManagerのシングルトンインスタンスを取得
-    private let realmManager = RealmManager.shared
-    /// 取得したデータの格納先
-    private var data: Results<PlanDataModel>?
+    
+    // MARK: - Initializers
+    
+    init(shioriName: String, dateRange: String, dayTitle: String, pageDate: Date, totalCost: String) {
+        self.shioriName = shioriName
+        self.dateRange = dateRange
+        self.dayTitle = dayTitle
+        self.pageDate = pageDate
+        self.totalCost = totalCost
+        super.init(nibName: "EditShioriPlanViewController", bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - View Life-Cycle Methods
     
@@ -39,7 +67,7 @@ final class EditShioriPlanViewController: UIViewController {
         configureNavigationBar()
         setupUI()
         configureTableView()
-        fetchData()
+        fetchDailyPlans()
     }
     
     // MARK: - IBActions
@@ -94,6 +122,18 @@ final class EditShioriPlanViewController: UIViewController {
         dayTitleLabel.font = .setFontZenMaruGothic(size: 24)
         dayLabel.font = .setFontZenMaruGothic(size: 18)
         totalCostLabel.font = .setFontZenMaruGothic(size: 13)
+        
+        shioriNameLabel.text = shioriName
+        dateRangeLabel.text = dateRange
+        dayTitleLabel.text = dayTitle
+        dayLabel.text = formatterDate(pageDate)
+        totalCostLabel.text = totalCost
+    }
+    
+    private func formatterDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M月d日"
+        return formatter.string(from: date)
     }
     
     private func configureTableView() {
@@ -108,9 +148,9 @@ final class EditShioriPlanViewController: UIViewController {
     }
     
     /// 予定データを取得する
-    private func fetchData() {
+    private func fetchDailyPlans() {
         let results = realmManager.getObjects(PlanDataModel.self)
-        data = results
+        self.dailyPlans = results.filter { Calendar.current.isDate($0.planDate, inSameDayAs: self.pageDate)}
         planTableView.reloadData()
     }
     
@@ -137,7 +177,7 @@ final class EditShioriPlanViewController: UIViewController {
 extension EditShioriPlanViewController: UITableViewDataSource {
     /// セルの数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data?.count ?? 0
+        return dailyPlans.count
     }
     
     /// セルを設定
@@ -149,12 +189,11 @@ extension EditShioriPlanViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        cell.delegate = self
         // セルに渡す処理
-        if let item = data?[indexPath.row] {
-            let item = makeScheduleItem(from: item)
-            cell.configurePlan(with: item, isEditMode: true)
-        }
+        let plan = dailyPlans[indexPath.row]
+        let item = makeScheduleItem(from: plan)
+        cell.configurePlan(with: item, isEditMode: true)
+        cell.delegate = self
         return cell
     }
 }

@@ -11,22 +11,39 @@ import RealmSwift
 /// しおりの中身の画面
 final class ShioriContentViewController: UIViewController {
     
+    // MARK: - Structs
+    struct EditContext {
+        let shioriName: String
+        let dateRange: String
+        let dayTitle: String
+        let pageDate: Date
+        let totalCost: String
+    }
+    
     // MARK: - Stored Properties
     
-    /// しおり名ラベル
+    /// しおり名
     private let shioriName: String
-    /// 旅行期間ラベル
+    /// 旅行期間
     private let dateRange: String
-    /// 日付タイトルラベル
+    /// 日付タイトル
     private let dayTitle: String
-    /// 日数ラベル
+    /// 日数
     let pageDate: Date
-    /// 合計費用ラベル
+    /// 合計費用
     private let totalCost: String
     /// 日毎の予定
     private var dailyPlans: [PlanDataModel] = []
     /// まだ保存されていない、追加途中の予定
     private var pendingPlans: [PlanDataModel]?
+    /// 編集画面に渡す現ページ情報
+    var editContext: EditContext {
+        .init(shioriName: shioriName,
+              dateRange: dateRange,
+              dayTitle: dayTitle,
+              pageDate: pageDate,
+              totalCost: totalCost)
+    }
     
     // MARK: - IBOutlets
     
