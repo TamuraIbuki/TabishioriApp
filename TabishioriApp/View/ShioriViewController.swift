@@ -9,14 +9,7 @@ import UIKit
 
 /// しおり画面
 final class ShioriViewController: UIViewController {
-    
-    // MARK: - Structs
-    
-    struct ShioriPageData {
-        let dayTitle: String
-        let day: String
-    }
-    
+
     // MARK: - Stored Properties
     
     /// 表示するページ一覧
@@ -120,7 +113,17 @@ final class ShioriViewController: UIViewController {
     
     /// 編集ボタンをタップ
     @objc func editButtonTapped() {
-        let editVC = EditShioriPlanViewController()
+        guard let currentVC = pageViewController.viewControllers?.first
+                as? ShioriContentViewController  else { return }
+        
+        let currentContext = currentVC.editContext
+        let editVC = EditShioriPlanViewController(
+            shioriName: currentContext.shioriName,
+            dateRange: currentContext.dateRange,
+            dayTitle: currentContext.dayTitle,
+            pageDate: currentContext.pageDate,
+            totalCost: currentContext.totalCost
+        )
         let navVC = UINavigationController(rootViewController: editVC)
         present(navVC, animated: true, completion: nil)
     }
