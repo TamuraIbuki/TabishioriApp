@@ -20,7 +20,7 @@ final class EditShioriPlanViewController: UIViewController {
     /// 日付タイトル
     private let dayTitle: String
     /// 日数
-    let pageDate: Date
+    private let pageDate: Date
     /// 合計費用
     private let totalCost: String
     /// 日毎の予定
