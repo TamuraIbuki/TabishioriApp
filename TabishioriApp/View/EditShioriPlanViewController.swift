@@ -36,6 +36,8 @@ final class EditShioriPlanViewController: UIViewController {
     private let pageDate: Date
     /// 合計費用
     private let totalCost: String
+    /// 背景色
+    private var backgroundHex: String = ""
     /// 日毎の予定
     private var dailyPlans: [PlanDataModel] = []
     /// RealmManagerのシングルトンインスタンスを取得
@@ -67,13 +69,15 @@ final class EditShioriPlanViewController: UIViewController {
          dateRange: String,
          dayTitle: String,
          pageDate: Date,
-         totalCost: String) {
+         totalCost: String,
+         backgroundHex: String) {
         self.dataModel = dataModel
         self.shioriName = shioriName
         self.dateRange = dateRange
         self.dayTitle = dayTitle
         self.pageDate = pageDate
         self.totalCost = totalCost
+        self.backgroundHex = backgroundHex
         super.init(nibName: "EditShioriPlanViewController", bundle: nil)
     }
     
@@ -136,7 +140,6 @@ final class EditShioriPlanViewController: UIViewController {
     
     /// 編集画面の閉じるボタンをタップ
     @objc func closeButtonTapped() {
-        delegateToParent?.didShioriupdate(dataModel)
         dismiss(animated: true, completion: nil)
     }
     
@@ -157,6 +160,9 @@ final class EditShioriPlanViewController: UIViewController {
         dayTitleLabel.text = dayTitle
         dayLabel.text = formatterDate(pageDate)
         totalCostLabel.text = totalCost
+        
+        // 背景色
+        view.backgroundColor = UIColor(hex: backgroundHex)
     }
     
     private func formatterDate(_ date: Date) -> String {
@@ -200,16 +206,6 @@ final class EditShioriPlanViewController: UIViewController {
                      planImage: imageName)
     }
     
-    /// しおり情報の変更箇所の確認
-    private func hasShioriMetaChanged(old: ShioriDataModel, new: ShioriDataModel) -> Bool {
-        let calendar = Calendar.current
-        let nameChanged = old.shioriName != new.shioriName
-        let startChanged = !calendar.isDate(old.startDate, inSameDayAs: new.startDate)
-        let endChanged   = !calendar.isDate(old.endDate, inSameDayAs: new.endDate)
-        let colorChanged = old.backgroundColor != new.backgroundColor
-        return nameChanged || startChanged || endChanged || colorChanged
-    }
-    
     /// しおりの情報を更新する
     private func updateShioriInformation(_ model: ShioriDataModel? = nil) {
         let current = model ?? dataModel
@@ -217,6 +213,8 @@ final class EditShioriPlanViewController: UIViewController {
         
         shioriNameLabel.text = current.shioriName
         dateRangeLabel.text  = "\(formatterDate(current.startDate))〜\(formatterDate(current.endDate))"
+        
+        view.backgroundColor = UIColor(hex: current.backgroundColor )
     }
 }
 
@@ -260,11 +258,6 @@ extension EditShioriPlanViewController: ShioriPlanTableViewCellDelegate {
 
 extension EditShioriPlanViewController: EditShioriViewControllerDelegate {
     func didSaveNewShiori(_ updated: ShioriDataModel) {
-        if hasShioriMetaChanged(old: dataModel, new: updated) {
-            // 何か1つでも変わっていたら更新処理
-            self.dataModel = updated
-            updateShioriInformation(updated)
-        }
-        navigationController?.popViewController(animated: true)
+        delegateToParent?.didShioriupdate(updated)
     }
 }

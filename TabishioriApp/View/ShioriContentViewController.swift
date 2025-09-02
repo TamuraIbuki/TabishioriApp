@@ -18,6 +18,7 @@ final class ShioriContentViewController: UIViewController {
         let dayTitle: String
         let pageDate: Date
         let totalCost: String
+        let backgroundHex: String
     }
     
     // MARK: - Stored Properties
@@ -32,6 +33,8 @@ final class ShioriContentViewController: UIViewController {
     let pageDate: Date
     /// 合計費用
     private let totalCost: String
+    /// 背景色
+    private var backgroundHex: String = ""
     /// 日毎の予定
     private var dailyPlans: [PlanDataModel] = []
     /// まだ保存されていない、追加途中の予定
@@ -42,7 +45,9 @@ final class ShioriContentViewController: UIViewController {
               dateRange: dateRange,
               dayTitle: dayTitle,
               pageDate: pageDate,
-              totalCost: totalCost)
+              totalCost: totalCost,
+              backgroundHex: backgroundHex
+        )
     }
     
     // MARK: - IBOutlets
@@ -64,12 +69,18 @@ final class ShioriContentViewController: UIViewController {
     
     // MARK: - Initializers
     
-    init(shioriName: String, dateRange: String, dayTitle: String, pageDate: Date, totalCost: String) {
+    init(shioriName: String,
+         dateRange: String,
+         dayTitle: String,
+         pageDate: Date,
+         totalCost: String,
+         backgroundHex: String) {
         self.shioriName = shioriName
         self.dateRange = dateRange
         self.dayTitle = dayTitle
         self.pageDate = pageDate
         self.totalCost = totalCost
+        self.backgroundHex = backgroundHex
         super.init(nibName: "ShioriContentViewController", bundle: nil)
     }
     
@@ -110,6 +121,9 @@ final class ShioriContentViewController: UIViewController {
         dayTitleLabel.font = .setFontZenMaruGothic(size: 24)
         dayLabel.font = .setFontZenMaruGothic(size: 18)
         totalCostLabel.font = .setFontZenMaruGothic(size: 13)
+        
+        // 背景色
+        applyBackground(hex: backgroundHex)
     }
     
     private func formattedDate(_ date: Date) -> String {
@@ -129,6 +143,22 @@ final class ShioriContentViewController: UIViewController {
         planTableView.estimatedRowHeight = 100
     }
     
+    private func updateUIWithPlans(_ plans: [PlanDataModel]) {
+        self.dailyPlans = plans
+        planTableView.reloadData()
+    }
+    
+    private func normalizeHex(_ hex: String) -> String {
+        var trimmedUppercasedHex = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        if !trimmedUppercasedHex.hasPrefix("#") { trimmedUppercasedHex = "#"+trimmedUppercasedHex }
+        return trimmedUppercasedHex
+    }
+    
+    private func applyBackground(hex: String) {
+        let color = UIColor(hex: normalizeHex(hex))
+        view.backgroundColor = color
+    }
+    
     // MARK: - Data Fetch
     
     func fetchAndDistributePlans() {
@@ -144,11 +174,6 @@ final class ShioriContentViewController: UIViewController {
         let results = RealmManager.shared.getObjects(PlanDataModel.self)
             .filter { Calendar.current.isDate($0.planDate, inSameDayAs: self.pageDate) }
         return Array(results)
-    }
-    
-    private func updateUIWithPlans(_ plans: [PlanDataModel]) {
-        self.dailyPlans = plans
-        planTableView.reloadData()
     }
 }
 

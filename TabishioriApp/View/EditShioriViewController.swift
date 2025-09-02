@@ -382,22 +382,22 @@ final class EditShioriViewController: UIViewController {
                 let finish: () -> Void = { [weak self] in
                     guard let self = self, !finished else { return }
                     finished = true
-                    self.delegate?.didSaveNewShiori(dataModel)
+                    self.delegate?.didSaveNewShiori(self.dataModel)
                     
-                    // 戻り処理
-                    let navigateBack: () -> Void = {
-                        if let nav = self.navigationController, nav.viewControllers.contains(self) {
-                            nav.popViewController(animated: true)
+                    // モーダルを閉じる
+                    let closeModal = {
+                        if let nav = self.navigationController {
+                            nav.dismiss(animated: true)
                         } else {
                             self.dismiss(animated: true)
                         }
                     }
                     
                     // 先にアラートを閉じてから戻る
-                    if self.presentedViewController != nil {
-                        self.dismiss(animated: true, completion: navigateBack)
+                    if let presented = self.presentedViewController {
+                        presented.dismiss(animated: true, completion: closeModal)
                     } else {
-                        navigateBack()
+                        closeModal()
                     }
                 }
                 

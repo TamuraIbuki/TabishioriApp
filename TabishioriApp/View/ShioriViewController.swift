@@ -124,7 +124,8 @@ final class ShioriViewController: UIViewController {
             dateRange: currentContext.dateRange,
             dayTitle: currentContext.dayTitle,
             pageDate: currentContext.pageDate,
-            totalCost: currentContext.totalCost
+            totalCost: currentContext.totalCost,
+            backgroundHex: currentContext.backgroundHex
         )
         editVC.delegateToParent = self
         let navVC = UINavigationController(rootViewController: editVC)
@@ -145,6 +146,8 @@ final class ShioriViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "M月d日"
         
+        let backgroundHex = shiori.backgroundColor
+        
         while date <= shiori.endDate {
             let dayNumber = calendar.dateComponents([.day], from: shiori.startDate, to: date).day! + 1
             let dayTitle = "〜\(dayNumber)日目〜"
@@ -159,7 +162,8 @@ final class ShioriViewController: UIViewController {
                 dateRange: "\(formatter.string(from: shiori.startDate))〜\(formatter.string(from: shiori.endDate))",
                 dayTitle: dayTitle,
                 pageDate: date,
-                totalCost: totalCost
+                totalCost: totalCost,
+                backgroundHex: backgroundHex
             )
             
             pages.append(page)
@@ -223,7 +227,6 @@ extension ShioriViewController: EditShioriPlanViewControllerDelegate {
         
         selectedShiori = updated
         configurePages(shiori: updated)
-        
         let targetIndex: Int = {
             guard let currentDate = currentDisplayedDate else { return 0 }
             let calendar = Calendar.current

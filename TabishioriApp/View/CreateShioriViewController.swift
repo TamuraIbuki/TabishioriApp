@@ -315,24 +315,20 @@ final class CreateShioriViewController: UIViewController {
                     finished = true
                     self.delegate?.didSaveNewShiori()
                     
-                    // 戻り処理
-                    let goBack: () -> Void = {
-                        if let navigationController = self.navigationController {
-                            if navigationController.viewControllers.first === self {
-                                navigationController.dismiss(animated: true)
-                            } else {
-                                navigationController.popViewController(animated: true)
-                            }
+                    // モーダルを閉じる
+                    let closeModal = {
+                        if let nav = self.navigationController {
+                            nav.dismiss(animated: true)
                         } else {
                             self.dismiss(animated: true)
                         }
                     }
                     
                     // 先にアラートを閉じてから戻る
-                    if self.presentedViewController != nil {
-                        self.dismiss(animated: true, completion: goBack)
+                    if let presented = self.presentedViewController {
+                        presented.dismiss(animated: true, completion: closeModal)
                     } else {
-                        goBack()
+                        closeModal()
                     }
                 }
                 

@@ -38,6 +38,15 @@ final class HomeViewController: UIViewController {
         fetchData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if data == nil {
+            fetchData()
+        } else {
+            tableView.reloadData()
+        }
+    }
+    
     // MARK: - IBActions
     
     /// 新しいしおりを作成ボタンをタップ
