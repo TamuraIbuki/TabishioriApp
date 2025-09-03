@@ -308,38 +308,25 @@ final class CreateShioriViewController: UIViewController {
                 guard let self = self else { return }
                 print("Object added successfully")
                 let alert = UIAlertController(title: "登録しました", message: nil, preferredStyle: .alert)
+                self.present(alert, animated: true)
                 
-                var finished = false
-                let finish: () -> Void = { [weak self] in
-                    guard let self = self, !finished else { return }
-                    finished = true
-                    self.delegate?.didSaveNewShiori()
-                    
-                    // モーダルを閉じる
-                    let closeModal = {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+                    guard let self = self else { return }
+                    let closeModal: () -> Void = {
                         if let nav = self.navigationController {
                             nav.dismiss(animated: true)
+                            self.delegate?.didSaveNewShiori()
                         } else {
-                            self.dismiss(animated: true)
+                            self.dismiss(animated: true){
+                                self.delegate?.didSaveNewShiori()
+                            }
                         }
                     }
-                    
                     // 先にアラートを閉じてから戻る
                     if let presented = self.presentedViewController {
                         presented.dismiss(animated: true, completion: closeModal)
                     } else {
                         closeModal()
-                    }
-                }
-                
-                // ”OK”を押したら閉じて戻る
-                alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-                    finish()
-                })
-                self.present(alert, animated: true) {
-                    // 2秒後に未操作なら自動で閉じて戻る
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        finish()
                     }
                 }
             }
