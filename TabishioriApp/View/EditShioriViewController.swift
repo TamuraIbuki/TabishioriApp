@@ -405,7 +405,8 @@ final class EditShioriViewController: UIViewController {
             // 失敗時の処理
             print("Failed to add object to Realm: \(error)")
             DispatchQueue.main.async { [weak self] in
-                self?.showAlert(title: "更新に失敗しました")
+                guard let self = self else { return }
+                self.showAlert(title: "更新に失敗しました")
             }
         }
     }
