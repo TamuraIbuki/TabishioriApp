@@ -114,8 +114,9 @@ final class ShioriViewController: UIViewController {
     /// 編集ボタンをタップ
     @objc func editButtonTapped() {
         guard let currentVC = pageViewController.viewControllers?.first as? ShioriContentViewController,
-              let shiori = selectedShiori
-        else { return }
+              let shiori = selectedShiori else{
+            return
+        }
         
         let currentContext = currentVC.editContext
         let editVC = EditShioriPlanViewController(
