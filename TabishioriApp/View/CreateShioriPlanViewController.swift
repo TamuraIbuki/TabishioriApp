@@ -408,7 +408,7 @@ final class CreateShioriPlanViewController: UIViewController {
                 let alert = UIAlertController(title: "登録しました", message: nil, preferredStyle: .alert)
                 self.present(alert, animated: true)
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                     guard let self = self else { return }
                     let closeModal: () -> Void = {
                         if let nav = self.navigationController {
