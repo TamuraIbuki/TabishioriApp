@@ -406,38 +406,25 @@ final class CreateShioriPlanViewController: UIViewController {
                 print("Object added successfully")
                 guard let self = self else { return }
                 let alert = UIAlertController(title: "登録しました", message: nil, preferredStyle: .alert)
-                var finished = false
-                let finish: () -> Void = { [weak self] in
-                    guard let self = self, !finished else { return }
-                    finished = true
-                    self.delegate?.didSaveNewPlan(for: planDataModel.planDate)
-                    
-                    // モーダルを閉じる
-                    let closeModal = {
+                self.present(alert, animated: true)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+                    guard let self = self else { return }
+                    let closeModal: () -> Void = {
                         if let nav = self.navigationController {
                             nav.dismiss(animated: true)
+                            self.delegate?.didSaveNewPlan(for: planDataModel.planDate)
                         } else {
-                            self.dismiss(animated: true)
+                            self.dismiss(animated: true){
+                                self.delegate?.didSaveNewPlan(for: planDataModel.planDate)
+                            }
                         }
                     }
-                    
                     // 先にアラートを閉じてから戻る
                     if let presented = self.presentedViewController {
                         presented.dismiss(animated: true, completion: closeModal)
                     } else {
                         closeModal()
-                    }
-                }
-                
-                // ”OK”を押したら閉じて戻る
-                alert.addAction(UIAlertAction(title: "OK", style: .default) {  _ in
-                    finish()
-                })
-                
-                self.present(alert, animated: true){
-                    // 2秒後に未操作なら自動で閉じて戻る
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        finish()
                     }
                 }
             }
