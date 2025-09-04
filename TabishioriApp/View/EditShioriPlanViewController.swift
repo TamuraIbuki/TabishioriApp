@@ -23,6 +23,8 @@ final class EditShioriPlanViewController: UIViewController {
     
     /// しおりのデータ
     private var dataModel: ShioriDataModel!
+    /// 予定のデータ
+    private var planDataModel: PlanDataModel!
     
     // MARK: - Stored Properties
     
@@ -185,7 +187,9 @@ final class EditShioriPlanViewController: UIViewController {
     /// 予定データを取得する
     private func fetchDailyPlans() {
         let results = realmManager.getObjects(PlanDataModel.self)
-        self.dailyPlans = results.filter { Calendar.current.isDate($0.planDate, inSameDayAs: self.pageDate)}
+        self.dailyPlans = results
+            .filter { Calendar.current.isDate($0.planDate, inSameDayAs: self.pageDate)}
+            .sorted{ $0.startTime < $1.startTime }
         planTableView.reloadData()
     }
     
@@ -247,11 +251,15 @@ extension EditShioriPlanViewController: UITableViewDataSource {
 /// セル横の編集ボタンをタップ
 extension EditShioriPlanViewController: ShioriPlanTableViewCellDelegate {
     func didTapRightButton(in cell: ShioriPlanTableViewCell) {
-        navigateToEditShioriPlanDetail()
+        guard let indexPath = planTableView.indexPath(for: cell) else {
+            return
+        }
+        let plan = dailyPlans[indexPath.row]
+        navigateToEditShioriPlanDetail(plan: plan)
         }
     
-    private func navigateToEditShioriPlanDetail() {
-        let nextVC = EditShioriPlanDetailViewController()
+    private func navigateToEditShioriPlanDetail(plan: PlanDataModel) {
+        let nextVC = EditShioriPlanDetailViewController(planDataModel: plan)
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }
