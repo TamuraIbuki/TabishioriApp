@@ -9,7 +9,7 @@ import UIKit
 
 /// しおり画面
 final class ShioriViewController: UIViewController {
-
+    
     // MARK: - Stored Properties
     
     /// 表示するページ一覧
@@ -113,17 +113,22 @@ final class ShioriViewController: UIViewController {
     
     /// 編集ボタンをタップ
     @objc func editButtonTapped() {
-        guard let currentVC = pageViewController.viewControllers?.first
-                as? ShioriContentViewController  else { return }
+        guard let currentVC = pageViewController.viewControllers?.first as? ShioriContentViewController,
+              let shiori = selectedShiori else {
+            return
+        }
         
         let currentContext = currentVC.editContext
         let editVC = EditShioriPlanViewController(
+            dataModel: shiori,
             shioriName: currentContext.shioriName,
             dateRange: currentContext.dateRange,
             dayTitle: currentContext.dayTitle,
             pageDate: currentContext.pageDate,
-            totalCost: currentContext.totalCost
+            totalCost: currentContext.totalCost,
+            backgroundHex: currentContext.backgroundHex
         )
+        editVC.delegateToParent = self
         let navVC = UINavigationController(rootViewController: editVC)
         present(navVC, animated: true, completion: nil)
     }
@@ -142,6 +147,8 @@ final class ShioriViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "M月d日"
         
+        let backgroundHex = shiori.backgroundColor
+        
         while date <= shiori.endDate {
             let dayNumber = calendar.dateComponents([.day], from: shiori.startDate, to: date).day! + 1
             let dayTitle = "〜\(dayNumber)日目〜"
@@ -156,7 +163,8 @@ final class ShioriViewController: UIViewController {
                 dateRange: "\(formatter.string(from: shiori.startDate))〜\(formatter.string(from: shiori.endDate))",
                 dayTitle: dayTitle,
                 pageDate: date,
-                totalCost: totalCost
+                totalCost: totalCost,
+                backgroundHex: backgroundHex
             )
             
             pages.append(page)
@@ -210,5 +218,26 @@ extension ShioriViewController: CreateShioriPlanViewControllerDelegate {
                 break
             }
         }
+    }
+}
+
+extension ShioriViewController: EditShioriPlanViewControllerDelegate {
+    /// しおりの情報を更新
+    func didShioriupdate(_ updated: ShioriDataModel) {
+        let currentDisplayedDate = (pageViewController.viewControllers?.first as? ShioriContentViewController)?.pageDate
+        
+        selectedShiori = updated
+        configurePages(shiori: updated)
+        let targetIndex: Int = {
+            guard let currentDate = currentDisplayedDate else { return 0 }
+            let calendar = Calendar.current
+            return pages.firstIndex {
+                guard let contentViewController = $0 as? ShioriContentViewController else { return false }
+                return calendar.isDate(contentViewController.pageDate, inSameDayAs: currentDate)
+            } ?? 0
+        }()
+        
+        pageViewController.setViewControllers([pages[targetIndex]], direction: .forward, animated: false)
+        updateAllPagesWithPlans()
     }
 }

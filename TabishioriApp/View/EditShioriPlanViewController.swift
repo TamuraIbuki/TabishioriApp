@@ -8,8 +8,21 @@
 import UIKit
 import RealmSwift
 
+// MARK: - Protocols
+
+protocol EditShioriPlanViewControllerDelegate: AnyObject {
+    func didShioriupdate(_ updated: ShioriDataModel)
+}
+
+// MARK: - Main Type
+
 /// しおり予定編集画面
 final class EditShioriPlanViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    /// しおりのデータ
+    private var dataModel: ShioriDataModel!
     
     // MARK: - Stored Properties
     
@@ -23,10 +36,14 @@ final class EditShioriPlanViewController: UIViewController {
     private let pageDate: Date
     /// 合計費用
     private let totalCost: String
+    /// 背景色
+    private var backgroundHex: String = ""
     /// 日毎の予定
     private var dailyPlans: [PlanDataModel] = []
     /// RealmManagerのシングルトンインスタンスを取得
     private let realmManager = RealmManager.shared
+    /// デリゲートのプロパティ
+    weak var delegateToParent: EditShioriPlanViewControllerDelegate?
     
     // MARK: - IBOutlets
     
@@ -47,12 +64,20 @@ final class EditShioriPlanViewController: UIViewController {
     
     // MARK: - Initializers
     
-    init(shioriName: String, dateRange: String, dayTitle: String, pageDate: Date, totalCost: String) {
+    init(dataModel: ShioriDataModel,
+         shioriName: String,
+         dateRange: String,
+         dayTitle: String,
+         pageDate: Date,
+         totalCost: String,
+         backgroundHex: String) {
+        self.dataModel = dataModel
         self.shioriName = shioriName
         self.dateRange = dateRange
         self.dayTitle = dayTitle
         self.pageDate = pageDate
         self.totalCost = totalCost
+        self.backgroundHex = backgroundHex
         super.init(nibName: "EditShioriPlanViewController", bundle: nil)
     }
     
@@ -70,11 +95,18 @@ final class EditShioriPlanViewController: UIViewController {
         fetchDailyPlans()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateShioriInformation()
+        planTableView.reloadData()
+    }
+    
     // MARK: - IBActions
     
     /// しおり編集ボタンをタップ
     @IBAction private func shioriEditButtonTapped(_ sender: Any) {
-        let nextVC = EditShioriViewController()
+        let nextVC = EditShioriViewController(dataModel: dataModel)
+        nextVC.delegate = self
         navigationController?.pushViewController(nextVC, animated: true)
     }
     
@@ -128,6 +160,9 @@ final class EditShioriPlanViewController: UIViewController {
         dayTitleLabel.text = dayTitle
         dayLabel.text = formatterDate(pageDate)
         totalCostLabel.text = totalCost
+        
+        // 背景色
+        view.backgroundColor = UIColor(hex: backgroundHex)
     }
     
     private func formatterDate(_ date: Date) -> String {
@@ -170,6 +205,17 @@ final class EditShioriPlanViewController: UIViewController {
                      hasURL: hasURL,
                      planImage: imageName)
     }
+    
+    /// しおりの情報を更新する
+    private func updateShioriInformation(_ model: ShioriDataModel? = nil) {
+        let current = model ?? dataModel
+        guard let current else { return }
+        
+        shioriNameLabel.text = current.shioriName
+        dateRangeLabel.text  = "\(formatterDate(current.startDate))〜\(formatterDate(current.endDate))"
+        
+        view.backgroundColor = UIColor(hex: current.backgroundColor )
+    }
 }
 
 // MARK: - Extentions
@@ -207,5 +253,11 @@ extension EditShioriPlanViewController: ShioriPlanTableViewCellDelegate {
     private func navigateToEditShioriPlanDetail() {
         let nextVC = EditShioriPlanDetailViewController()
         navigationController?.pushViewController(nextVC, animated: true)
+    }
+}
+
+extension EditShioriPlanViewController: EditShioriViewControllerDelegate {
+    func didSaveNewShiori(_ updated: ShioriDataModel) {
+        delegateToParent?.didShioriupdate(updated)
     }
 }

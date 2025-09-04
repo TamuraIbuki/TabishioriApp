@@ -20,7 +20,16 @@
                 <outlet property="titleLabel" destination="q7G-EU-bal" id="5kc-1U-X05"/>
                 <outlet property="updateButton" destination="jBA-ja-TfE" id="bET-vR-obM"/>
                 <outlet property="view" destination="ciz-jI-H99" id="7bQ-l4-ceT"/>
-                <outlet property="whiteColorButton" destination="vsM-zd-Gbu" id="L1c-Om-NmJ"/>
+                <outletCollection property="colorButtons" destination="33P-Wn-ViT" collectionClass="NSMutableArray" id="EKb-K3-eqn"/>
+                <outletCollection property="colorButtons" destination="Mi7-fL-PZn" collectionClass="NSMutableArray" id="hec-gZ-AYQ"/>
+                <outletCollection property="colorButtons" destination="g2X-4a-QV5" collectionClass="NSMutableArray" id="9h1-gA-U5L"/>
+                <outletCollection property="colorButtons" destination="Gcf-DI-ZO4" collectionClass="NSMutableArray" id="FEr-k0-fFN"/>
+                <outletCollection property="colorButtons" destination="Y4M-qI-npP" collectionClass="NSMutableArray" id="6mC-OL-g5x"/>
+                <outletCollection property="colorButtons" destination="YQ7-bJ-kWO" collectionClass="NSMutableArray" id="qWt-dm-C9J"/>
+                <outletCollection property="colorButtons" destination="gBr-Do-KF3" collectionClass="NSMutableArray" id="efH-dG-Uz9"/>
+                <outletCollection property="colorButtons" destination="PRr-I9-4Wi" collectionClass="NSMutableArray" id="Rm4-Oe-FUS"/>
+                <outletCollection property="colorButtons" destination="ACT-aA-pLc" collectionClass="NSMutableArray" id="2Zi-oh-SrF"/>
+                <outletCollection property="colorButtons" destination="vsM-zd-Gbu" collectionClass="NSMutableArray" id="vjO-7j-EgN"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

@@ -134,7 +134,7 @@ final class CreateShioriPlanViewController: UIViewController {
         imagePickerController.delegate = self
         imagePickerController.sourceType = .photoLibrary
         present(imagePickerController, animated: true, completion: nil)
-     }
+    }
     
     /// 追加ボタンをタップ
     @IBAction private func addButtonTapped(_ sender: UIButton) {
@@ -402,17 +402,31 @@ final class CreateShioriPlanViewController: UIViewController {
         
         realmManager.add(planDataModel, onSuccess: { [weak self] in
             // 成功時の処理
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
                 print("Object added successfully")
                 guard let self = self else { return }
                 let alert = UIAlertController(title: "登録しました", message: nil, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default) { [weak self] _ in
-                    guard let self = self else { return }
-                    self.presentingViewController?.dismiss(animated: true) { [weak self] in
-                        self?.delegate?.didSaveNewPlan(for: planDataModel.planDate)
-                    }
-                })
                 self.present(alert, animated: true)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                    guard let self = self else { return }
+                    let closeModal: () -> Void = {
+                        if let nav = self.navigationController {
+                            nav.dismiss(animated: true)
+                            self.delegate?.didSaveNewPlan(for: planDataModel.planDate)
+                        } else {
+                            self.dismiss(animated: true){
+                                self.delegate?.didSaveNewPlan(for: planDataModel.planDate)
+                            }
+                        }
+                    }
+                    // 先にアラートを閉じてから戻る
+                    if let presented = self.presentedViewController {
+                        presented.dismiss(animated: true, completion: closeModal)
+                    } else {
+                        closeModal()
+                    }
+                }
             }
         }, onFailure: { [weak self] error in
             // 失敗の処理

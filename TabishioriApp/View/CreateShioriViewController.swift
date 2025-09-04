@@ -7,10 +7,18 @@
 
 import UIKit
 
+// MARK: - Protocols
+
+protocol CreateShioriViewControllerDelegate: AnyObject {
+    func didSaveNewShiori()
+}
+
+// MARK: - Main Type
+
 /// 新しいしおり作成画面
 final class CreateShioriViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: - Stored Properties
     
     /// しおり名
     private var selectedShioriName: String = ""
@@ -22,8 +30,8 @@ final class CreateShioriViewController: UIViewController {
     private var selectedEndDate: Date?
     /// RealmManagerのシングルトンインスタンスを取得
     let realmManager = RealmManager.shared
-    /// しおり保存後に呼び出される処理
-    var onSaved: (() -> Void)?
+    /// デリゲートのプロパティ
+    weak var delegate: CreateShioriViewControllerDelegate?
     
     // MARK: - IBOutlets
     
@@ -279,7 +287,7 @@ final class CreateShioriViewController: UIViewController {
             print("開始日と終了日を入れ替えました")
         }
     }
-
+    
     ///しおりを登録する
     private func createShiori(startDate: Date, endDate: Date) {
         
@@ -296,19 +304,36 @@ final class CreateShioriViewController: UIViewController {
         
         realmManager.add(dataModel, onSuccess: { [weak self] in
             // 成功時の処理
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 print("Object added successfully")
                 let alert = UIAlertController(title: "登録しました", message: nil, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-                    self?.onSaved?()
-                    self?.navigationController?.dismiss(animated: true)
-                })
-                self?.present(alert, animated: true)
+                self.present(alert, animated: true)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                    guard let self = self else { return }
+                    let closeModal: () -> Void = {
+                        if let nav = self.navigationController {
+                            nav.dismiss(animated: true)
+                            self.delegate?.didSaveNewShiori()
+                        } else {
+                            self.dismiss(animated: true){
+                                self.delegate?.didSaveNewShiori()
+                            }
+                        }
+                    }
+                    // 先にアラートを閉じてから戻る
+                    if let presented = self.presentedViewController {
+                        presented.dismiss(animated: true, completion: closeModal)
+                    } else {
+                        closeModal()
+                    }
+                }
             }
         }, onFailure: { [weak self] error in
             // 失敗時の処理
             print("Failed to add object to Realm: \(error)")
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
                 self?.showAlert(title: "登録に失敗しました")
             }
         })

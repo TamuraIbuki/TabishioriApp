@@ -38,15 +38,21 @@ final class HomeViewController: UIViewController {
         fetchData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if data == nil {
+            fetchData()
+        } else {
+            tableView.reloadData()
+        }
+    }
+    
     // MARK: - IBActions
     
     /// 新しいしおりを作成ボタンをタップ
     @IBAction private func createButtonTapped(_ sender: UIButton) {
         let nextVC = CreateShioriViewController()
-        nextVC.onSaved = { [weak self] in
-            self?.fetchData()
-            self?.tableView.reloadData()
-        }
+        nextVC.delegate = self
         let navi = UINavigationController(rootViewController: nextVC)
         navigationController?.present(navi, animated: true)
     }
@@ -136,5 +142,11 @@ extension HomeViewController: UITableViewDelegate {
             shioriVC.selectedShiori = data[indexPath.row] // 単一のShioriDataModelを渡す
         }
         navigationController?.pushViewController(shioriVC, animated: true)
+    }
+}
+
+extension HomeViewController: CreateShioriViewControllerDelegate {
+    func didSaveNewShiori() {
+        fetchData()
     }
 }
