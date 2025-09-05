@@ -98,6 +98,8 @@ final class EditShioriPlanDetailViewController: UIViewController {
     /// 画像プレビュー
     @IBOutlet private weak var planImageView: UIImageView!
     
+    // MARK: - Initializers
+    
     init(planDataModel: PlanDataModel) {
         self.planDataModel = planDataModel
         super.init(nibName: "EditShioriPlanDetailViewController", bundle: nil)
