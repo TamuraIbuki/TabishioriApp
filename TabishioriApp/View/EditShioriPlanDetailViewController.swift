@@ -253,7 +253,7 @@ final class EditShioriPlanDetailViewController: UIViewController {
         }
         urlTextField.text = selectedURL
         if let imageName =  selectedImage {
-            planImageView.image = imageFromIdentifer(imageName)
+            planImageView.image = convertToImage(from: imageName)
         } else {
             planImageView.image = nil
         }
@@ -266,7 +266,7 @@ final class EditShioriPlanDetailViewController: UIViewController {
     }
     
     /// 画像の型の変更
-    private func imageFromIdentifer(_ identifier: String) -> UIImage? {
+    private func convertToImage(from identifier: String) -> UIImage? {
         let trimmedIdentifier = identifier.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedIdentifier.isEmpty else { return nil}
         
