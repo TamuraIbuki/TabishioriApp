@@ -22,9 +22,9 @@ final class EditShioriPlanViewController: UIViewController {
     // MARK: - Properties
     
     /// しおりのデータ
-    private var dataModel: ShioriDataModel!
+    private var dataModel: ShioriDataModel?
     /// 予定のデータ
-    private var planDataModel: PlanDataModel!
+    private var planDataModel: PlanDataModel?
     
     // MARK: - Stored Properties
     
@@ -72,7 +72,9 @@ final class EditShioriPlanViewController: UIViewController {
          dayTitle: String,
          pageDate: Date,
          totalCost: String,
-         backgroundHex: String) {
+         backgroundHex: String,
+         planDataModel: PlanDataModel? = nil
+    ) {
         self.dataModel = dataModel
         self.shioriName = shioriName
         self.dateRange = dateRange
@@ -80,6 +82,7 @@ final class EditShioriPlanViewController: UIViewController {
         self.pageDate = pageDate
         self.totalCost = totalCost
         self.backgroundHex = backgroundHex
+        self.planDataModel = planDataModel
         super.init(nibName: "EditShioriPlanViewController", bundle: nil)
     }
     
@@ -107,7 +110,10 @@ final class EditShioriPlanViewController: UIViewController {
     
     /// しおり編集ボタンをタップ
     @IBAction private func shioriEditButtonTapped(_ sender: Any) {
-        let nextVC = EditShioriViewController(dataModel: dataModel)
+        guard let model = dataModel else {
+            return
+        }
+        let nextVC = EditShioriViewController(dataModel: model)
         nextVC.delegate = self
         navigationController?.pushViewController(nextVC, animated: true)
     }

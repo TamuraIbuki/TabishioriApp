@@ -35,7 +35,7 @@ final class EditShioriPlanDetailViewController: UIViewController {
     /// 終了時間ピッカー
     private let datePickerEndTime = UIDatePicker()
     /// しおり予定データ
-    private var planDataModel: PlanDataModel
+    private var planDataModel: PlanDataModel?
     
     // MARK: - Computed Properties
     
@@ -230,7 +230,9 @@ final class EditShioriPlanDetailViewController: UIViewController {
     
     /// Realmから予定の情報をセット
     private func setPlanFromRealm() {
-        let model = planDataModel
+        guard let model = planDataModel else {
+            return
+        }
         
         selectedDate = model.planDate
         selectedStartTime = model.startTime

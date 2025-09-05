@@ -30,7 +30,7 @@ final class EditShioriViewController: UIViewController {
     /// 終了日
     private var selectedEndDate: Date?
     /// しおりデータ
-    var dataModel: ShioriDataModel!
+    var dataModel: ShioriDataModel?
     /// デリゲートのプロパティ
     weak var delegate: EditShioriViewControllerDelegate?
     
@@ -248,11 +248,14 @@ final class EditShioriViewController: UIViewController {
     
     /// Realmからしおりの情報をセット
     private func setShioriFromRealm() {
-        guard let dataModel else { return }
-        selectedShioriName = dataModel.shioriName
-        selectedStartDate = dataModel.startDate
-        selectedEndDate = dataModel.endDate
-        selectedBackgroundColor = dataModel.backgroundColor
+        guard let model = dataModel else {
+            return
+        }
+        
+        selectedShioriName = model.shioriName
+        selectedStartDate = model.startDate
+        selectedEndDate = model.endDate
+        selectedBackgroundColor = model.backgroundColor
         // テキストフィールドに反映
         shioriNameTextField.text = selectedShioriName
         startDateTextField.text = dateFormatter.string(from: selectedStartDate!)
@@ -363,14 +366,14 @@ final class EditShioriViewController: UIViewController {
     
     /// しおりデータを更新する
     private func update(startDate: Date, endDate: Date) {
-        guard let dataModel = dataModel else { return }
+        guard let model = dataModel else { return }
         do {
             let realm = try Realm()
             try realm.write {
-                dataModel.shioriName = selectedShioriName
-                dataModel.startDate = startDate
-                dataModel.endDate = endDate
-                dataModel.backgroundColor = selectedBackgroundColor
+                model.shioriName = selectedShioriName
+                model.startDate = startDate
+                model.endDate = endDate
+                model.backgroundColor = selectedBackgroundColor
             }
             
             // 成功時の処理
@@ -385,11 +388,15 @@ final class EditShioriViewController: UIViewController {
                     let closeModal: () -> Void = {
                         if let nav = self.navigationController {
                             nav.dismiss(animated: true)
-                            self.delegate?.didSaveNewShiori(self.dataModel)
+                            if let model = self.dataModel {
+                                self.delegate?.didSaveNewShiori(model)
+                            }
                     
                         } else {
                             self.dismiss(animated: true){
-                                self.delegate?.didSaveNewShiori(self.dataModel)
+                                if let model = self.dataModel {
+                                    self.delegate?.didSaveNewShiori(model)
+                                }
                             }
                         }
                     }
