@@ -93,7 +93,7 @@ final class ShioriPlanTableViewCell: UITableViewCell {
     }
     
     /// 画像の型の変更
-    private func imageFromIdentifier(_ identifier: String) -> UIImage? {
+    private func convertToImage(from identifier: String) -> UIImage? {
         let trimmedIdentifier = identifier.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedIdentifier.isEmpty else { return nil }
         
@@ -150,7 +150,7 @@ final class ShioriPlanTableViewCell: UITableViewCell {
         }
         
         // 画像がある場合表示
-        if let id = item.planImage, let decodedImage = imageFromIdentifier(id){
+        if let id = item.planImage, let decodedImage = convertToImage(from: id){
             planImageView.image = decodedImage
             planImageView.isHidden = false
             planImageHeightConstraint.constant = 120

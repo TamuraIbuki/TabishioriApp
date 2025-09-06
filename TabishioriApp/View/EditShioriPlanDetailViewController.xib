@@ -18,8 +18,10 @@
                 <outlet property="endTimeLabel" destination="iqu-uM-e5O" id="1tS-Oe-Qkp"/>
                 <outlet property="endTimeTextField" destination="svl-YY-goj" id="Xll-bk-AJY"/>
                 <outlet property="insertImageButton" destination="9Oe-1q-fId" id="KPd-wx-RK4"/>
+                <outlet property="planImageView" destination="dhr-UY-4kP" id="YsF-31-Mng"/>
                 <outlet property="planLabel" destination="gjQ-Pg-DDC" id="Ecp-lv-DOa"/>
                 <outlet property="planTextView" destination="GrO-jw-XER" id="wgQ-Rc-mM7"/>
+                <outlet property="reservationCheckButton" destination="5UA-I9-kEK" id="leS-ZN-bN5"/>
                 <outlet property="reservationLabel" destination="wma-O4-buD" id="BPQ-hh-94Y"/>
                 <outlet property="startTimeLabel" destination="7la-AK-HrU" id="SI0-Bo-ucQ"/>
                 <outlet property="startTimeTextField" destination="Brk-xl-bJr" id="dua-oH-Iuf"/>

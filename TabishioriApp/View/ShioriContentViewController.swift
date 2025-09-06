@@ -173,7 +173,7 @@ final class ShioriContentViewController: UIViewController {
     private func fetchPlansForThisDay() -> [PlanDataModel] {
         let results = RealmManager.shared.getObjects(PlanDataModel.self)
             .filter { Calendar.current.isDate($0.planDate, inSameDayAs: self.pageDate) }
-        return Array(results)
+        return results.sorted { $0.startTime < $1.startTime }
     }
 }
 
