@@ -63,8 +63,6 @@ final class EditShioriPlanDetailViewController: UIViewController {
     private let timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = .init(identifier: "ja_JP")
-        //formatter.dateStyle = .medium
-        //formatter.timeStyle = .none
         formatter.calendar = Calendar(identifier: .gregorian)
         formatter.dateFormat = "HH:mm"
         return formatter
