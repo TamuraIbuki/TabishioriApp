@@ -6,6 +6,15 @@
 //
 
 import UIKit
+import RealmSwift
+
+// MARK: - Protocols
+
+protocol EditShioriPlanDetailViewControllerDelegate: AnyObject {
+    func didSavePlan(_ plan: PlanDataModel)
+}
+
+// MARK: - Main Type
 
 /// しおり予定情報編集画面
 final class EditShioriPlanDetailViewController: UIViewController {
@@ -36,16 +45,18 @@ final class EditShioriPlanDetailViewController: UIViewController {
     private let datePickerEndTime = UIDatePicker()
     /// しおり予定データ
     private var planDataModel: PlanDataModel?
+    /// デリゲートのプロパティ
+    weak var delegate: EditShioriPlanDetailViewControllerDelegate?
     
     // MARK: - Computed Properties
     
     /// 日付取得のフォーマット
     private let dateFormatter: DateFormatter = {
-        let df = DateFormatter()
-        df.locale = Locale(identifier: "ja_JP")
-        df.calendar = Calendar(identifier: .gregorian)
-        df.dateFormat = "yyyy年M月d日"
-        return df
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.dateFormat = "yyyy年M月d日"
+        return formatter
     }()
     
     /// 時間取得のフォーマット
@@ -119,6 +130,8 @@ final class EditShioriPlanDetailViewController: UIViewController {
         configureBarButtonItems()
         setPlanFromRealm()
         setReservationCheckBox()
+        configureBarButtonItems()
+        configureDatePicker()
     }
     
     // MARK: - IBActions
@@ -127,14 +140,26 @@ final class EditShioriPlanDetailViewController: UIViewController {
     @IBAction private func checkBoxButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
         selectedReservation = sender.isSelected
-        
     }
     
     /// 画像をを挿入するボタンをタップ
     @IBAction private func insertImageButtonTapped(_ sender: UIButton) {
+        // イメージピッカーを表示
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        present(imagePickerController, animated: true, completion: nil)
     }
-    /// 「編集」ボタンをタップ
-    @IBAction private func editButtonTapped(_ sender: UIButton) {
+    
+    /// 「修正」ボタンをタップ
+    @IBAction private func correctButtonTapped(_ sender: UIButton) {
+        // 予定を登録
+        selectedPlan = planTextView.text
+        // 費用を登録
+        selectedCost = Int(costTextField.text ?? "")
+        // URLを登録
+        selectedURL = urlTextField.text ?? ""
+        validatePlanForm()
     }
     
     // MARK: - Other Methods
@@ -230,6 +255,112 @@ final class EditShioriPlanDetailViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    private func configureDatePicker() {
+        [datePickerDate, datePickerStartTime, datePickerEndTime].forEach {
+            $0.locale = .init(identifier: "ja_JP")
+            $0.preferredDatePickerStyle = .wheels
+        }
+        
+        let pickerToolbar = configureToolbar()
+        
+        datePickerDate.datePickerMode = .date
+        datePickerDate.addTarget(self, action: #selector(dateChanged),  for: .valueChanged)
+        dateTextField.inputView = datePickerDate
+        dateTextField.inputAccessoryView = pickerToolbar
+        
+        datePickerStartTime.datePickerMode = .time
+        datePickerStartTime.addTarget(self, action: #selector(startTimeChanged), for: .valueChanged)
+        startTimeTextField.inputView = datePickerStartTime
+        startTimeTextField.inputAccessoryView = pickerToolbar
+        
+        datePickerEndTime.datePickerMode = .time
+        datePickerEndTime.addTarget(self, action: #selector(endTimeChanged),   for: .valueChanged)
+        endTimeTextField.inputView = datePickerEndTime
+        endTimeTextField.inputAccessoryView = pickerToolbar
+    }
+    
+    @objc private func dateChanged() {
+        dateTextField.text = dateFormat(datePickerDate.date, pattern: "yyyy年M月d日")
+        // 日付を登録
+        selectedDate = datePickerDate.date
+    }
+    
+    @objc private func startTimeChanged() {
+        startTimeTextField.text = dateFormat(datePickerStartTime.date, pattern: "HH:mm")
+        // 開始時間を登録
+        selectedStartTime = datePickerStartTime.date
+        checkAndSwapTimes()
+    }
+    
+    @objc private func endTimeChanged() {
+        endTimeTextField.text = dateFormat(datePickerEndTime.date, pattern: "HH:mm")
+        // 終了時間を登録
+        selectedEndTime = datePickerEndTime.date
+        checkAndSwapTimes()
+    }
+    
+    private func dateFormat(_ date: Date, pattern: String) -> String {
+        dateFormatter.dateFormat = pattern
+        return dateFormatter.string(from: date)
+    }
+    
+    /// ツールバーの設定
+    private func configureToolbar() -> UIToolbar {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "決定",
+                                         style: .done,
+                                         target: self,
+                                         action: #selector(doneButtonTapped))
+        let cancelButton = UIBarButtonItem(title: "キャンセル",
+                                           style: .plain,
+                                           target: self,
+                                           action: #selector(cancelButtonTapped))
+        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.items = [cancelButton, flex, doneButton]
+        return toolbar
+    }
+    
+    ///「決定」をタップ時
+    @objc private func doneButtonTapped() {
+        if dateTextField.isFirstResponder {
+            dateChanged()
+            dateTextField.resignFirstResponder()
+        } else if startTimeTextField.isFirstResponder {
+            startTimeChanged()
+            startTimeTextField.resignFirstResponder()
+        } else if endTimeTextField.isFirstResponder {
+            endTimeChanged()
+            endTimeTextField.resignFirstResponder()
+        }
+    }
+    
+    /// 「キャンセル」をタップ時
+    @objc private func cancelButtonTapped() {
+        // ピッカーを閉じる
+        view.endEditing(true)
+        // dateTextField.resignFirstResponder()
+    }
+    
+    /// 開始終了時間の逆転をチェック
+    private func checkAndSwapTimes() {
+        // 開始日より終了日が前だったら逆転させる
+        if let startTime = selectedStartTime,
+           let endTime = selectedEndTime,
+           startTime > endTime {
+            selectedStartTime = endTime
+            selectedEndTime = startTime
+            
+            datePickerStartTime.setDate(endTime, animated: true)
+            datePickerEndTime.setDate(startTime, animated: true)
+            
+            startTimeTextField.text = dateFormat(endTime, pattern: "HH:mm")
+            endTimeTextField.text   = dateFormat(startTime, pattern: "HH:mm")
+            
+            print("開始時間と終了時間を入れ替えました")
+        }
+    }
+    
     /// Realmから予定の情報をセット
     private func setPlanFromRealm() {
         guard let model = planDataModel else {
@@ -286,6 +417,104 @@ final class EditShioriPlanDetailViewController: UIViewController {
         }
         return UIImage(named: trimmedIdentifier)
     }
+    
+    /// バリデーション
+    private func validatePlanForm() {
+        var validateTitles: [String] = []
+        let validateMessage = "%@は必須項目です"
+        
+        // 日付がない場合
+        if selectedDate == nil {
+            validateTitles.append("「日付」")
+        }
+        
+        // 開始時間がない場合
+        if selectedStartTime == nil {
+            validateTitles.append("「開始時間」")
+        }
+        
+        // 予定内容がない場合
+        if selectedPlan.isEmpty {
+            validateTitles.append("「内容」")
+        }
+        
+        if validateTitles.isEmpty {
+            // 日付と内容が記載されている場合、登録処理を行う
+            let planDate = selectedDate!
+            let startTime = selectedStartTime!
+            updatePlan(planDate: planDate, startTime: startTime)
+        } else {
+            // 未入力項目がある場合、アラートを表示
+            showAlert(title: String(format: validateMessage, validateTitles.joined(separator: "、")))
+        }
+    }
+    
+    /// 予定データを更新する
+    private func updatePlan(planDate: Date, startTime: Date) {
+        guard let model = planDataModel else { return }
+        do {
+            let realm = try Realm()
+            try realm.write {
+                model.planDate = planDate
+                model.startTime = startTime
+                model.endTime = selectedEndTime
+                model.planContent = selectedPlan
+                model.planReservation = selectedReservation
+                model.planCost = selectedCost ?? 0
+                model.planURL = selectedURL
+                model.planImage = selectedImage
+            }
+            
+            // 成功時の処理
+            DispatchQueue.main.async { [ weak self ] in
+                guard let self = self else { return }
+                print("Object added successfully")
+                let alert = UIAlertController(title: "更新しました", message: nil, preferredStyle: .alert)
+                self.present(alert, animated: true)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                    guard let self = self else { return }
+                    self.delegate?.didSavePlan(model)
+                    
+                    let closeModal: () -> Void = {
+                        if self.navigationController != nil {
+                            self.navigationController?.popViewController(animated: true)
+                        } else {
+                            self.dismiss(animated: true)
+                        }
+                    }
+                    // 先にアラートを閉じてから戻る
+                    if let presented = self.presentedViewController {
+                        presented.dismiss(animated: true, completion: closeModal)
+                    } else {
+                        closeModal()
+                    }
+                }
+            }
+        } catch {
+            // 失敗時の処理
+            print("Failed to add object to Realm: \(error)")
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.showAlert(title: "更新に失敗しました")
+            }
+        }
+    }
+    
+    /// アラートを表示
+    private func showAlert(title: String) {
+        let alert = UIAlertController(title: title,
+                                      message: "",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    /// Date型に変換
+    private func parseDate(_ text: String?, with formatter: DateFormatter) -> Date? {
+        guard let text, !text.isEmpty else { return nil }
+        return formatter.date(from: text)
+    }
 }
 
 // MARK: - Extensions
@@ -296,6 +525,23 @@ extension EditShioriPlanDetailViewController: UITextFieldDelegate {
         // キーボードを閉じる
         textField.resignFirstResponder()
         return true
+    }
+    
+    /// ピッカーを開いた時に今の設定時刻で選択スタートする
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == dateTextField {
+            if let currentSelectedDate = selectedDate ?? parseDate(dateTextField.text, with: dateFormatter) {
+                datePickerDate.setDate(currentSelectedDate, animated: false)
+            }
+        } else if textField == startTimeTextField {
+            if let currentSelectedStartTime = selectedStartTime ?? parseDate(startTimeTextField.text, with: timeFormatter) {
+                datePickerStartTime.setDate(currentSelectedStartTime, animated: false)
+            }
+        } else if textField == endTimeTextField {
+            if let currentSelectedEndTime = selectedEndTime ?? parseDate(endTimeTextField.text, with: timeFormatter) {
+                datePickerEndTime.setDate(currentSelectedEndTime, animated: false)
+            }
+        }
     }
 }
 
@@ -310,5 +556,23 @@ extension EditShioriPlanDetailViewController: UITextViewDelegate {
             return false
         }
         return true
+    }
+}
+
+// MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate
+
+extension EditShioriPlanDetailViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage,
+           let imageData = image.jpegData(compressionQuality: 0.8) {
+            selectedImage = imageData.base64EncodedString()
+            planImageView.image = image
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
     }
 }

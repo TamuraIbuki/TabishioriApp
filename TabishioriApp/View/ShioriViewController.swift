@@ -223,7 +223,7 @@ extension ShioriViewController: CreateShioriPlanViewControllerDelegate {
 
 extension ShioriViewController: EditShioriPlanViewControllerDelegate {
     /// しおりの情報を更新
-    func didShioriupdate(_ updated: ShioriDataModel) {
+    func didShioriUpdate(_ updated: ShioriDataModel) {
         let currentDisplayedDate = (pageViewController.viewControllers?.first as? ShioriContentViewController)?.pageDate
         
         selectedShiori = updated
@@ -239,5 +239,18 @@ extension ShioriViewController: EditShioriPlanViewControllerDelegate {
         
         pageViewController.setViewControllers([pages[targetIndex]], direction: .forward, animated: false)
         updateAllPagesWithPlans()
+    }
+    
+    /// 予定の情報を更新
+    func didPlanUpdate(_ updated: PlanDataModel) {
+        let targetDate = updated.planDate
+        let cal = Calendar.current
+        for page in pages {
+            if let content = page as? ShioriContentViewController,
+               cal.isDate(content.pageDate, inSameDayAs: targetDate) {
+                content.fetchAndDistributePlans()
+                break
+            }
+        }
     }
 }

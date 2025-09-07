@@ -11,7 +11,8 @@ import RealmSwift
 // MARK: - Protocols
 
 protocol EditShioriPlanViewControllerDelegate: AnyObject {
-    func didShioriupdate(_ updated: ShioriDataModel)
+    func didShioriUpdate(_ updated: ShioriDataModel)
+    func didPlanUpdate(_ plan: PlanDataModel)
 }
 
 // MARK: - Main Type
@@ -205,7 +206,7 @@ final class EditShioriPlanViewController: UIViewController {
         let hasURL = !trimmedURL.isEmpty
         let rawImage = plan.planImage?.trimmingCharacters(in: .whitespacesAndNewlines)
         let imageName: String? = (rawImage?.isEmpty == false) ? rawImage : nil
-
+        
         
         return .init(startTime: plan.startTime,
                      endTime: plan.endTime,
@@ -262,16 +263,28 @@ extension EditShioriPlanViewController: ShioriPlanTableViewCellDelegate {
         }
         let plan = dailyPlans[indexPath.row]
         navigateToEditShioriPlanDetail(plan: plan)
-        }
+    }
     
     private func navigateToEditShioriPlanDetail(plan: PlanDataModel) {
         let nextVC = EditShioriPlanDetailViewController(planDataModel: plan)
+        nextVC.delegate = self
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 
 extension EditShioriPlanViewController: EditShioriViewControllerDelegate {
     func didSaveNewShiori(_ updated: ShioriDataModel) {
-        delegateToParent?.didShioriupdate(updated)
+        delegateToParent?.didShioriUpdate(updated)
+    }
+}
+
+
+extension EditShioriPlanViewController: EditShioriPlanDetailViewControllerDelegate {
+    func didSavePlan(_ plan: PlanDataModel) {
+        fetchDailyPlans()
+        planTableView.reloadData()
+        
+        delegateToParent?.didPlanUpdate(plan)
+        
     }
 }
