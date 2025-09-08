@@ -47,6 +47,8 @@ final class EditShioriPlanDetailViewController: UIViewController {
     private var planDataModel: PlanDataModel?
     /// デリゲートのプロパティ
     weak var delegate: EditShioriPlanDetailViewControllerDelegate?
+    /// RealmManagerのシングルトンインスタンスを取得
+    let realmManager = RealmManager.shared
     
     // MARK: - Computed Properties
     
@@ -450,9 +452,38 @@ final class EditShioriPlanDetailViewController: UIViewController {
     /// 予定データを更新する
     private func updatePlan(planDate: Date, startTime: Date) {
         guard let model = planDataModel else { return }
-        do {
-            let realm = try Realm()
-            try realm.write {
+        
+            realmManager.update(onSuccess: {
+                // 成功時の処理
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    print("Object added successfully")
+                    let alert = UIAlertController(title: "更新しました", message: nil, preferredStyle: .alert)
+                    self.present(alert, animated: true) {
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                        guard let self = self else { return }
+                        self.delegate?.didSavePlan(model)
+                        
+                        let closeModal: () -> Void = {
+                            if self.navigationController != nil {
+                                self.navigationController?.popViewController(animated: true)
+                            } else {
+                                self.dismiss(animated: true)
+                            }
+                        }
+                        alert.dismiss(animated: true, completion: closeModal)
+                        }
+                    }
+                }
+            }, onFailure: { [weak self] error in
+                    // 失敗時の処理
+                    print("Failed to add object to Realm: \(error)")
+                    DispatchQueue.main.async {
+                        self?.showAlert(title: "更新に失敗しました")
+                    }
+                })
+                {
                 model.planDate = planDate
                 model.startTime = startTime
                 model.endTime = selectedEndTime
@@ -462,42 +493,7 @@ final class EditShioriPlanDetailViewController: UIViewController {
                 model.planURL = selectedURL
                 model.planImage = selectedImage
             }
-            
-            // 成功時の処理
-            DispatchQueue.main.async { [ weak self ] in
-                guard let self = self else { return }
-                print("Object added successfully")
-                let alert = UIAlertController(title: "更新しました", message: nil, preferredStyle: .alert)
-                self.present(alert, animated: true)
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-                    guard let self = self else { return }
-                    self.delegate?.didSavePlan(model)
-                    
-                    let closeModal: () -> Void = {
-                        if self.navigationController != nil {
-                            self.navigationController?.popViewController(animated: true)
-                        } else {
-                            self.dismiss(animated: true)
-                        }
-                    }
-                    // 先にアラートを閉じてから戻る
-                    if let presented = self.presentedViewController {
-                        presented.dismiss(animated: true, completion: closeModal)
-                    } else {
-                        closeModal()
-                    }
-                }
-            }
-        } catch {
-            // 失敗時の処理
-            print("Failed to add object to Realm: \(error)")
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.showAlert(title: "更新に失敗しました")
-            }
         }
-    }
     
     /// アラートを表示
     private func showAlert(title: String) {

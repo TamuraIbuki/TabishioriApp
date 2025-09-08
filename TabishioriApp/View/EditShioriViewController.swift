@@ -33,6 +33,8 @@ final class EditShioriViewController: UIViewController {
     var dataModel: ShioriDataModel?
     /// デリゲートのプロパティ
     weak var delegate: EditShioriViewControllerDelegate?
+    /// RealmManagerのシングルトンインスタンスを取得
+    let realmManager = RealmManager.shared
     
     // MARK: - Computed Properties
     
@@ -367,54 +369,38 @@ final class EditShioriViewController: UIViewController {
     /// しおりデータを更新する
     private func update(startDate: Date, endDate: Date) {
         guard let model = dataModel else { return }
-        do {
-            let realm = try Realm()
-            try realm.write {
-                model.shioriName = selectedShioriName
-                model.startDate = startDate
-                model.endDate = endDate
-                model.backgroundColor = selectedBackgroundColor
-            }
-            
+        
+        realmManager.update(onSuccess: {
             // 成功時の処理
-            DispatchQueue.main.async { [ weak self ] in
+            print("Object added successfully")
+            let alert = UIAlertController(title: "更新しました", message: nil, preferredStyle: .alert)
+            self.present(alert, animated: true)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 guard let self = self else { return }
-                print("Object added successfully")
-                let alert = UIAlertController(title: "更新しました", message: nil, preferredStyle: .alert)
-                self.present(alert, animated: true)
+                self.delegate?.didSaveNewShiori(model)
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-                    guard let self = self else { return }
-                    let closeModal: () -> Void = {
-                        if let nav = self.navigationController {
-                            nav.dismiss(animated: true)
-                            if let model = self.dataModel {
-                                self.delegate?.didSaveNewShiori(model)
-                            }
-                    
-                        } else {
-                            self.dismiss(animated: true){
-                                if let model = self.dataModel {
-                                    self.delegate?.didSaveNewShiori(model)
-                                }
-                            }
-                        }
-                    }
-                    // 先にアラートを閉じてから戻る
-                    if let presented = self.presentedViewController {
-                        presented.dismiss(animated: true, completion: closeModal)
+                alert.dismiss(animated: true) {
+                    if let nav = self.navigationController {
+                        nav.dismiss(animated: true)
+                        self.delegate?.didSaveNewShiori(model)
                     } else {
-                        closeModal()
+                        self.dismiss(animated: true)
                     }
                 }
             }
-        } catch {
+        }, onFailure: { [weak self] error in
             // 失敗時の処理
             print("Failed to add object to Realm: \(error)")
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.showAlert(title: "更新に失敗しました")
+            DispatchQueue.main.async {
+                self?.showAlert(title: "更新に失敗しました")
             }
+        })
+        {
+            model.shioriName = selectedShioriName
+            model.startDate = startDate
+            model.endDate = endDate
+            model.backgroundColor = selectedBackgroundColor
         }
     }
     
