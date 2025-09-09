@@ -145,15 +145,6 @@ final class CreateShioriPlanViewController: UIViewController {
         // URLを登録
         selectedURL = urlTextField.text ?? ""
         validatePlanForm()
-        
-        // 確認用
-        print("selectedDate: \(String(describing: selectedDate))")
-        print("selectedStartTime: \(String(describing: selectedStartTime))")
-        print("selectedEndTime: \(String(describing: selectedEndTime))")
-        print("selectedPlan: \(selectedPlan)")
-        print("selectedReservation: \(selectedReservation)")
-        print("selectedCost: \(selectedCost?.description ?? "nil")")
-        print("selectedURL: \(selectedURL)")
     }
     
     // MARK: - Other Methods

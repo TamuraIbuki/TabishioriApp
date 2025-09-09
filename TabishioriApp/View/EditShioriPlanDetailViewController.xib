@@ -163,7 +163,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="editButtonTapped:" destination="-1" eventType="touchUpInside" id="bwZ-Fv-78R"/>
+                        <action selector="correctButtonTapped:" destination="-1" eventType="touchUpInside" id="bwZ-Fv-78R"/>
                     </connections>
                 </button>
                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gY6-ck-hzU">
