@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 // MARK: - Protocols
 
@@ -453,13 +452,14 @@ final class EditShioriPlanDetailViewController: UIViewController {
     private func updatePlan(planDate: Date, startTime: Date) {
         guard let model = planDataModel else { return }
         
-            realmManager.update(onSuccess: {
-                // 成功時の処理
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    print("Object added successfully")
-                    let alert = UIAlertController(title: "更新しました", message: nil, preferredStyle: .alert)
-                    self.present(alert, animated: true) {
+        realmManager.update(
+            onSuccess: {
+            // 成功時の処理
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                print("Object added successfully")
+                let alert = UIAlertController(title: "更新しました", message: nil, preferredStyle: .alert)
+                self.present(alert, animated: true) {
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                         guard let self = self else { return }
@@ -473,27 +473,27 @@ final class EditShioriPlanDetailViewController: UIViewController {
                             }
                         }
                         alert.dismiss(animated: true, completion: closeModal)
-                        }
                     }
                 }
-            }, onFailure: { [weak self] error in
-                    // 失敗時の処理
-                    print("Failed to add object to Realm: \(error)")
-                    DispatchQueue.main.async {
-                        self?.showAlert(title: "更新に失敗しました")
-                    }
-                })
-                {
-                model.planDate = planDate
-                model.startTime = startTime
-                model.endTime = selectedEndTime
-                model.planContent = selectedPlan
-                model.planReservation = selectedReservation
-                model.planCost = selectedCost ?? 0
-                model.planURL = selectedURL
-                model.planImage = selectedImage
             }
+        }, onFailure: { [weak self] error in
+            // 失敗時の処理
+            print("Failed to add object to Realm: \(error)")
+            DispatchQueue.main.async {
+                self?.showAlert(title: "更新に失敗しました")
+            }
+        })
+        {
+            model.planDate = planDate
+            model.startTime = startTime
+            model.endTime = selectedEndTime
+            model.planContent = selectedPlan
+            model.planReservation = selectedReservation
+            model.planCost = selectedCost ?? 0
+            model.planURL = selectedURL
+            model.planImage = selectedImage
         }
+    }
     
     /// アラートを表示
     private func showAlert(title: String) {

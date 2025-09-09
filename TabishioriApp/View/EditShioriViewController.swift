@@ -370,7 +370,8 @@ final class EditShioriViewController: UIViewController {
     private func update(startDate: Date, endDate: Date) {
         guard let model = dataModel else { return }
         
-        realmManager.update(onSuccess: {
+        realmManager.update(
+            onSuccess: {
             // 成功時の処理
             print("Object added successfully")
             let alert = UIAlertController(title: "更新しました", message: nil, preferredStyle: .alert)
