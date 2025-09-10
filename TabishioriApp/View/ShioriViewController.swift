@@ -52,7 +52,8 @@ final class ShioriViewController: UIViewController {
     
     /// 持ち物リストボタンをタップ
     @IBAction private func luggageButtonTapped(_ sender: UIButton) {
-        let nextVC = PackingListViewController()
+        let hex = normalizeHex(selectedShiori?.backgroundColor ?? "#FFFFFF")
+        let nextVC = PackingListViewController(backgroundHex: hex)
         let navi = UINavigationController(rootViewController: nextVC)
         navigationController?.present(navi, animated: true)
     }
@@ -180,6 +181,13 @@ final class ShioriViewController: UIViewController {
             }
         }
     }
+    
+    /// 色コードをそろえる
+    private func normalizeHex(_ hex: String) -> String {
+        var trimmedUppercasedHex = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        if !trimmedUppercasedHex.hasPrefix("#") { trimmedUppercasedHex = "#"+trimmedUppercasedHex }
+        return trimmedUppercasedHex
+    }
 }
 
 // MARK: - UIPageViewControllerDataSource
@@ -224,7 +232,8 @@ extension ShioriViewController: CreateShioriPlanViewControllerDelegate {
 extension ShioriViewController: EditShioriPlanViewControllerDelegate {
     /// しおりの情報を更新
     func didShioriUpdate(_ updated: ShioriDataModel) {
-        let currentDisplayedDate = (pageViewController.viewControllers?.first as? ShioriContentViewController)?.pageDate
+        let currentDisplayedDate
+        = (pageViewController.viewControllers?.first as? ShioriContentViewController)?.pageDate
         
         selectedShiori = updated
         configurePages(shiori: updated)

@@ -47,7 +47,6 @@
                 </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" red="0.97647058823529409" green="0.82352941176470584" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="cn5-4d-OqH" firstAttribute="top" secondItem="cf8-oi-vMu" secondAttribute="bottom" constant="9" id="1YV-4R-ycA"/>
                 <constraint firstItem="T3n-NP-eQa" firstAttribute="top" secondItem="cn5-4d-OqH" secondAttribute="bottom" constant="10" id="2qx-CH-kXr"/>

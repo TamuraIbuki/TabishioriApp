@@ -83,6 +83,7 @@ final class HomeViewController: UIViewController {
     
     private func configureTableView() {
         tableView.dataSource = self
+        tableView.delegate = self
         // カスタムセルを登録
         let nib = UINib(nibName: "HomeTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "HomeTableViewCellID")
@@ -142,6 +143,46 @@ extension HomeViewController: UITableViewDelegate {
             shioriVC.selectedShiori = data[indexPath.row] // 単一のShioriDataModelを渡す
         }
         navigationController?.pushViewController(shioriVC, animated: true)
+    }
+    
+    /// セルの削除
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+    -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "削除") { [weak self] _, _, done in
+            guard let self = self,
+                  let data = self.data,
+                  data.indices.contains(indexPath.row) else {
+                return
+            }
+            let shiori = data[indexPath.row]
+            
+            // Realm から削除
+            self.realmManager.delete(shiori, onSuccess: { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.fetchData()
+                self.tableView.reloadData()
+                done(true)
+                // ローカル配列からも除去してテーブル更新
+                //tableView.deleteRows(at: [indexPath], with: .automatic)
+                
+                //if let visible = tableView.indexPathsForVisibleRows {
+                  //  tableView.reloadRows(at: visible, with: .none)
+                //}
+                //done(true)
+                
+            }, onFailure: { error in
+                print("Delete failed: \(error)")
+                done(false)
+            })
+        }
+        
+        let config = UISwipeActionsConfiguration(actions: [deleteAction])
+        config.performsFirstActionWithFullSwipe = true
+        return config
     }
 }
 

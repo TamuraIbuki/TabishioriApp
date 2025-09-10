@@ -9,7 +9,15 @@ import UIKit
 
 /// 持ち物リスト画面
 final class PackingListViewController: UIViewController {
-
+    
+    // MARK: - Stored Properties
+    /// RealmManagerのシングルトンインスタンスを取得
+    private let realmManager = RealmManager.shared
+    /// パッキングアイテムの配列
+    private var items: [PackingItemDataModel] = []
+    /// 背景色
+    private var backgroundHex: String = ""
+    
     // MARK: - IBOutlets
     
     /// タイトルラベル
@@ -19,6 +27,18 @@ final class PackingListViewController: UIViewController {
     /// 持ち物リストテーブルビュー
     @IBOutlet private weak var packingListTableView: UITableView!
     
+    // MARK: - Initializers
+    
+    init(backgroundHex: String) {
+        self.backgroundHex = backgroundHex
+        super.init(nibName: "PackingListViewController", bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
     // MARK: - View Life-Cycle Methods
     
     override func viewDidLoad() {
@@ -26,6 +46,7 @@ final class PackingListViewController: UIViewController {
         configureNavigationBar()
         setupUI()
         configureTableView()
+        fetchItems()
     }
     
     // MARK: - Other Methods
@@ -42,6 +63,9 @@ final class PackingListViewController: UIViewController {
         
         // 説明ラベルのフォント設定
         descriptionLabel.font = .setFontZenMaruGothic(size: 13)
+        
+        // 背景色の設定
+        applyBackground(hex: backgroundHex)
     }
     
     private func configureNavigationBar() {
@@ -71,33 +95,91 @@ final class PackingListViewController: UIViewController {
         // テーブルビューの高さ設定
         packingListTableView.rowHeight = UITableView.automaticDimension
         packingListTableView.estimatedRowHeight = 100
+        
+        // キーボードを閉じる処理
+        packingListTableView.keyboardDismissMode = .onDrag
+        let tap = UITapGestureRecognizer(target: self, action: #selector(endEditingList))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc private func endEditingList() {
+        view.endEditing(true)
+    }
+    
+    private func fetchItems() {
+        let results = realmManager.getObjects(PackingItemDataModel.self)
+        items = Array(results)
+        packingListTableView.reloadData()
+    }
+    
+    @objc private func addButtonTapped() {
+        let dataModel = PackingItemDataModel()
+        dataModel.name = ""
+        dataModel.isChecked = false
+        
+        realmManager.add(dataModel) { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            let hadAtLeastOne = !self.items.isEmpty
+            let previousLastIndexPath = IndexPath(row: max(self.items.count - 1, 0), section: 0)
+            
+            self.items.append(dataModel)
+            let indexPath = IndexPath(row: self.items.count - 1, section: 0)
+            
+            // 追加時のセルの更新
+            self.packingListTableView.performBatchUpdates({
+                if hadAtLeastOne {
+                    self.packingListTableView.reloadRows(at: [previousLastIndexPath], with: .none)
+                }
+                self.packingListTableView.insertRows(at: [indexPath], with: .automatic)
+            })
+        }
+    }
+    
+    private func applyBackground(hex: String) {
+        let color = UIColor(hex: hex)
+        view.backgroundColor = color
+    }
+    
+    private func configure(backgroundHex: String) {
+        self.backgroundHex = backgroundHex
     }
 }
-
 
 // MARK: - Extentions
 
 extension PackingListViewController: UITableViewDataSource {
     /// セルの数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        items.count
     }
     
     /// セルを設定
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         //カスタムセルを指定
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PackingListCellID", for: indexPath)as! PackingListTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PackingListCellID",
+                                                 for: indexPath)as! PackingListTableViewCell
         
         // セルの最初と最後を確認
+        let item = items[indexPath.row]
         let isFirstCell = indexPath.row == 0
-        let isLastCell = indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1
-        cell.setup(packingItem: "パスポート", isFirst: isFirstCell, isLast: isLastCell)
+        let isLastCell = indexPath.row == items.count - 1
+        cell.setup(packingItem: item.name, isFirst: isFirstCell, isLast: isLastCell)
+        cell.delegate = self
         return cell
     }
 }
 
 extension PackingListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        (tableView.cellForRow(at: indexPath) as? PackingListTableViewCell)?.beginEditing()
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     /// セクションフッターを設定
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIView()
@@ -123,6 +205,62 @@ extension PackingListViewController: UITableViewDelegate {
         return 50
     }
     
-    @objc private func addButtonTapped() {
+    /// セルの削除
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+    -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "削除") { [weak self] _, _, done in
+            guard let self = self else {
+                return
+            }
+            let item = self.items[indexPath.row]
+            
+            // Realm から削除
+            self.realmManager.delete(item, onSuccess: { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                // ローカル配列からも除去してテーブル更新
+                self.items.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                
+                if let visible = tableView.indexPathsForVisibleRows {
+                    tableView.reloadRows(at: visible, with: .none)
+                }
+                done(true)
+                
+            }, onFailure: { error in
+                print("Delete failed: \(error)")
+                done(false)
+            })
+        }
+        
+        let config = UISwipeActionsConfiguration(actions: [deleteAction])
+        config.performsFirstActionWithFullSwipe = true
+        return config
+    }
+}
+
+extension PackingListViewController: PackingListTableViewCellDelegate {
+    func packingCell(_ cell: PackingListTableViewCell, didCommitText text: String) {
+        guard let indexPath = packingListTableView.indexPath(for: cell) else {
+            return
+        }
+        let item = items[indexPath.row]
+        // Realm更新
+        realmManager.update {
+            item.name = text
+        }
+    }
+    
+    func packingCellDidToggleCheck(_ cell: PackingListTableViewCell, isChecked: Bool) {
+        guard let indexPath = packingListTableView.indexPath(for: cell) else {
+            return
+        }
+        let item = items[indexPath.row]
+        realmManager.update {
+            item.isChecked = isChecked
+        }
     }
 }
