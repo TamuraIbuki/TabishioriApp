@@ -17,7 +17,7 @@ protocol PackingListTableViewCellDelegate: AnyObject {
 // MARK: - Main Type
 
 /// 持ち物リストセル
-final class PackingListTableViewCell: UITableViewCell, UITextFieldDelegate {
+final class PackingListTableViewCell: UITableViewCell {
     
     // MARK: - Stored Properties
     
@@ -120,7 +120,11 @@ final class PackingListTableViewCell: UITableViewCell, UITextFieldDelegate {
         let newText = (packingItemTextField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         delegate?.packingCell(self, didCommitText: newText)
     }
-    
+}
+
+// MARK: - Extentions
+
+extension PackingListTableViewCell: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         endEditingAndCommit()
     }
