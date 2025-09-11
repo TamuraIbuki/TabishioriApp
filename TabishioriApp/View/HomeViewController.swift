@@ -140,7 +140,8 @@ extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let shioriVC = ShioriViewController(nibName: "ShioriViewController", bundle: nil)
         if let data = data {
-            shioriVC.selectedShiori = data[indexPath.row] // 単一のShioriDataModelを渡す
+            // 単一のShioriDataModelを渡す
+            shioriVC.selectedShiori = data[indexPath.row]
         }
         navigationController?.pushViewController(shioriVC, animated: true)
     }
@@ -166,13 +167,6 @@ extension HomeViewController: UITableViewDelegate {
                 self.fetchData()
                 self.tableView.reloadData()
                 done(true)
-                // ローカル配列からも除去してテーブル更新
-                //tableView.deleteRows(at: [indexPath], with: .automatic)
-                
-                //if let visible = tableView.indexPathsForVisibleRows {
-                  //  tableView.reloadRows(at: visible, with: .none)
-                //}
-                //done(true)
                 
             }, onFailure: { error in
                 print("Delete failed: \(error)")
