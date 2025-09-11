@@ -185,7 +185,8 @@ final class EditShioriPlanDetailViewController: UIViewController {
             .font: addButtonFont,
             .foregroundColor: UIColor.white
         ]
-        let addButtonAttributedTitle = NSAttributedString(string: addButtonTitle, attributes: addButtonAttributes)
+        let addButtonAttributedTitle = NSAttributedString(string: addButtonTitle,
+                                                          attributes: addButtonAttributes)
         editButton.setAttributedTitle(addButtonAttributedTitle, for: .normal)
         
         // 画像挿入ボタンのフォントを設定
@@ -196,7 +197,8 @@ final class EditShioriPlanDetailViewController: UIViewController {
             .foregroundColor: UIColor.systemBlue,
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
-        let insertAttributeTitle = NSAttributedString(string: insertImageTitle, attributes: insertImageAttributes)
+        let insertAttributeTitle = NSAttributedString(string: insertImageTitle,
+                                                      attributes: insertImageAttributes)
         insertImageButton.setAttributedTitle(insertAttributeTitle, for: .normal)
     }
     
@@ -454,35 +456,35 @@ final class EditShioriPlanDetailViewController: UIViewController {
         
         realmManager.update(
             onSuccess: {
-            // 成功時の処理
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                print("Object added successfully")
-                let alert = UIAlertController(title: "更新しました", message: nil, preferredStyle: .alert)
-                self.present(alert, animated: true) {
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-                        guard let self = self else { return }
-                        self.delegate?.didSavePlan(model)
+                // 成功時の処理
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    print("Object added successfully")
+                    let alert = UIAlertController(title: "更新しました", message: nil, preferredStyle: .alert)
+                    self.present(alert, animated: true) {
                         
-                        let closeModal: () -> Void = {
-                            if self.navigationController != nil {
-                                self.navigationController?.popViewController(animated: true)
-                            } else {
-                                self.dismiss(animated: true)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                            guard let self = self else { return }
+                            self.delegate?.didSavePlan(model)
+                            
+                            let closeModal: () -> Void = {
+                                if self.navigationController != nil {
+                                    self.navigationController?.popViewController(animated: true)
+                                } else {
+                                    self.dismiss(animated: true)
+                                }
                             }
+                            alert.dismiss(animated: true, completion: closeModal)
                         }
-                        alert.dismiss(animated: true, completion: closeModal)
                     }
                 }
-            }
-        }, onFailure: { [weak self] error in
-            // 失敗時の処理
-            print("Failed to add object to Realm: \(error)")
-            DispatchQueue.main.async {
-                self?.showAlert(title: "更新に失敗しました")
-            }
-        })
+            }, onFailure: { [weak self] error in
+                // 失敗時の処理
+                print("Failed to add object to Realm: \(error)")
+                DispatchQueue.main.async {
+                    self?.showAlert(title: "更新に失敗しました")
+                }
+            })
         {
             model.planDate = planDate
             model.startTime = startTime
@@ -524,15 +526,18 @@ extension EditShioriPlanDetailViewController: UITextFieldDelegate {
     /// ピッカーを開いた時に今の設定時刻で選択スタートする
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == dateTextField {
-            if let currentSelectedDate = selectedDate ?? parseDate(dateTextField.text, with: dateFormatter) {
+            if let currentSelectedDate = selectedDate ?? parseDate(dateTextField.text,
+                                                                   with: dateFormatter) {
                 datePickerDate.setDate(currentSelectedDate, animated: false)
             }
         } else if textField == startTimeTextField {
-            if let currentSelectedStartTime = selectedStartTime ?? parseDate(startTimeTextField.text, with: timeFormatter) {
+            if let currentSelectedStartTime = selectedStartTime ?? parseDate(startTimeTextField.text,
+                                                                             with: timeFormatter) {
                 datePickerStartTime.setDate(currentSelectedStartTime, animated: false)
             }
         } else if textField == endTimeTextField {
-            if let currentSelectedEndTime = selectedEndTime ?? parseDate(endTimeTextField.text, with: timeFormatter) {
+            if let currentSelectedEndTime = selectedEndTime ?? parseDate(endTimeTextField.text,
+                                                                         with: timeFormatter) {
                 datePickerEndTime.setDate(currentSelectedEndTime, animated: false)
             }
         }
@@ -555,16 +560,18 @@ extension EditShioriPlanDetailViewController: UITextViewDelegate {
 
 // MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate
 
-extension EditShioriPlanDetailViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.originalImage] as? UIImage,
-           let imageData = image.jpegData(compressionQuality: 0.8) {
-            selectedImage = imageData.base64EncodedString()
-            planImageView.image = image
+extension EditShioriPlanDetailViewController: UIImagePickerControllerDelegate,
+                                              UINavigationControllerDelegate {
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let image = info[.originalImage] as? UIImage,
+               let imageData = image.jpegData(compressionQuality: 0.8) {
+                selectedImage = imageData.base64EncodedString()
+                planImageView.image = image
+            }
+            picker.dismiss(animated: true, completion: nil)
         }
-        picker.dismiss(animated: true, completion: nil)
-    }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)

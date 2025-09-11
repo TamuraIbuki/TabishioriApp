@@ -27,26 +27,26 @@
                             <action selector="checkBoxButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="MGH-Lz-Pqv"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i4Q-Qg-7va">
+                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BEF-mb-9at">
                         <rect key="frame" x="37" y="10" width="271" height="18"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="i4Q-Qg-7va" secondAttribute="trailing" constant="12" id="8WH-io-qcJ"/>
-                    <constraint firstAttribute="bottom" secondItem="i4Q-Qg-7va" secondAttribute="bottom" constant="10" id="Da2-MP-xFJ"/>
-                    <constraint firstItem="i4Q-Qg-7va" firstAttribute="leading" secondItem="2lB-c0-hma" secondAttribute="trailing" constant="12" id="Xx9-UV-8BD"/>
+                    <constraint firstItem="BEF-mb-9at" firstAttribute="centerY" secondItem="2lB-c0-hma" secondAttribute="centerY" id="ITe-tu-akx"/>
+                    <constraint firstAttribute="bottom" secondItem="BEF-mb-9at" secondAttribute="bottom" constant="10" id="JCv-FV-GHV"/>
+                    <constraint firstAttribute="trailing" secondItem="BEF-mb-9at" secondAttribute="trailing" constant="12" id="M4g-0f-3JI"/>
                     <constraint firstItem="2lB-c0-hma" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="dpX-He-9KR"/>
                     <constraint firstItem="2lB-c0-hma" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="hZF-Xu-Zg1"/>
-                    <constraint firstItem="i4Q-Qg-7va" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="qxM-vb-gLb"/>
-                    <constraint firstItem="i4Q-Qg-7va" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="z9u-7D-GFo"/>
+                    <constraint firstItem="BEF-mb-9at" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="t9b-tb-8VE"/>
+                    <constraint firstItem="BEF-mb-9at" firstAttribute="leading" secondItem="2lB-c0-hma" secondAttribute="trailing" constant="12" id="uNc-NF-0Ie"/>
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
-                <outlet property="packingItemLabel" destination="i4Q-Qg-7va" id="Z1L-gl-uUr"/>
+                <outlet property="checkBoxButton" destination="2lB-c0-hma" id="TcO-G1-OT6"/>
+                <outlet property="packingItemTextField" destination="BEF-mb-9at" id="6cZ-5z-D0x"/>
             </connections>
             <point key="canvasLocation" x="138.93129770992365" y="19.718309859154932"/>
         </tableViewCell>

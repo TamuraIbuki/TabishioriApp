@@ -20,13 +20,6 @@ protocol EditShioriPlanViewControllerDelegate: AnyObject {
 /// しおり予定編集画面
 final class EditShioriPlanViewController: UIViewController {
     
-    // MARK: - Properties
-    
-    /// しおりのデータ
-    private var dataModel: ShioriDataModel?
-    /// 予定のデータ
-    private var planDataModel: PlanDataModel?
-    
     // MARK: - Stored Properties
     
     /// しおり名
@@ -41,6 +34,10 @@ final class EditShioriPlanViewController: UIViewController {
     private let totalCost: String
     /// 背景色
     private var backgroundHex: String = ""
+    /// しおりのデータ
+    private var dataModel: ShioriDataModel?
+    /// 予定のデータ
+    private var planDataModel: PlanDataModel?
     /// 日毎の予定
     private var dailyPlans: [PlanDataModel] = []
     /// RealmManagerのシングルトンインスタンスを取得
@@ -182,6 +179,8 @@ final class EditShioriPlanViewController: UIViewController {
     
     private func configureTableView() {
         planTableView.dataSource = self
+        planTableView.delegate = self
+        
         // カスタムセルを登録
         let nib = UINib(nibName: "ShioriPlanTableViewCell", bundle: nil)
         planTableView.register(nib, forCellReuseIdentifier: "ShioriPlanTableViewCellID")
@@ -278,7 +277,6 @@ extension EditShioriPlanViewController: EditShioriViewControllerDelegate {
     }
 }
 
-
 extension EditShioriPlanViewController: EditShioriPlanDetailViewControllerDelegate {
     func didSavePlan(_ plan: PlanDataModel) {
         fetchDailyPlans()
@@ -286,5 +284,40 @@ extension EditShioriPlanViewController: EditShioriPlanDetailViewControllerDelega
         
         delegateToParent?.didPlanUpdate(plan)
         
+    }
+}
+
+extension EditShioriPlanViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+    -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "削除") { [weak self] _, _, done in
+            guard let self = self else { return }
+            let plan = self.dailyPlans[indexPath.row]
+            
+            // Realm から削除
+            self.realmManager.delete(
+                plan,
+                onSuccess: { [weak self] in
+                guard let self = self else { return }
+                // ローカル配列からも除去してテーブル更新
+                self.dailyPlans.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                
+                if let visible = tableView.indexPathsForVisibleRows {
+                    tableView.reloadRows(at: visible, with: .none)
+                }
+                done(true)
+                
+            }, onFailure: { error in
+                print("Delete failed: \(error)")
+                done(false)
+            })
+        }
+        
+        let config = UISwipeActionsConfiguration(actions: [deleteAction])
+        config.performsFirstActionWithFullSwipe = true
+        return config
     }
 }
