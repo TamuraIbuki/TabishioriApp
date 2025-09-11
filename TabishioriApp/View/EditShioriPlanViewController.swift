@@ -297,7 +297,9 @@ extension EditShioriPlanViewController: UITableViewDelegate {
             let plan = self.dailyPlans[indexPath.row]
             
             // Realm から削除
-            self.realmManager.delete(plan, onSuccess: { [weak self] in
+            self.realmManager.delete(
+                plan,
+                onSuccess: { [weak self] in
                 guard let self = self else { return }
                 // ローカル配列からも除去してテーブル更新
                 self.dailyPlans.remove(at: indexPath.row)
