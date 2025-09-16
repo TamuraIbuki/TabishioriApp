@@ -74,6 +74,7 @@ final class ShioriViewController: UIViewController {
     
     /// PDFボタンをタップ
     @IBAction private func pdfButtonTapped(_ sender: UIButton) {
+        exportCurrentContentPageAsPDF()
     }
     
     // MARK: - Other Methods
@@ -188,6 +189,49 @@ final class ShioriViewController: UIViewController {
         if !trimmedUppercasedHex.hasPrefix("#") { trimmedUppercasedHex = "#"+trimmedUppercasedHex }
         return trimmedUppercasedHex
     }
+    
+    private func currentContentVC() -> ShioriContentViewController? {
+        return pageViewController.viewControllers?.first as? ShioriContentViewController
+    }
+    
+    ///　現在の画面をPDF化する
+    private func exportCurrentContentPageAsPDF() {
+        guard let contentVC = currentContentVC(),
+        let targetView = contentVC.view else {
+            let alert = UIAlertController(title: "PDF化対象が見つかりません",
+                                          message: "PDF化対象を特定できませんでした。",
+                                          preferredStyle: .alert)
+            alert.addAction(.init(title: "OK", style: .default))
+            present(alert, animated: true)
+            return
+        }
+
+        targetView.layoutIfNeeded()
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd_HHmmss"
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("旅のしおり_\(formatter.string(from: Date())).pdf")
+        let pdfData = targetView.toPDF()
+        
+        do {
+            try pdfData.write(to: url)
+            presentSaveToFiles(fileURL: url)
+        } catch {
+            let alert = UIAlertController(title: "保存に失敗しました",
+                                          message: error.localizedDescription,
+                                          preferredStyle: .alert)
+            alert.addAction(.init(title: "OK", style: .default))
+            present(alert, animated: true)
+        }
+    }
+    
+    /// PDFを保存
+    private func presentSaveToFiles(fileURL: URL) {
+        let picker = UIDocumentPickerViewController(forExporting: [fileURL])
+        picker.shouldShowFileExtensions = true
+        present(picker, animated: true)
+    }
 }
 
 // MARK: - UIPageViewControllerDataSource
@@ -228,6 +272,8 @@ extension ShioriViewController: CreateShioriPlanViewControllerDelegate {
         }
     }
 }
+
+// MARK: - EditShioriPlanViewControllerDelegate
 
 extension ShioriViewController: EditShioriPlanViewControllerDelegate {
     /// しおりの情報を更新

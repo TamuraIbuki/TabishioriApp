@@ -94,6 +94,7 @@ final class ShioriContentViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         configureTableView()
+        refreshTotalCostLabel()
         
         // pendingPlans があれば反映
         if let plans = pendingPlans {
@@ -146,6 +147,7 @@ final class ShioriContentViewController: UIViewController {
     private func updateUIWithPlans(_ plans: [PlanDataModel]) {
         self.dailyPlans = plans
         planTableView.reloadData()
+        refreshTotalCostLabel()
     }
     
     private func normalizeHex(_ hex: String) -> String {
@@ -159,6 +161,13 @@ final class ShioriContentViewController: UIViewController {
         view.backgroundColor = color
     }
     
+    /// 合計コストの再計算
+    private func refreshTotalCostLabel() {
+        let plans = fetchPlansForThisDay()
+        let sum = fetchPlansForThisDay().reduce(0) { $0 + ($1.planCost) }
+        totalCostLabel.text = "合計費用：¥\(String(sum))"
+    }
+
     // MARK: - Data Fetch
     
     func fetchAndDistributePlans() {
