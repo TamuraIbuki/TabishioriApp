@@ -163,7 +163,6 @@ final class ShioriContentViewController: UIViewController {
     
     /// 合計コストの再計算
     private func refreshTotalCostLabel() {
-        let plans = fetchPlansForThisDay()
         let sum = fetchPlansForThisDay().reduce(0) { $0 + ($1.planCost) }
         totalCostLabel.text = "合計費用：¥\(String(sum))"
     }
