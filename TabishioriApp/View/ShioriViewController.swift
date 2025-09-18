@@ -21,8 +21,8 @@ final class ShioriViewController: UIViewController {
     private var dailyPlans: [PlanDataModel] = []
     /// 選択したしおりデータ
     var selectedShiori: ShioriDataModel?
+    /// 選択した画像
     private var selectedImages: [UIImage] = []
-
 
     // MARK: - Computed Properties
     
