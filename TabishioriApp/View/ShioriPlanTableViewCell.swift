@@ -127,6 +127,13 @@ final class ShioriPlanTableViewCell: UITableViewCell {
         reservationLabel.isHidden = !item.isReserved
         checkBoxButton.isHidden = !item.isReserved
         
+        // チェックボタンのUI設定
+        checkBoxButton.configurationUpdateHandler = { button in
+            var configuration = button.configuration
+            configuration?.background.backgroundColor = .clear
+            button.configuration = configuration
+        }
+        
         // 費用
         if let cost = item.cost {
             costLabel.text = "¥\(cost)"

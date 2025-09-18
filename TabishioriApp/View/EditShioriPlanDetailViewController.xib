@@ -183,7 +183,7 @@
                         <action selector="insertImageButtonTapped:" destination="-1" eventType="touchUpInside" id="8BM-X2-4S2"/>
                     </connections>
                 </button>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_sample" translatesAutoresizingMaskIntoConstraints="NO" id="dhr-UY-4kP">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dhr-UY-4kP">
                     <rect key="frame" x="38" y="506.33333333333326" width="188" height="188"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="188" id="pC0-hb-LgJ"/>
@@ -237,7 +237,6 @@
     </objects>
     <resources>
         <image name="ic_check_box_out" width="15" height="15"/>
-        <image name="ic_sample" width="1416" height="1191"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
