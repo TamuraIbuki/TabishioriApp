@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PhotosUI
 
 /// しおり画面
 final class ShioriViewController: UIViewController {
@@ -20,7 +21,9 @@ final class ShioriViewController: UIViewController {
     private var dailyPlans: [PlanDataModel] = []
     /// 選択したしおりデータ
     var selectedShiori: ShioriDataModel?
-    
+    private var selectedImages: [UIImage] = []
+
+
     // MARK: - Computed Properties
     
     /// ページ管理用の UIPageViewController
@@ -74,7 +77,14 @@ final class ShioriViewController: UIViewController {
     
     /// PDFボタンをタップ
     @IBAction private func pdfButtonTapped(_ sender: UIButton) {
-        exportCurrentContentPageAsPDF()
+//        exportCurrentContentPageAsPDF()
+        var config = PHPickerConfiguration(photoLibrary: .shared())
+        config.selectionLimit = 0 // 複数可
+        config.filter = .images
+
+        let picker = PHPickerViewController(configuration: config)
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
     }
     
     // MARK: - Other Methods
@@ -232,6 +242,49 @@ final class ShioriViewController: UIViewController {
         picker.shouldShowFileExtensions = true
         present(picker, animated: true)
     }
+
+
+    private func createPDF(from images: [UIImage]) -> Data {
+        let pdfMetaData = [
+            kCGPDFContextCreator: "MyApp",
+            kCGPDFContextAuthor: "Me"
+        ]
+        let format = UIGraphicsPDFRendererFormat()
+        format.documentInfo = pdfMetaData as [String: Any]
+
+        let pageSize = images.first?.size ?? CGSize(width: 595, height: 842) // A4 fallback
+        let renderer = UIGraphicsPDFRenderer(bounds: CGRect(origin: .zero, size: pageSize), format: format)
+
+        let data = renderer.pdfData { ctx in
+            for image in images {
+                ctx.beginPage()
+                let aspectWidth = pageSize.width / image.size.width
+                let aspectHeight = pageSize.height / image.size.height
+                let aspectRatio = min(aspectWidth, aspectHeight)
+                let scaledSize = CGSize(width: image.size.width * aspectRatio,
+                                        height: image.size.height * aspectRatio)
+                let origin = CGPoint(x: (pageSize.width - scaledSize.width) / 2,
+                                     y: (pageSize.height - scaledSize.height) / 2)
+                image.draw(in: CGRect(origin: origin, size: scaledSize))
+            }
+        }
+        return data
+    }
+
+    private func saveToFiles(data: Data) {
+        let tmpURL = FileManager.default.temporaryDirectory.appendingPathComponent("images.pdf")
+        do {
+            try data.write(to: tmpURL)
+
+            // ファイルアプリに保存できるように Document Picker を開く
+            let picker = UIDocumentPickerViewController(forExporting: [tmpURL])
+            picker.delegate = self
+            present(picker, animated: true)
+
+        } catch {
+            print("PDF保存エラー: \(error)")
+        }
+    }
 }
 
 // MARK: - UIPageViewControllerDataSource
@@ -307,5 +360,43 @@ extension ShioriViewController: EditShioriPlanViewControllerDelegate {
                 break
             }
         }
+    }
+}
+
+
+// MARK: - PHPicker Delegate
+
+extension ShioriViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        dismiss(animated: true, completion: nil)
+
+        let itemProviders = results.map(\.itemProvider)
+        var loadedImages: [UIImage] = []
+        let group = DispatchGroup()
+
+        for item in itemProviders {
+            if item.canLoadObject(ofClass: UIImage.self) {
+                group.enter()
+                item.loadObject(ofClass: UIImage.self) { (object, error) in
+                    if let image = object as? UIImage {
+                        loadedImages.append(image)
+                    }
+                    group.leave()
+                }
+            }
+        }
+
+        group.notify(queue: .main) {
+            let pdfData = self.createPDF(from: loadedImages)
+            self.saveToFiles(data: pdfData)
+        }
+    }
+}
+
+// MARK: - UIDocumentPicker Delegate
+
+extension ShioriViewController: UIDocumentPickerDelegate {
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        print("キャンセルされました")
     }
 }
