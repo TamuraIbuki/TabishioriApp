@@ -223,7 +223,7 @@ final class EditShioriPlanViewController: UIViewController {
         
         shioriNameLabel.text = current.shioriName
         dateRangeLabel.text  = "\(formatterDate(current.startDate))〜\(formatterDate(current.endDate))"
-        
+        totalCostLabel.text = "合計費用：¥\(dailyPlans.reduce(0) { $0 + $1.planCost })"
         view.backgroundColor = UIColor(hex: current.backgroundColor )
     }
 }
