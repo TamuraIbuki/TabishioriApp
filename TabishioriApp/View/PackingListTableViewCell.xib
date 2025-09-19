@@ -22,7 +22,9 @@
                             <constraint firstAttribute="width" constant="15" id="sQ1-Bt-isZ"/>
                         </constraints>
                         <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="plain" image="ic_check_box_out"/>
+                        <buttonConfiguration key="configuration" style="plain" image="ic_check_box_out">
+                            <color key="baseForegroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </buttonConfiguration>
                         <connections>
                             <action selector="checkBoxButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="MGH-Lz-Pqv"/>
                         </connections>

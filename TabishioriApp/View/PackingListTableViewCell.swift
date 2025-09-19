@@ -77,6 +77,13 @@ final class PackingListTableViewCell: UITableViewCell {
         // チェックボタンの画像をセット
         checkBoxButton.setImage(UIImage(named: "ic_check_box_out"), for: .normal)
         checkBoxButton.setImage(UIImage(named: "ic_check_box_in"), for: .selected)
+
+        // チェックボタンのUI設定
+        checkBoxButton.configurationUpdateHandler = { button in
+            var configuration = button.configuration
+            configuration?.background.backgroundColor = .clear
+            button.configuration = configuration
+        }
     }
     
     func setup(packingItem: String?, isFirst: Bool, isLast: Bool) {
