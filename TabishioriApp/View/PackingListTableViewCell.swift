@@ -78,7 +78,7 @@ final class PackingListTableViewCell: UITableViewCell {
         checkBoxButton.setImage(UIImage(named: "ic_check_box_out"), for: .normal)
         checkBoxButton.setImage(UIImage(named: "ic_check_box_in"), for: .selected)
 
-        //チェックボタンのUI設定
+        // チェックボタンのUI設定
         checkBoxButton.configurationUpdateHandler = { button in
             var configuration = button.configuration
             configuration?.background.backgroundColor = .clear
