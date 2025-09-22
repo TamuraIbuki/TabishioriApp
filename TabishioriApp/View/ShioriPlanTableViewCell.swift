@@ -11,6 +11,7 @@ import UIKit
 
 protocol ShioriPlanTableViewCellDelegate: AnyObject {
     func didTapRightButton(in cell: ShioriPlanTableViewCell)
+    func planCell(_ cell: ShioriPlanTableViewCell, didToggleCheck isChecked: Bool)
 }
 
 // MARK: - Main Type
@@ -36,6 +37,7 @@ final class ShioriPlanTableViewCell: UITableViewCell {
         let cost: Int?
         let hasURL: Bool
         let planImage: String?
+        var isChecked: Bool
     }
     /// 編集モード初期値
     private var isEditMode: Bool = false
@@ -72,12 +74,7 @@ final class ShioriPlanTableViewCell: UITableViewCell {
     /// チェックボックスをタップ
     @IBAction private func checkBoxButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
-        
-        if sender.isSelected {
-            sender.setImage(UIImage(named: "ic_check_box_in"), for: .normal)
-        } else {
-            sender.setImage(UIImage(named: "ic_check_box_out"), for: .normal)
-        }
+        delegate?.planCell(self, didToggleCheck: sender.isSelected)
     }
     
     /// URLボタンをタップ
@@ -128,6 +125,8 @@ final class ShioriPlanTableViewCell: UITableViewCell {
         checkBoxButton.isHidden = !item.isReserved
         
         // チェックボタンのUI設定
+        checkBoxButton.setImage(UIImage(named: "ic_check_box_out"), for: .normal)
+        checkBoxButton.setImage(UIImage(named: "ic_check_box_in"),  for: .selected)
         checkBoxButton.configurationUpdateHandler = { button in
             var configuration = button.configuration
             configuration?.background.backgroundColor = .clear
@@ -145,6 +144,9 @@ final class ShioriPlanTableViewCell: UITableViewCell {
         if isEditMode{
             // 修正ボタンを表示
             rightButton.setImage(UIImage(named: "ic_edit"), for: .normal)
+            // チェックボックスボタンを表示
+            checkBoxButton.isSelected = item.isChecked
+            checkBoxButton.isUserInteractionEnabled = false
         } else {
             // URLボタンを表示
             rightButton.setImage(UIImage(named: "ic_url"), for: .normal)
@@ -154,6 +156,10 @@ final class ShioriPlanTableViewCell: UITableViewCell {
             } else {
                 rightButton.isHidden = true
             }
+            // チェックボックスボタンを表示
+            checkBoxButton.isSelected = item.isChecked
+            checkBoxButton.isUserInteractionEnabled = item.isReserved
+            
         }
         
         // 画像がある場合表示

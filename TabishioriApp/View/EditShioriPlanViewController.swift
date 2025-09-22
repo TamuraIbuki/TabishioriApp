@@ -213,7 +213,8 @@ final class EditShioriPlanViewController: UIViewController {
                      isReserved: plan.planReservation,
                      cost: plan.planCost,
                      hasURL: hasURL,
-                     planImage: imageName)
+                     planImage: imageName,
+                     isChecked: plan.reservationIsChecked)
     }
     
     /// しおりの情報を更新する
@@ -269,6 +270,10 @@ extension EditShioriPlanViewController: ShioriPlanTableViewCellDelegate {
         nextVC.delegate = self
         navigationController?.pushViewController(nextVC, animated: true)
     }
+    
+    func planCell(_ cell: ShioriPlanTableViewCell, didToggleCheck isChecked: Bool) {
+        // 編集画面ではチェックボックスボタンを表示しない
+    }
 }
 
 extension EditShioriPlanViewController: EditShioriViewControllerDelegate {
@@ -300,20 +305,20 @@ extension EditShioriPlanViewController: UITableViewDelegate {
             self.realmManager.delete(
                 plan,
                 onSuccess: { [weak self] in
-                guard let self = self else { return }
-                // ローカル配列からも除去してテーブル更新
-                self.dailyPlans.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                
-                if let visible = tableView.indexPathsForVisibleRows {
-                    tableView.reloadRows(at: visible, with: .none)
-                }
-                done(true)
-                
-            }, onFailure: { error in
-                print("Delete failed: \(error)")
-                done(false)
-            })
+                    guard let self = self else { return }
+                    // ローカル配列からも除去してテーブル更新
+                    self.dailyPlans.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                    
+                    if let visible = tableView.indexPathsForVisibleRows {
+                        tableView.reloadRows(at: visible, with: .none)
+                    }
+                    done(true)
+                    
+                }, onFailure: { error in
+                    print("Delete failed: \(error)")
+                    done(false)
+                })
         }
         
         let config = UISwipeActionsConfiguration(actions: [deleteAction])

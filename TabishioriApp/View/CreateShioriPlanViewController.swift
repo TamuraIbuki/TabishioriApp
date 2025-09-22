@@ -89,6 +89,8 @@ final class CreateShioriPlanViewController: UIViewController {
     @IBOutlet private weak var endTimeTextField: UITextField!
     /// 予定内容記入欄
     @IBOutlet private weak var planTextView: UITextView!
+    /// 予約可否ボタン
+    @IBOutlet weak var reservationCheckButton: UIButton!
     /// 費用記入欄
     @IBOutlet private weak var costTextField: UITextField!
     /// URL記入欄
@@ -106,9 +108,10 @@ final class CreateShioriPlanViewController: UIViewController {
             dateTextField.text = dateFormat(date, pattern: "yyyy年M月d日")
             datePickerDate.date = date
         }
-        setupFont()
+        setupUI()
         configureTextField()
         configureTextView()
+        setReservationCheckBox()
         configureNavigationBar()
         configureDatePicker()
     }
@@ -119,12 +122,6 @@ final class CreateShioriPlanViewController: UIViewController {
     @IBAction private func checkBoxButtonTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
         selectedReservation = sender.isSelected
-        
-        if sender.isSelected {
-            sender.setImage(UIImage(named: "ic_check_box_in"), for: .normal)
-        } else {
-            sender.setImage(UIImage(named: "ic_check_box_out"), for: .normal)
-        }
     }
     
     /// 画像をを挿入するボタンをタップ
@@ -149,7 +146,7 @@ final class CreateShioriPlanViewController: UIViewController {
     
     // MARK: - Other Methods
     
-    private func setupFont() {
+    private func setupUI() {
         // タイトルのフォントを変更
         titleLabel.font = .setFontZenMaruGothic(size: 24)
         titleLabel.layer.shadowColor = UIColor(white: 0.0, alpha: 0.3).cgColor
@@ -265,7 +262,7 @@ final class CreateShioriPlanViewController: UIViewController {
         endTimeTextField.inputView = datePickerEndTime
         endTimeTextField.inputAccessoryView = pickerToolbar
     }
-
+    
     @objc private func dateChanged() {
         dateTextField.text = dateFormat(datePickerDate.date, pattern: "yyyy年M月d日")
         // 日付を登録
@@ -289,6 +286,17 @@ final class CreateShioriPlanViewController: UIViewController {
     private func dateFormat(_ date: Date, pattern: String) -> String {
         dateFormatter.dateFormat = pattern
         return dateFormatter.string(from: date)
+    }
+    
+    /// 予約チェックボックスの画像表示
+    private func setReservationCheckBox() {
+        reservationCheckButton.setImage(UIImage(named: "ic_check_box_out"), for: .normal)   // false用
+        reservationCheckButton.setImage(UIImage(named: "ic_check_box_in"),  for: .selected) // true用
+        reservationCheckButton.configurationUpdateHandler = { button in
+            var configuration = button.configuration
+            configuration?.background.backgroundColor = .clear
+            button.configuration = configuration
+        }
     }
     
     /// ツールバーの設定

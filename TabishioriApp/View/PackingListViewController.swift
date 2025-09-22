@@ -169,6 +169,7 @@ extension PackingListViewController: UITableViewDataSource {
         let isFirstCell = indexPath.row == 0
         let isLastCell = indexPath.row == items.count - 1
         cell.setup(packingItem: item.name, isFirst: isFirstCell, isLast: isLastCell)
+        cell.configureCheckedState(item.isChecked)
         cell.delegate = self
         return cell
     }
@@ -187,7 +188,6 @@ extension PackingListViewController: UITableViewDelegate {
         
         let addButton = UIButton(type: .system)
         addButton.setImage(UIImage(named: "ic_addlist"), for: .normal)
-        //addButton.tintColor = .black
         addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         

@@ -39,6 +39,8 @@ final class ShioriContentViewController: UIViewController {
     private var dailyPlans: [PlanDataModel] = []
     /// まだ保存されていない、追加途中の予定
     private var pendingPlans: [PlanDataModel]?
+    /// RealmManagerのシングルトンインスタンスを取得
+    private let realmManager = RealmManager.shared
     /// 編集画面に渡す現ページ情報
     var editContext: EditContext {
         .init(shioriName: shioriName,
@@ -166,7 +168,7 @@ final class ShioriContentViewController: UIViewController {
         let sum = fetchPlansForThisDay().reduce(0) { $0 + ($1.planCost) }
         totalCostLabel.text = "合計費用：¥\(String(sum))"
     }
-
+    
     // MARK: - Data Fetch
     
     func fetchAndDistributePlans() {
@@ -179,7 +181,7 @@ final class ShioriContentViewController: UIViewController {
     
     /// 予定を取得
     private func fetchPlansForThisDay() -> [PlanDataModel] {
-        let results = RealmManager.shared.getObjects(PlanDataModel.self)
+        let results = realmManager.getObjects(PlanDataModel.self)
             .filter { Calendar.current.isDate($0.planDate, inSameDayAs: self.pageDate) }
         return results.sorted { $0.startTime < $1.startTime }
     }
@@ -221,7 +223,8 @@ extension ShioriContentViewController: UITableViewDataSource {
             isReserved: plan.planReservation,
             cost: plan.planCost,
             hasURL: hasURL,
-            planImage: imageName
+            planImage: imageName,
+            isChecked: plan.reservationIsChecked
         )
     }
 }
@@ -238,5 +241,17 @@ extension ShioriContentViewController: ShioriPlanTableViewCellDelegate {
         guard !urlString.isEmpty, let url = URL(string: urlString) else { return }
         
         UIApplication.shared.open(url)
+    }
+    
+    func planCell(_ cell: ShioriPlanTableViewCell, didToggleCheck isChecked: Bool) {
+        guard let indexPath = planTableView.indexPath(for: cell) else {
+            return
+        }
+        let plan = dailyPlans[indexPath.row]
+        do {
+            realmManager.update {
+                plan.reservationIsChecked = isChecked
+            }
+        }
     }
 }
