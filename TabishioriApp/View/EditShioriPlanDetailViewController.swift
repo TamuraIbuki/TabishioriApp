@@ -399,6 +399,11 @@ final class EditShioriPlanDetailViewController: UIViewController {
     private func setReservationCheckBox() {
         reservationCheckButton.setImage(UIImage(named: "ic_check_box_out"), for: .normal)   // false用
         reservationCheckButton.setImage(UIImage(named: "ic_check_box_in"),  for: .selected) // true用
+        reservationCheckButton.configurationUpdateHandler = { button in
+            var configuration = button.configuration
+            configuration?.background.backgroundColor = .clear
+            button.configuration = configuration
+        }
     }
     
     /// 画像の型の変更

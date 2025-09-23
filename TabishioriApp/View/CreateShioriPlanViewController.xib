@@ -21,6 +21,7 @@
                 <outlet property="planImageView" destination="YTH-DL-nVM" id="kvr-50-lgN"/>
                 <outlet property="planLabel" destination="eRf-Ls-eSV" id="WeL-uZ-Gfo"/>
                 <outlet property="planTextView" destination="oT8-xJ-Pn5" id="L7J-mR-fdK"/>
+                <outlet property="reservationCheckButton" destination="LjZ-G0-vdF" id="7Jd-1y-Im2"/>
                 <outlet property="reservationLabel" destination="Ce9-Ae-iUE" id="pgM-pQ-EqN"/>
                 <outlet property="startTimeLabel" destination="QlO-Ti-xos" id="osf-LK-m1g"/>
                 <outlet property="startTimeTextField" destination="STe-e6-snH" id="bXF-yN-obE"/>
@@ -237,7 +238,7 @@
         </view>
     </objects>
     <resources>
-        <image name="ic_check_box_out" width="15" height="15"/>
+        <image name="ic_check_box_out" width="30" height="30"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

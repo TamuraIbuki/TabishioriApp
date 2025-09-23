@@ -24,7 +24,7 @@ final class PackingListTableViewCell: UITableViewCell {
     /// デリゲートのプロパティ
     weak var delegate: PackingListTableViewCellDelegate?
     /// チェックボックスの初期値
-    private var isChecked = false //Stpred?
+    private var isChecked = false
     
     // MARK: - IBOutlets
     
@@ -77,7 +77,7 @@ final class PackingListTableViewCell: UITableViewCell {
         // チェックボタンの画像をセット
         checkBoxButton.setImage(UIImage(named: "ic_check_box_out"), for: .normal)
         checkBoxButton.setImage(UIImage(named: "ic_check_box_in"), for: .selected)
-
+        
         // チェックボタンのUI設定
         checkBoxButton.configurationUpdateHandler = { button in
             var configuration = button.configuration
@@ -116,6 +116,11 @@ final class PackingListTableViewCell: UITableViewCell {
             contentView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
             return
         }
+    }
+    
+    func configureCheckedState(_ isChecked: Bool) {
+        self.isChecked = isChecked
+        checkBoxButton.isSelected = isChecked
     }
     
     func beginEditing() {
