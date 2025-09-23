@@ -25,8 +25,8 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="マレーシア旅行" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgg-b3-jzh">
-                    <rect key="frame" x="91.666666666666671" y="117.99999999999999" width="209.66666666666663" height="38.333333333333329"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="マレーシア旅行" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgg-b3-jzh">
+                    <rect key="frame" x="16" y="117.99999999999999" width="361" height="38.333333333333329"/>
                     <fontDescription key="fontDescription" type="system" pointSize="32"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -86,7 +86,9 @@
                 <constraint firstItem="ngj-ba-HYX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="5Of-rS-txW"/>
                 <constraint firstItem="mmA-uO-VZU" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="AdI-2U-7JJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="WDu-5x-Z0c" secondAttribute="trailing" constant="4" id="CiY-sL-KXL"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Wgg-b3-jzh" secondAttribute="trailing" constant="16" id="HYf-rT-XcI"/>
                 <constraint firstItem="tHz-tq-MMb" firstAttribute="top" secondItem="ngj-ba-HYX" secondAttribute="bottom" id="MY8-cK-laa"/>
+                <constraint firstItem="Wgg-b3-jzh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="QYv-34-txQ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tHz-tq-MMb" secondAttribute="trailing" constant="4" id="V3r-YF-XO1"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ZXC-5B-A4C" secondAttribute="trailing" constant="13" id="XgG-tD-jRu"/>
                 <constraint firstItem="mmA-uO-VZU" firstAttribute="top" secondItem="ZXC-5B-A4C" secondAttribute="bottom" id="byr-SR-v9g"/>

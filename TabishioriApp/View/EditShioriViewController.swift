@@ -367,6 +367,12 @@ final class EditShioriViewController: UIViewController {
     
     /// しおりデータを更新する
     private func update(startDate: Date, endDate: Date) {
+        // タイトルは18文字以下にする
+        if selectedShioriName.count > 18 {
+            showAlert(title: "タイトルは18文字以下にしてください")
+            return
+        }
+        
         guard let model = dataModel else { return }
         
         realmManager.update(

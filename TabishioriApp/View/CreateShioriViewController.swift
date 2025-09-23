@@ -296,6 +296,12 @@ final class CreateShioriViewController: UIViewController {
             selectedBackgroundColor = "#FFFFFF"
         }
         
+        // タイトルは18文字以下にする
+        if selectedShioriName.count > 18 {
+            showAlert(title: "タイトルは18文字以下にしてください")
+            return
+        }
+        
         let dataModel = ShioriDataModel()
         dataModel.shioriName = selectedShioriName
         dataModel.startDate = startDate
