@@ -21,6 +21,15 @@ final class CalendarPopupHandler: NSObject, UITextFieldDelegate {
     private var containerView: UIView?
     private var backgroundView: UIView?
     private var datePicker: UIDatePicker?
+    private var minimumDate: Date? {
+        didSet { datePicker?.minimumDate = minimumDate }
+    }
+    
+    // MARK: - Computed Properties
+    
+    private var effectiveCalendar: Calendar {
+        calendar ?? .current
+    }
     
     // MARK: - Initializers
     
@@ -29,6 +38,7 @@ final class CalendarPopupHandler: NSObject, UITextFieldDelegate {
          dateStyle: DateFormatter.Style,
          locale: Locale,
          calendar: Calendar?,
+         minimumDate: Date? = nil,
          onDateSelected: ((Date) -> Void)?) {
         
         self.textField = textField
@@ -36,10 +46,21 @@ final class CalendarPopupHandler: NSObject, UITextFieldDelegate {
         self.dateStyle = dateStyle
         self.locale = locale
         self.calendar = calendar
+        self.minimumDate = minimumDate
         self.onDateSelected = onDateSelected
     }
     
     // MARK: - Other Methods
+    
+    /// 日付フォーマットの作成
+    private func makeFormatter() -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.locale = locale
+        formatter.dateStyle = dateStyle
+        formatter.calendar = effectiveCalendar
+        formatter.timeStyle = .none
+        return formatter
+    }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.resignFirstResponder()
@@ -64,12 +85,28 @@ final class CalendarPopupHandler: NSObject, UITextFieldDelegate {
             picker.preferredDatePickerStyle = .inline
         }
         picker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
-        container.addSubview(picker)
         
-        if let cal = calendar {
-            picker.calendar = cal
+        // デフォルトは今日の日付をおき、今日以降の日付のみ選択可能にする
+        let selectedCalendar = calendar ?? Calendar.current
+        let todayStart = selectedCalendar.startOfDay(for: Date())
+        let minDate = self.minimumDate ?? todayStart
+        picker.minimumDate = minDate
+        picker.timeZone = .current
+        
+        let formatter = makeFormatter()
+        if let text = textField.text,
+           let current = formatter.date(from: text) {
+            picker.date = (current < minDate) ? minDate : current
+        } else {
+            picker.date = minDate
         }
         
+        if (textField.text ?? "").isEmpty {
+            textField.text = formatter.string(from: minDate)
+            onDateSelected?(minDate)
+        }
+
+        container.addSubview(picker)
         picker.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             picker.topAnchor.constraint(equalTo: container.topAnchor),
@@ -118,12 +155,7 @@ final class CalendarPopupHandler: NSObject, UITextFieldDelegate {
     
     @objc private func dateChanged(_ sender: UIDatePicker) {
         guard let textField else { return }
-        let formatter = DateFormatter()
-        formatter.locale = locale
-        formatter.dateStyle = dateStyle
-        if let cal = calendar {
-            formatter.calendar = cal
-        }
+        let formatter = makeFormatter()
         textField.text = formatter.string(from: sender.date)
         onDateSelected?(sender.date)
         dismissCalendar()
