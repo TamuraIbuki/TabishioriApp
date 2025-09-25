@@ -30,14 +30,6 @@ final class CalendarPopupHandler: NSObject, UITextFieldDelegate {
     private var effectiveCalendar: Calendar {
         calendar ?? .current
     }
-    private func makeFormatter() -> DateFormatter {
-        let formatter = DateFormatter()
-        formatter.locale = locale
-        formatter.dateStyle = dateStyle
-        formatter.calendar = effectiveCalendar
-        formatter.timeStyle = .none
-        return formatter
-    }
     
     // MARK: - Initializers
     
@@ -59,6 +51,16 @@ final class CalendarPopupHandler: NSObject, UITextFieldDelegate {
     }
     
     // MARK: - Other Methods
+    
+    /// 日付フォーマットの作成
+    private func makeFormatter() -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.locale = locale
+        formatter.dateStyle = dateStyle
+        formatter.calendar = effectiveCalendar
+        formatter.timeStyle = .none
+        return formatter
+    }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.resignFirstResponder()
