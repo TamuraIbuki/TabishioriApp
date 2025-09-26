@@ -324,27 +324,37 @@ extension ShioriViewController: EditShioriPlanViewControllerDelegate {
 
 extension ShioriViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        dismiss(animated: true, completion: nil)
-
-        let itemProviders = results.map(\.itemProvider)
-        var loadedImages: [UIImage] = []
-        let group = DispatchGroup()
-
-        for item in itemProviders {
-            if item.canLoadObject(ofClass: UIImage.self) {
-                group.enter()
-                item.loadObject(ofClass: UIImage.self) { (object, error) in
-                    if let image = object as? UIImage {
-                        loadedImages.append(image)
+        picker.dismiss(animated: true) { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            // 画像が選択されていなかったら何もしない
+            guard !results.isEmpty else {
+                return
+            }
+            
+            // 選択した画像をまとめてPDF化する
+            let itemProviders = results.map(\.itemProvider)
+            var loadedImages: [UIImage] = []
+            let group = DispatchGroup()
+            
+            for item in itemProviders {
+                if item.canLoadObject(ofClass: UIImage.self) {
+                    group.enter()
+                    item.loadObject(ofClass: UIImage.self) { (object, error) in
+                        if let image = object as? UIImage {
+                            loadedImages.append(image)
+                        }
+                        group.leave()
                     }
-                    group.leave()
                 }
             }
-        }
-
-        group.notify(queue: .main) {
-            let pdfData = self.createPDF(from: loadedImages)
-            self.saveToFiles(data: pdfData)
+            
+            group.notify(queue: .main) {
+                let pdfData = self.createPDF(from: loadedImages)
+                self.saveToFiles(data: pdfData)
+            }
         }
     }
 }

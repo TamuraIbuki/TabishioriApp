@@ -12,10 +12,8 @@ final class HomeTableViewCell: UITableViewCell {
     
     // MARK: - IBOutlets
     
-    /// 白線表示用のしおり名ラベル
-    @IBOutlet private weak var shioriNameStrokeLabel: UILabel!
-    /// しおり名の塗り用ラベル
-    @IBOutlet private weak var shioriNameFillLabel: UILabel!
+    /// しおり名ラベル
+    @IBOutlet private weak var shioriNameLabel: StrokeLabel!
     /// 日付ラベル
     @IBOutlet private weak var dateLabel: UILabel!
     
@@ -36,15 +34,6 @@ final class HomeTableViewCell: UITableViewCell {
         let bgColor = UIColor(hex: backgroundColorHex)
         contentView.backgroundColor = bgColor
         
-        // ストローク用
-        let strokeAttributes: [NSAttributedString.Key: Any] = [
-            .font: font,
-            .strokeColor: UIColor.white,
-            .strokeWidth: 24.0,
-            .foregroundColor: UIColor.clear
-        ]
-        shioriNameStrokeLabel.attributedText = NSAttributedString(string: shioriName,
-                                                                  attributes: strokeAttributes)
         // 背景が白の場合はテキストを黒色にする
         let textColor: UIColor
         if backgroundColorHex.uppercased() == "#FFFFFF" {
@@ -53,9 +42,12 @@ final class HomeTableViewCell: UITableViewCell {
             textColor = bgColor
         }
         
-        // 塗り用（通常表示）
-        shioriNameFillLabel.font = font
-        shioriNameFillLabel.textColor = textColor
-        shioriNameFillLabel.text = shioriName
+        // ストローク付きラベル設定
+        shioriNameLabel.font = font
+        shioriNameLabel.text = shioriName
+        shioriNameLabel.textColor = textColor
+        shioriNameLabel.strokeColor = .white
+        shioriNameLabel.strokeWidth = 6.0  // 縁取りの太さを調整
+        
     }
 }

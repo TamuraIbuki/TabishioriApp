@@ -15,4 +15,5 @@ final class ShioriDataModel: Object {
     @Persisted var endDate: Date
     @Persisted var backgroundColor: String = ""
     @Persisted var dailyPlans = List<PlanDataModel>()
+    @Persisted(indexed: true) var createdAt: Date = Date()
 }

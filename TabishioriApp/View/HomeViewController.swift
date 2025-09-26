@@ -91,7 +91,9 @@ final class HomeViewController: UIViewController {
     
     /// しおりデータを取得する
     private func fetchData() {
-        let results = realmManager.getObjects(ShioriDataModel.self)
+        let results = realmManager
+            .getObjects(ShioriDataModel.self)
+            .sorted(byKeyPath: "createdAt", ascending: false)
         data = results
         tableView.reloadData()
     }
