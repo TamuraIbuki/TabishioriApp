@@ -15,24 +15,23 @@
                 <rect key="frame" x="0.0" y="0.0" width="367" height="65.666664123535156"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AVq-Wk-zmu">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AVq-Wk-zmu">
                         <rect key="frame" x="24" y="3.9999999999999964" width="218" height="57.666666666666657"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="218" id="jyU-5b-8gg"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="57" id="myR-YS-f8w"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpZ-7F-txm">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpZ-7F-txm" customClass="StrokeLabel" customModule="TabishioriApp" customModuleProvider="target">
                         <rect key="frame" x="24" y="3.9999999999999964" width="218" height="57.666666666666657"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="218" id="Olm-a8-vGg"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="57" id="omh-rb-zuO"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7G-Qb-YxJ">
@@ -50,6 +49,7 @@
                     <constraint firstAttribute="trailing" secondItem="c7G-Qb-YxJ" secondAttribute="trailing" constant="12" id="32Q-uc-Vtz"/>
                     <constraint firstItem="hpZ-7F-txm" firstAttribute="leading" secondItem="AVq-Wk-zmu" secondAttribute="leading" id="4Wf-uF-Mkh"/>
                     <constraint firstAttribute="bottom" secondItem="hpZ-7F-txm" secondAttribute="bottom" constant="4" id="CGN-iL-osm"/>
+                    <constraint firstItem="c7G-Qb-YxJ" firstAttribute="leading" secondItem="hpZ-7F-txm" secondAttribute="trailing" constant="15" id="DGb-VR-xuF"/>
                     <constraint firstAttribute="bottom" secondItem="AVq-Wk-zmu" secondAttribute="bottom" constant="4" id="FeD-9N-V2a"/>
                     <constraint firstItem="hpZ-7F-txm" firstAttribute="centerY" secondItem="AVq-Wk-zmu" secondAttribute="centerY" id="FnE-EJ-icl"/>
                     <constraint firstItem="c7G-Qb-YxJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="GvB-cr-7Gt"/>
@@ -67,10 +67,10 @@
                     </userDefinedRuntimeAttribute>
                 </userDefinedRuntimeAttributes>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="dateLabel" destination="c7G-Qb-YxJ" id="7Iv-Pt-e5B"/>
-                <outlet property="shioriNameFillLabel" destination="hpZ-7F-txm" id="TBX-iv-WFz"/>
-                <outlet property="shioriNameStrokeLabel" destination="AVq-Wk-zmu" id="2MP-9v-WJf"/>
+                <outlet property="shioriNameLabel" destination="hpZ-7F-txm" id="2rr-ET-gZk"/>
             </connections>
             <point key="canvasLocation" x="133.58778625954199" y="-3.5211267605633805"/>
         </tableViewCell>
