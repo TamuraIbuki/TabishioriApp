@@ -445,6 +445,13 @@ final class EditShioriPlanDetailViewController: UIViewController {
         }
         
         if validateTitles.isEmpty {
+            guard validateCostForm() else {
+                return
+            }
+            guard validateURLForm() else {
+                return
+            }
+            
             // 日付と内容が記載されている場合、登録処理を行う
             let planDate = selectedDate!
             let startTime = selectedStartTime!
@@ -453,6 +460,66 @@ final class EditShioriPlanDetailViewController: UIViewController {
             // 未入力項目がある場合、アラートを表示
             showAlert(title: String(format: validateMessage, validateTitles.joined(separator: "、")))
         }
+    }
+    
+    // 費用バリデーション
+    private func validateCostForm() -> Bool {
+        let raw = (costTextField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        // 費用が空欄ならそのまま返す
+        guard raw.isEmpty == false else {
+            selectedCost = nil
+            return true
+        }
+        
+        // 全角→半角にし、カンマを削除
+        let half = raw.applyingTransform(.fullwidthToHalfwidth, reverse: false) ?? raw
+        let digitsOnly = half.replacingOccurrences(of: ",", with: "")
+        
+        // 数字以外ならアラートを表示する
+        let isAllDigits = CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: digitsOnly))
+        guard isAllDigits, let value = Int(digitsOnly) else {
+            showAlert(title: "費用は数字のみで入力してください")
+            return false
+        }
+        
+        selectedCost = value
+        return true
+    }
+    
+    /// URLバリデーション
+    private func validateURLForm() -> Bool {
+        let raw = (urlTextField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        /// URLが空欄ならそのまま返す
+        guard raw.isEmpty == false else {
+            selectedURL = ""
+            return true
+        }
+        
+        // 全角→半角に正規化
+        let normalizedURL = raw.applyingTransform(.fullwidthToHalfwidth, reverse: false) ?? raw
+        
+        // http(s)かを確認
+        guard normalizedURL.lowercased().hasPrefix("http://") || normalizedURL.lowercased().hasPrefix("https://") else {
+            showAlert(title: "URLは http(s):// から記入してください")
+            return false
+        }
+        
+        // FQDN確認
+        let URLpattern = #"^(?:https?):\/\/(?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,}(?::\d+)?(?:\/[^\s#?]*)?(?:\?[^\s#]*)?(?:#[^\s]*)?$"#
+        let regex = try! NSRegularExpression(pattern: URLpattern, options: .caseInsensitive)
+        let range = NSRange(normalizedURL.startIndex..., in: normalizedURL)
+        let match = regex.firstMatch(in: normalizedURL, range: range)
+        let isWholeMatch = (match?.range.location == 0 && match?.range.length == range.length)
+        
+        guard isWholeMatch else {
+            showAlert(title: "URLの形式が正しくありません")
+            return false
+        }
+        
+        selectedURL = normalizedURL
+        return true
     }
     
     /// 予定データを更新する

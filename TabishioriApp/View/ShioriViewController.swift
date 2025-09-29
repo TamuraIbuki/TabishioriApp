@@ -317,6 +317,17 @@ extension ShioriViewController: EditShioriPlanViewControllerDelegate {
             }
         }
     }
+
+    /// 予定の削除後更新
+    func didPlanDelete(_ vc: EditShioriPlanViewController, for date: Date?) {
+        guard let date else { return updateAllPagesWithPlans() }
+        let cal = Calendar.current
+            (pages.first {
+                guard let p = $0 as? ShioriContentViewController else { return false }
+                return cal.isDate(p.pageDate, inSameDayAs: date)
+            } as? ShioriContentViewController)?
+                .fetchAndDistributePlans()
+}
 }
 
 

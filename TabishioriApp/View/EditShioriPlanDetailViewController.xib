@@ -173,7 +173,7 @@
                         <constraint firstAttribute="width" constant="263" id="cGM-qd-TtY"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Oe-1q-fId">
                     <rect key="frame" x="350" y="516.33333333333337" width="24" height="14"/>
@@ -190,6 +190,12 @@
                         <constraint firstAttribute="height" constant="188" id="v9J-Yc-lA4"/>
                     </constraints>
                 </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="円" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VIl-L4-jeK">
+                    <rect key="frame" x="350" y="442.33333333333331" width="16" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -220,6 +226,8 @@
                 <constraint firstItem="I9P-Og-aRb" firstAttribute="leading" secondItem="eqq-UL-jPC" secondAttribute="trailing" constant="55" id="R5J-5v-6iR"/>
                 <constraint firstItem="5UA-I9-kEK" firstAttribute="leading" secondItem="wma-O4-buD" secondAttribute="trailing" constant="22" id="T6M-NF-XQD"/>
                 <constraint firstItem="7la-AK-HrU" firstAttribute="leading" secondItem="eqq-UL-jPC" secondAttribute="leading" id="The-M4-6Vn"/>
+                <constraint firstItem="VIl-L4-jeK" firstAttribute="leading" secondItem="gY6-ck-hzU" secondAttribute="trailing" constant="6" id="UY4-cJ-S6l"/>
+                <constraint firstItem="VIl-L4-jeK" firstAttribute="bottom" secondItem="gY6-ck-hzU" secondAttribute="bottom" id="VYk-cS-sHU"/>
                 <constraint firstItem="wma-O4-buD" firstAttribute="leading" secondItem="eqq-UL-jPC" secondAttribute="leading" id="WpN-id-2xC"/>
                 <constraint firstItem="gRE-3L-KkF" firstAttribute="top" secondItem="wma-O4-buD" secondAttribute="bottom" constant="17" id="YLU-pL-Mqn"/>
                 <constraint firstItem="dhr-UY-4kP" firstAttribute="top" secondItem="WuO-sh-nNa" secondAttribute="bottom" constant="5" id="ZQR-7z-E83"/>
@@ -236,7 +244,7 @@
         </view>
     </objects>
     <resources>
-        <image name="ic_check_box_out" width="15" height="15"/>
+        <image name="ic_check_box_out" width="30" height="30"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

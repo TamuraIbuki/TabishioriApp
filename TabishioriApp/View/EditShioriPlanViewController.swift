@@ -13,6 +13,7 @@ import RealmSwift
 protocol EditShioriPlanViewControllerDelegate: AnyObject {
     func didShioriUpdate(_ updated: ShioriDataModel)
     func didPlanUpdate(_ plan: PlanDataModel)
+    func didPlanDelete(_ vc: EditShioriPlanViewController,for date: Date?)
 }
 
 // MARK: - Main Type
@@ -301,6 +302,8 @@ extension EditShioriPlanViewController: UITableViewDelegate {
             guard let self = self else { return }
             let plan = self.dailyPlans[indexPath.row]
             
+            let affectedDate = plan.planDate
+            
             // Realm から削除
             self.realmManager.delete(
                 plan,
@@ -313,6 +316,7 @@ extension EditShioriPlanViewController: UITableViewDelegate {
                     if let visible = tableView.indexPathsForVisibleRows {
                         tableView.reloadRows(at: visible, with: .none)
                     }
+                    self.delegateToParent?.didPlanDelete(self, for: affectedDate)
                     done(true)
                     
                 }, onFailure: { error in
