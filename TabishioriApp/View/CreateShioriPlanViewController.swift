@@ -432,9 +432,9 @@ final class CreateShioriPlanViewController: UIViewController {
         // 全角→半角に正規化
         let normalizedURL = raw.applyingTransform(.fullwidthToHalfwidth, reverse: false) ?? raw
         
-        // http(s)かを確認
-        guard normalizedURL.lowercased().hasPrefix("http://") || normalizedURL.lowercased().hasPrefix("https://") else {
-                showAlert(title: "URLは http(s):// から記入してください")
+        // httpsかを確認
+        guard normalizedURL.lowercased().hasPrefix("https://") else {
+                showAlert(title: "URLは https:// から記入してください")
                 return false
             }
         
